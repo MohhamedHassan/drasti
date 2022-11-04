@@ -1,0 +1,42 @@
+<section class="homepage">
+    <app-header
+    imgSrc="https://drastiq8.com/wp-content/uploads/2022/09/%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84.png"
+    ></app-header>
+    <!-- end header image -->
+    <section class="container">
+        <div class="homepageHeader">
+            <h1>
+                مواد تعليمية مدرسية
+            </h1>
+            <h2>
+                الطريق الاسهل والاضمن للنجاح و التفوق
+            </h2>
+        </div>
+        <!--  -->
+        <div class="row mb-3">
+            <div 
+            *ngFor="let stage of stages"
+            class="col-6 col-md-4 mb-4">
+                <div>
+                   <a 
+                   aria-label="دراستي"
+                   routerLink="category-details">
+                    <img 
+                    class="img-fluid stage"
+                    [src]="stage?.img" alt="دراستي">
+                   </a>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="videoSection mb-3">
+           <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <video class="elementor-video" src="https://drastiq8.com/wp-content/uploads/2022/08/IMG_7296.mp4" controls="" controlslist="nodownload"></video>
+                </div>
+                <div class="col-md-2"></div>
+           </div>
+        </div>
+    </section>
+</section>

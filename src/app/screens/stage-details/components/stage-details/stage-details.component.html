@@ -1,0 +1,21 @@
+<app-header
+imgSrc="https://drastiq8.com/wp-content/uploads/2022/09/%D8%A8%D8%A7%D9%86%D8%B1-%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B92.png"
+></app-header>
+<!-- end header image -->
+<section 
+style="min-height: 100vh;"
+class="container mt-5">
+    <div class="row mt-4">
+        <div class="col-6 col-md-4 mb-4"
+        *ngFor="let stage of stages"
+        >
+            <div>
+                <a routerLink="/classes">
+                    <img 
+                    class="img-fluid stage"
+                    src="https://drastiq8.com/wp-content/uploads/2022/08/WhatsApp-Image-2022-08-21-at-2.27.18-PM-1.jpeg" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

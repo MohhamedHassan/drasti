@@ -1,1 +1,289 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+$blueColor: #2b6cb0;
+$blueHover: #215387;
+$navbarBG: #F7FAFC;
+$footerBG: #0034C2;
+$cartH2Color: #4b5981;
+$grayColor: #b1b8c9;
+$lightBlue:#1b52d8;
+
+// end variables
+* {
+    text-align: right;
+    direction: rtl;
+}
+td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.redstar {
+    color: red;
+}
+header.blueHeader {
+    height: 200px;
+    background-color: #EDF2F7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h1 {
+        font-weight: 500
+    }
+}
+bdi {
+    color: $cartH2Color;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+del {
+    color: $grayColor;
+    font-size: 16px;
+    font-weight: bold;
+}
+img.stage {
+    border-radius: 25px 25px 25px 25px;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 50%);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none;
+}
+
+a {
+    color: black !important;
+    text-decoration: none !important;
+
+    &:hover {
+        color: black !important
+    }
+}
+
+.bluButton {
+    background-color: $blueColor;
+    color: white !important;
+    border-radius: 20px;
+    padding: 10px 15px 13px 15px;
+    border: none;
+    &:hover {
+        background-color: $blueHover;
+        box-shadow: 0px 15px 25px -7px rgb(0 0 0 / 10%);
+        color: white !important
+    }
+    a {
+        color:white !important
+    }
+}
+
+// end glopal
+nav {
+    background-color: $navbarBG;
+
+    div.container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .mainlogo {
+        width: 70px
+    }
+
+    svg {
+        font-weight: bold;
+    }
+
+    .cartCount {
+        background-color: #EDF2F7;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        display: inline-block;
+        text-align: center;
+    }
+}
+
+// end navbar
+.homepage {
+    .homepageHeader {
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: $blueColor;
+            font-family: "Cairo", Sans-serif;
+            font-size: 59px;
+            font-weight: 500;
+        }
+
+        h2 {
+            color: $blueColor;
+            font-family: "Cairo", Sans-serif;
+            font-size: 26px;
+            font-weight: 300;
+        }
+    }
+
+    video {
+        width: 100%;
+        border: 1px solid;
+        border-radius: 10px;
+    }
+
+}
+
+@media (max-width: 767px) {
+    .homepageHeader {
+        h1 {
+            font-size: 34px !important;
+        }
+
+        h2 {
+            font-size: 19px !important;
+        }
+    }
+}
+
+// end home page
+footer {
+    background-color: $footerBG;
+    color: white;
+
+    h2 {
+        color: #FFFFFF;
+        font-family: "Cairo", Sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    i {
+        color: #fff;
+        transition: .5s;
+        font-size: 25px;
+
+        &:hover {
+            opacity: .9;
+        }
+    }
+
+    td {
+        padding: 10px 0 10px 30px;
+    }
+}
+
+// end footer
+.login {
+    form {
+        border: 1px solid #b7cde1;
+        padding: 30px;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+   
+
+    input.submitinput {
+        border-radius: 5px !important;
+    }
+
+   
+}
+.phonenumberRight {
+    width: 85%;
+}
+
+.phonenumberLeft {
+    width: 15%;
+    text-align: center;
+}
+@media only screen and (max-width: 600px) {
+    .login {
+        .phonenumberRight {
+            width: 75%;
+        }
+
+        .phonenumberLeft {
+            width: 25%;
+        }
+    }
+}
+
+// end login
+.cstmCart {
+    box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+    border-radius: 8px;
+    transition: bottom .5s;
+    position: relative;
+    bottom: 0;
+    &:hover {
+        box-shadow: 0 24px 34px -5px rgb(0 0 0 / 27%);
+        bottom: 5px;
+    }
+    .cartImg {
+        img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+    }
+
+    .cartDetails {
+        h2 {
+            font-family: "Cairo", Sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            a {
+                color: $cartH2Color !important;
+                transition: .5s;
+                &:hover {
+                    color:$lightBlue !important;
+                }
+            }
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            color: $blueHover;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+}
+
+// end cart
+.class-details {
+    background-color: #F7F7F7;
+    .category {
+        small:first-of-type {
+            color:$grayColor
+        }
+        small {
+            font-weight: bold;
+        }
+    }
+    h3 {
+        font-size: 20px;
+    }
+}
+// end class details
+.conditions {
+    background-color: #F7F7F7;
+}
+// end condiations
+

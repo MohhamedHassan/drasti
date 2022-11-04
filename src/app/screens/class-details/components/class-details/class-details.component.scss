@@ -1,0 +1,61 @@
+::ng-deep {
+    .mat-radio-group:not(:last-of-type) .border-btm {
+         padding-bottom: 15px;
+         border-bottom: 1px solid #d4d1d1;
+         margin-bottom: 15px;
+    }
+    .accordion-toggle {
+      padding: 5px;
+    }
+    .accordion-toggle[aria-expanded="true"]:after {
+         font-family: "Font Awesome 5 Free";
+  content: "\f077";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight: 900;
+  position: absolute;
+  color:#3052D8;
+  left:20px;
+  top: 20px;
+       
+     }
+     .card {
+        padding:10px 0;
+        li {
+         padding: 20px 20px 0px 20px;
+         i {
+            color:#C2BEC9
+         }
+        }
+        li:not(:last-of-type) {
+         padding-bottom: 20px;
+        }
+     }
+     .card-header{border-bottom:none;background-color: transparent;padding: 0;}
+     .card-body{padding:0}
+     .accordion-toggle[aria-expanded="false"]:after {
+         font-family: "Font Awesome 5 Free";
+         content: "\f078";
+         color:#3052D8;
+         display: inline-block;
+         padding-right: 3px;
+         vertical-align: middle;
+         font-weight: 900;
+         position: absolute;
+         left: 20px;
+         top: 20px;
+         
+         
+     }
+    .btn-link {
+         font-weight: 500;
+         color: #3052D8 ;
+         text-decoration: none;
+    }
+    .btn.focus, .btn:focus{box-shadow: none;}
+     .btn-link:hover {
+        color:#3052D8;
+        text-decoration: none;
+     }
+    }

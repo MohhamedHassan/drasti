@@ -1,0 +1,86 @@
+<section class="class-details pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5">
+                <div class="contentDescription bg-white rounded p-3 p-md-5">
+                    <h2 class="mb-5">العلوم للصف السادس</h2>
+                    <hr>
+                    <div class="category">
+                        <small class="d-block">فئات</small>
+                        <small>الصف السادس</small>
+                    </div>
+                    <hr>
+                    <h3 class="my-4">
+                        الوصف
+                    </h3>
+                    <ul class="p-0 mb-5 list-unstyled">
+                        <li>-الاشتراك للكورس كامل</li>
+                        <li>-الاشتراك يكون على جميع الدروس المهمة في الوحدات والتركيز عليها بشرح مبسط مع التدريب على الحل.</li>
+                        <li>-يوجد حل اختبارات والتدريب عليها والتركيز على الاسئلة المكررة بالاختبارات</li>
+                        <li>-لايتوفر خاصية السؤال بين الطالب والمعلم</li>
+                    </ul>
+                    <!--  -->
+                    <div class="d-flex justify-content-between align-items-center mb-5 ">
+                        <h3 class="m-0">
+                            موضوعات المادة
+                        </h3>
+                        <small>10 دروس</small>
+                    </div>
+                    <accordion
+                    class="mb-4"
+                    [isAnimated]="true">
+                        <accordion-group
+                        [isOpen]="true"
+                        heading="اضغط هنا للوصول للمنهج">
+                            <ul class="p-0 list-unstyled">
+                                <li 
+                                *ngFor="let item of items"
+                                class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
+                                    <div class="w-57">
+                                        <i class="fa-solid fa-book"></i>
+                                        ما انواع التكليفات      
+                                    </div>
+                                    <i class="fa-solid fa-lock"></i>
+                                </li>
+                                
+                            </ul>
+                        </accordion-group>
+                    </accordion>
+                    <accordion [isAnimated]="true">
+                        <accordion-group
+                        heading="الاختبار القصير الاول">
+                            <ul class="p-0 list-unstyled">
+                                <li 
+                                class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
+                                    <div class="w-57">
+                                        <i class="fa-solid fa-book"></i>
+                                        اضغط هنا
+                                    </div>
+                                    <i class="fa-solid fa-lock"></i>
+                                </li>
+                                
+                            </ul>
+                        </accordion-group>
+                    </accordion>
+                </div>
+            </div>
+            <!--  -->
+            <div class="col-lg-4 mb-5">
+                <div class="bg-white rounded overflow-hidden">
+                    <video class="w-100" src="https://drastiq8.com/wp-content/uploads/2022/08/IMG_7296.mp4" controls="" controlslist="nodownload"></video>
+                    <div class="d-flex  justify-content-between align-items-center  p-3">
+                        <del>د.ك23.990</del>
+                        <bdi>د.ك23.990</bdi>        
+                    </div>
+                  <div class="pb-3 px-3">
+                    <button class="w-100 btn btn-primary">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        اضافة الي السلة
+                    </button>
+                  </div>
+                </div>
+            </div>
+            <!--  -->
+        </div>
+    </div>
+</section>

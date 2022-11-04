@@ -1,0 +1,137 @@
+<section style="min-height: 100vh;" class="conditions pb-5">
+    <header class="p-2 mb-5 blueHeader">
+        <h1>
+            اتمام الطلب
+        </h1>
+    </header>
+    <div class="container bg-white rounded p-5">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div>
+                    <h4 class="mb-4">تفاصيل الفاتورة</h4>
+                    <form class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>
+                                    الاسم الاول <span class="redstar">*</span>
+                                </label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-6">
+                            <div class="form-group mb-3">
+                                <label>
+                                    الاسم الاخير <span class="redstar">*</span>
+                                </label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12 mb-3">
+                            <label>رقم الهاتف <span class="redstar">*</span></label>
+                            <div class="d-flex align-items-center ">
+                                <input type="number" class="form-control phonenumberRight">
+                                <input value="+965" readonly class="form-control phonenumberLeft">
+                            </div>
+                            <a class="text-primary" href="">
+                                إرسال رمز التحقق
+                            </a>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>
+                                    انشاء كلمة مرور للحساب <span class="redstar">*</span>
+                                </label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label>
+                                    تأكيد كلمة المرور <span class="redstar">*</span>
+                                </label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-check">
+                                <input id='rememberme' type="checkbox">
+                                <label class="mx-1" for="rememberme">
+                                    <a routerLink="/conditions" class="text-primary">
+                                        أوافق على الشروط والأحكام وسياسة الخصوصية
+                                    </a>
+                                </label><br>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--  -->
+            <div class="col-lg-6 mb-4">
+                <div>
+                    <h4 class="mb-4">طلبك</h4>
+                    <div class="table-responsive">
+                        <table class="w-100 table mb-4">
+                            <thead>
+                                <tr>
+                                    <th>المنتج</th>
+                                    <th>المجموع</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>العلوم للصف السادس </td>
+                                    <td>د.ك71.970</td>
+                                </tr>
+                                <tr>
+                                    <td>العلوم للصف السادس </td>
+                                    <td>د.ك71.970</td>
+                                </tr>
+                                <tr>
+                                    <td>العلوم للصف السادس </td>
+                                    <td>د.ك71.970</td>
+                                </tr>
+                                <tr>
+                                    <th>المجموع</th>
+                                    <th>د.ك71.970</th>
+                                </tr>
+                                <tr>
+                                    <th>رسوم بوابة الدفع :</th>
+                                    <th>د.ك71.970</th>
+                                </tr>
+                                <tr>
+                                    <th>الاجمالي</th>
+                                    <th>د.ك71.970</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;">
+                         <input type="radio" id="one" name="fav_language" value="one">
+                         <label for="one">
+                            <img src="https://drastiq8.com/wp-content/plugins/No%20invoice%20woocommerce%20-%20Knet/assets/knet.png"
+                            class="img-fluid"
+                            alt="">
+                         </label>
+                    </div>
+                    <div style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;">
+                        <input type="radio" id="two" name="fav_language" value="two">
+                        <span class="mx-2"></span>
+                        <label for="two">
+                           <img src="https://drastiq8.com/wp-content/plugins/No%20invoice%20woocommerce%20-%20Credit%20Card/assets/cc.png"
+                           class="img-fluid"
+                           alt="">
+                        </label>
+                   </div>
+                    <button style="border-radius: 5px" class="w-100 bluButton text-center">
+                        تأكيد الطلب
+                    </button>
+                </div>
+            </div>
+            <!--  -->
+        </div>
+    </div>
+</section>

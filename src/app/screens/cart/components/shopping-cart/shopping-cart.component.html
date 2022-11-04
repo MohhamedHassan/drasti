@@ -1,0 +1,92 @@
+<section style="min-height: 100vh;" class="conditions">
+    <header class="p-2 mb-5 blueHeader">
+        <h1>
+            سلة المشتريات           
+        </h1>
+    </header>
+    <div class="container bg-white rounded p-5">
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div>
+                    <h4>ملخص المشتريات</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th>المنتج</th>
+                                <th >السعر</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td 
+                                    style="cursor: pointer;"
+                                    >
+                                        <i class="fa-solid fa-x" style="font-size: small;color:red"></i>
+                                        <img 
+                                        style="width: 60px;"
+                                        class="mx-3"
+                                        src="https://drastiq8.com/wp-content/uploads/2022/08/Sciences-300x300.png" alt="">
+                                        العلوم للصف السادس
+                                    </td>
+                                    <td>	د.ك23.990</td>
+                                  </tr>
+                              <tr>
+                                <td 
+                                style="cursor: pointer;"
+                                >
+                                    <i class="fa-solid fa-x" style="font-size: small;color:red"></i>
+                                    <img 
+                                    style="width: 60px;"
+                                    class="mx-3"
+                                    src="https://drastiq8.com/wp-content/uploads/2022/08/Sciences-300x300.png" alt="">
+                                    العلوم للصف السادس
+                                </td>
+                                <td>	د.ك23.990</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="col-lg-4 mb-4">
+                <div>
+                    <h4>اجمال سلة المشتريات</h4>
+                    <table class="w-100  my-4">
+                        <tr 
+                        style="border-bottom: 1px solid #b7cde1;">
+                            <th class="p-2">المجموع</th>
+                            <td class="p-2">د.ك71.970</td>
+                        </tr>
+                        <tr>
+                            <th class="p-2">الاجمالي</th>
+                            <td class="p-2">د.ك71.970</td>
+                        </tr>
+                    </table>
+                    <a 
+                    style="border-radius: 5px"
+                    routerLink="/checkout"
+                    class="bluButton text-center  d-block"
+                    >
+                        التقدم لاتمام الطلب
+                    </a>
+                </div>
+            </div>
+            <!--  -->
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4"
+            *ngFor="let stage of stages"
+            >
+                <div>
+                    <div>
+                        <app-cart
+                        imgSrc="https://drastiq8.com/wp-content/uploads/2022/08/Fichier-12.png"
+                        ></app-cart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
