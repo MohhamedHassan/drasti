@@ -1,4 +1,5 @@
 <app-header
+*ngIf="banner"
 [imgSrc]="banner"
 ></app-header>
 <!-- end header image -->
@@ -14,12 +15,12 @@ class="container mt-5">
                 <a 
                 [routerLink]="['/classes/',id,stage?.id]"
               >
-                <!-- 
+                
                     <img 
                     class="img-fluid stage"
                     [src]="stage?.media" alt="دراستي"> 
-                -->
-                    {{stage?.name}}
+               
+                    <!-- {{stage?.name}} -->
                 </a>
             </div>
         </div>

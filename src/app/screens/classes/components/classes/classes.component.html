@@ -1,12 +1,17 @@
-<app-header
-imgSrc="https://drastiq8.com/wp-content/uploads/2022/09/%D8%B3%D8%A7%D8%AF%D8%B3-1024x115.png"
-></app-header>
+<!-- <app-header
+imgSrc=""
+></app-header> -->
 <!-- end header image -->
 <section 
 style="min-height: 100vh;"
 class="container">
 <div class="row my-5">
-    <div class=" col-md-6 col-lg-4 col-xl-3 mb-4"
+    <div class="col-md-12">
+        <app-loading *ngIf="loadingOffer"></app-loading>
+    </div>
+    <div 
+    *ngIf="!loadingOffer"
+    class=" col-md-6 col-lg-4 col-xl-3 mb-4"
     >
         <div>
             <app-cart
@@ -18,16 +23,24 @@ class="container">
     </div>
 </div>
 <div class="row">
-    <div class=" col-md-6 col-lg-4 col-xl-3 mb-4"
-    *ngFor="let class of classes"
-    >
-        <div>
-            <app-cart
-            [imgSrc]="class?.media"
-            [name]="class?.name"
-            [price]="class?.price"
-            ></app-cart>
-        </div>
+    <div class="col-md-12">
+        <app-loading *ngIf="loadingsubjects"></app-loading>
     </div>
+    <ng-container *ngIf="!loadingsubjects">
+        <div 
+        class=" col-md-6 col-lg-4 col-xl-3 mb-4"
+        *ngFor="let class of classes"
+        >
+            <div>
+                <app-cart
+                [imgSrc]="class?.media"
+                [name]="class?.name"
+                [price]="class?.price"
+                ></app-cart>
+            </div>
+        </div>
+    </ng-container>
+    
+
 </div>
 </section>
