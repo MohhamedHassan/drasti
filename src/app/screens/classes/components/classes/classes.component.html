@@ -41,6 +41,11 @@ class="container">
         </div>
     </ng-container>
     
-
+    <p 
+    style="font-size:20px"
+    *ngIf="!loadingsubjects&&!classes?.length"
+    class="text-center fw-bold text-secondary m-2">
+        لا توجد بيانات
+    </p>
 </div>
 </section>

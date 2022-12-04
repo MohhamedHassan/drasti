@@ -24,7 +24,7 @@ export class HasSpecialistComponent implements OnInit {
       })
     ).subscribe(
       (res:any)=> {
-          this.stages= res?.data?.classes.find((item:any) => {         
+        this.stages= res?.data?.classes.find((item:any) => {         
             return item?.id==this.id
           })?.has_specialties
           //this.banner=res?.data[0].media
