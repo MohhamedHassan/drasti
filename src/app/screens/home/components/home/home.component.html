@@ -1,6 +1,6 @@
-<section class="homepage">
+<section class="homepage" style="min-height: 100vh;">
     <app-header
-    imgSrc="https://drastiq8.com/wp-content/uploads/2022/09/%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84.png"
+    imgSrc="assets/header.png"
     ></app-header>
     <!-- end header image -->
     <section class="container">
@@ -13,6 +13,7 @@
             </h2>
         </div>
         <!--  -->
+        <app-loading *ngIf="loading"></app-loading>
         <div class="row mb-3">
             <div 
             *ngFor="let stage of stages"
@@ -20,10 +21,10 @@
                 <div>
                    <a 
                    aria-label="دراستي"
-                   routerLink="category-details">
+                   [routerLink]="['/stage/',stage?.id]">
                     <img 
                     class="img-fluid stage"
-                    [src]="stage?.img" alt="دراستي">
+                    [src]="stage?.media" alt="دراستي">
                    </a>
                 </div>
             </div>

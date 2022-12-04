@@ -1,42 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { StageDetailsService } from '../../services/stage-details.service';
+import { StageDetailsService } from 'src/app/screens/stage-details/services/stage-details.service';
 
 @Component({
-  selector: 'app-stage-details',
-  templateUrl: './stage-details.component.html',
-  styleUrls: ['./stage-details.component.scss']
+  selector: 'app-has-specialist',
+  templateUrl: './has-specialist.component.html',
+  styleUrls: ['./has-specialist.component.scss']
 })
-export class StageDetailsComponent implements OnInit {
+export class HasSpecialistComponent implements OnInit {
   loading=true
   stages:any
-  banner=''
-  id=''
+  banner:any
+  id:any
   constructor(private activatedRoute:ActivatedRoute,
     private stageService:StageDetailsService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(
       switchMap((params:any) => {
-        this.id=params?.id
+        this.id=params?.specialist
          return this.stageService.getHomeStages(params?.id)
       })
     ).subscribe(
       (res:any)=> {
         if(res?.data?.length) {
-          this.stages=res?.data[0]?.classes
+          console.log(res?.data[0]?.classes,this.id)
+          this.stages= res?.data[0]?.classes.find((item:any) => {         
+            return item?.id==this.id
+          })?.has_specialties
           this.banner=res?.data[0].media
         }
         this.loading=false
+        console.log(this.stages)
       }
     )
   }
-  hasSpecialist(item:any) {
-    if(!!item?.has_specialties?.length) {
-      return `/specialist/${this.id}/${item?.id}`
-    } else {
-      return `/classes/${item?.id}/-1`
-    }
-  }
+
 }

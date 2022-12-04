@@ -12,11 +12,14 @@ class="container mt-5">
         >
             <div>
                 <a 
-                [routerLink]="hasSpecialist(stage)"
+                [routerLink]="['/classes/',id,stage?.id]"
               >
+                <!-- 
                     <img 
                     class="img-fluid stage"
-                    [src]="stage?.media" alt="دراستي">
+                    [src]="stage?.media" alt="دراستي"> 
+                -->
+                    {{stage?.name}}
                 </a>
             </div>
         </div>

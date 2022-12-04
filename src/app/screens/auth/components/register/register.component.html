@@ -1,0 +1,214 @@
+<section 
+style="min-height: 100vh;"
+class="login">
+    <app-header 
+    imgSrc="assets/header.png"
+    ></app-header>
+    <!-- end header -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-lg-3"></div>
+            <div class="col-md-8 col-lg-6">
+                <div>
+                    <h2>انشاء حساب</h2>
+                    <form 
+                    (ngSubmit)="register(registerForm.value)"
+                    [formGroup]="registerForm"
+                    class="row">
+                        <div class="col-lg-6 mb-3">
+                            <div class="form-group ">
+                                <label  >
+                                     الأسم الأول <span class="redstar">*</span>
+                                </label>
+                                <input 
+                                formControlName="fname"
+                                type="text" class="form-control">
+                                <p 
+                                *ngIf="(registerForm.get('fname')?.errors!=null&&registerForm.get('fname')?.touched) || 
+                                (registerForm.get('fname')?.errors!=null&&submited)"
+                                class="text-danger my-1">
+                                    هذا الحقل مطلوب
+                                </p>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-6 mb-3">
+                            <div class="form-group ">
+                                <label  >
+                                    الأسم الأخير <span class="redstar">*</span>
+                                </label>
+                                <input
+                                formControlName="lname"
+                                type="text" class="form-control">
+                                <p 
+                                *ngIf="(registerForm.get('lname')?.errors!=null&&registerForm.get('lname')?.touched) || 
+                                (registerForm.get('lname')?.errors!=null&&submited)"
+                                class="text-danger my-1">
+                                    هذا الحقل مطلوب
+                                </p>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group ">
+                                <label>رقم الهاتف</label>
+                                <div class="d-flex align-items-center mb-2">
+                                    <input 
+                                    onKeyPress="if(this.value.length==8) return false;"
+                                    min="1"
+                                    formControlName="phone"
+                                    type="number" class="form-control phonenumberRight">
+                                    <input 
+                                    value="965+" readonly class="form-control phonenumberLeft">
+                                </div>
+                                <p 
+                                *ngIf="(registerForm.get('phone')?.errors!=null&&registerForm.get('phone')?.touched) || 
+                                (registerForm.get('phone')?.errors!=null&&submited)"
+                                class="text-danger my-2">
+                                يبدأ رقم الهاتف ب 5 و لا يقل عن ثمانية أرقام
+                                </p>
+                                <p
+                                *ngIf="showsendcode" 
+                                style="cursor: pointer;"
+                                (click)="sendOtb()"
+                                class="mb-3 text-primary">
+                                    أرسال رمز التحقق
+                                    <i 
+                                    *ngIf="sendotbLoading"
+                                    class="fas fa-circle-notch fa-spin"></i> 
+                                </p>
+                                <ng-container 
+                                *ngIf="showVervication"
+                                >
+                                    
+                                    <input type="text"
+                                    [formControl]="verificationControl"
+                                    placeholder="أدخل الرمز هنا"
+                                    class="form-control">
+                                    <!-- <p 
+                                    *ngIf="(registerForm.get('confirmation_code')?.errors!=null&&registerForm.get('confirmation_code')?.touched) || 
+                                    (registerForm.get('confirmation_code')?.errors!=null&&submited)"
+                                    class="text-danger my-1">
+                                        هذا الحقل مطلوب
+                                    </p> -->
+                                    <p
+                                    style="cursor: pointer;"
+                                    (click)="verifyCode()"
+                                    class="mb-1 text-primary">
+                                       أنقر هنا للتحقق 
+                                       <i 
+                                       *ngIf="verifyOtbLoading"
+                                       class="fas fa-circle-notch fa-spin"></i> 
+                                    </p>
+                                    <div class="mt-3">
+                                        <p class="mb-1 fw-bold"
+                                        style="color:green;word-wrap: break-word;"
+                                        >
+                                           أدخل رمز التحقق المرسل الي 
+                                           {{registerForm.get('phne')}} 
+                                           <bdi
+                                           style="color:green"
+                                           >965+</bdi>
+                                         </p>
+                                        <p 
+                                        (click)="counterToEnable()"
+                                        [ngStyle]="{
+                                            'cursor':enable?'pointer':'no-drop'
+                                        }"
+                                        
+                                        class="mb-1 text-primary">
+                                         ({{counter}})  لم تتلقي الرمز ؟ أعد الأرسال مرة أخري
+                                         <i 
+                                         *ngIf="sendotbLoading"
+                                         class="fas fa-circle-notch fa-spin"></i>  
+                                          </p>
+                                
+                                    </div>
+                                </ng-container>
+                                
+                           
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group ">
+                                <label  >
+                                     أنشاء كلمة مرور للحساب <span class="redstar">*</span>
+                                </label>
+                                <input
+                                formControlName="password"
+                                type="password" class="form-control">
+                                <p 
+                                *ngIf="(registerForm.get('password')?.errors!=null&&registerForm.get('password')?.touched) || 
+                                (registerForm.get('password')?.errors!=null&&submited)"
+                                class="text-danger my-1">
+                                    هذا الحقل مطلوب
+                                </p>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group ">
+                                <label  >
+                                     تأكيد كلمة المرور   <span class="redstar">*</span>
+                                </label>
+                                <input 
+                                formControlName="password_confirmation"
+                                type="password" class="form-control">
+                                <p 
+                                *ngIf="(registerForm.get('password_confirmation')?.errors!=null&&registerForm.get('password_confirmation')?.touched) || 
+                                (registerForm.get('password_confirmation')?.errors!=null&&submited)"
+                                class="text-danger my-1">
+                                    هذا الحقل مطلوب
+                                </p>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group d-flex">
+                                <input  
+                                formControlName="agree"
+                                type="checkbox">
+                                <label class="mx-1">
+                                    <a 
+                                    style="text-decoration:underline !important"
+                                    class="text-primary"
+                                    routerLink="/conditions">
+                                        أوافق علي الشروط والأحكام وسياسة الخصوصية
+                                    </a>
+                                </label>
+
+                            </div>
+                            <p 
+                            *ngIf="(registerForm.get('agree')?.value!=true&&registerForm.get('agree')?.touched) || 
+                            (registerForm.get('agree')?.value!=true&&submited)"
+                            class="text-danger my-1">
+                                هذا الحقل مطلوب
+                            </p>
+                        </div>
+                        <div class="col-lg-12">
+                            <button 
+                            [disabled]="registerLoading"
+                            class="bluButton submitinput w-100 text-center">
+                                أنشاء حساب
+                                <i 
+                                *ngIf="registerLoading"
+                                class="fas fa-circle-notch fa-spin"></i>  
+                            </button>
+                        </div>
+                        <div class="my-1">
+                            <a 
+                            style="text-decoration: underline !important;"
+                            class="text-primary"
+                            routerLink="/auth/login">
+                               تسجيل الدخول
+                            </a>
+                        </div>  
+                    </form>
+               
+                </div>
+            </div>
+            <div class="col-md-2 col-md-3"></div>
+        </div>
+    </div>
+</section>

@@ -2,7 +2,7 @@
 style="min-height: 100vh;"
 class="login">
     <app-header 
-    imgSrc="https://drastiq8.com/wp-content/uploads/2022/09/%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84.png"
+    imgSrc="assets/header.png"
     ></app-header>
     <!-- end header -->
     <div class="container">
@@ -11,30 +11,79 @@ class="login">
             <div class="col-md-8 col-lg-6">
                 <div>
                     <h2>تسجيل الدخول</h2>
-                    <form>
+                    <form
+                    [formGroup]="loginForm"
+                    (ngSubmit)="login(loginForm.value)"
+                    >
                         <div class="form-group mb-3">
                             <label  for="phone">
                                 رقم الهاتف <span class="redstar">*</span>
                             </label>
-                            <input id="phone" type="text" class="form-control">
+                            <div class="d-flex align-items-center mb-3">
+                                <input 
+                                onKeyPress="if(this.value.length==8) return false;"
+                                formControlName="phone"
+                                type="number" class="form-control phonenumberRight">
+                                <input 
+                                value="+965" readonly class="form-control phonenumberLeft">
+                            </div>
+                            <p 
+                            *ngIf="(loginForm.get('phone')?.errors!=null&&loginForm.get('phone')?.touched) || 
+                            (loginForm.get('phone')?.errors!=null&&submited)"
+                            class="text-danger my-2">
+                            يبدأ رقم الهاتف ب 5 و لا يقل عن ثمانية أرقام
+                            </p>
                         </div>
                         <!--  -->
                         <div class="form-group mb-3">
                             <label for="password">
                                 كلمة المرور <span class="redstar">*</span>
                             </label>
-                            <input id="password" type="password" class="form-control">
+                            <input 
+                            formControlName="password"
+                            id="password" type="password" class="form-control">
+                            <p 
+                            *ngIf="(loginForm.get('password')?.errors!=null&&loginForm.get('password')?.touched) || 
+                            (loginForm.get('password')?.errors!=null&&submited)"
+                            class="text-danger my-1">
+                                هذا الحقل مطلوب
+                            </p>
                         </div>
                         <!--  -->
                         <div class="form-group mb-3">
-                            <input type="submit" value="تسجيل  الدخول" class="bluButton submitinput">
-                            <span class="mx-2"></span>
+                            <button
+                            [disabled]="loginloading"
+                            class="bluButton submitinput w-100 text-center"
+                            >
+                                تسجيل الدخول
+                                <i 
+                                *ngIf="loginloading"
+                                class="fas fa-circle-notch fa-spin"></i>
+                            </button>
+                            <div class="my-1">
+                                <a 
+                                style="text-decoration: underline;"
+                                class="text-primary"
+                                routerLink="/auth/reset-password">
+                                   هل نسيت كلمة المرور ؟
+                                </a>
+                            </div>   
+                            <!-- <span class="mx-2"></span> -->
                             <!--  -->
-                            <input id='rememberme' type="checkbox">
-                            <label class="mx-1" for="rememberme">تزكرني</label><br>
+                            <!-- <input id='rememberme' type="checkbox">
+                            <label class="mx-1" for="rememberme">تزكرني</label><br> -->
                         </div>
                         <!--  -->
                         <div class="form-group">
+                            <button
+                            type="button"
+                            routerLink="/auth/register"
+                            class="bluButton submitinput w-100 text-center"
+                            >
+                            أنشاء حساب 
+                            </button>
+                        </div>
+                        <!-- <div class="form-group">
                             <input 
                             (click)="returnPassword=true"
                             *ngIf="!returnPassword"
@@ -42,13 +91,37 @@ class="login">
                             <ng-container *ngIf="returnPassword">
                                 <label>رقم الهاتف</label>
                                 <div class="d-flex align-items-center mb-3">
-                                    <input type="number" class="form-control phonenumberRight">
+                                    <input 
+                                    onKeyPress="if(this.value.length==8) return false;"
+                                    [formControl]="resetPasswordControl"
+                                    type="number" class="form-control phonenumberRight">
                                     <input 
                                     value="+965" readonly class="form-control phonenumberLeft">
                                 </div>
-                                <input type="button" value="ارسال كلمة المرور الجديدة" class="bluButton submitinput d-block mb-3">
-                            </ng-container>                          
-                        </div>
+                                <p 
+                                *ngIf="resetPasswordControl?.errors!=null&&resetPasswordControl?.touched"
+                                class="text-danger my-2">
+                                   لا يقل عن ثمانية أرقام
+                                </p>
+                                <button 
+                                [disabled]="resetPasswordLoading"
+                                (click)="resetPassword()"
+                                type="button" class="bluButton submitinput d-block mb-3">
+                                        ارسال كلمة المرور الجديدة
+                                        <i 
+                                        *ngIf="resetPasswordLoading"
+                                        class="fas fa-circle-notch fa-spin"></i>
+                                </button>
+                            </ng-container>  
+                            <div class="my-1">
+                                <a 
+                                style="text-decoration: underline;"
+                                class="text-primary"
+                                routerLink="/auth/register">
+                                    أنشاء حساب
+                                </a>
+                            </div>                        
+                        </div> -->
                     </form>
                 </div>
             </div>

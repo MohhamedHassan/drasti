@@ -10,7 +10,9 @@ class="container">
     >
         <div>
             <app-cart
-            imgSrc="https://drastiq8.com/wp-content/uploads/2022/08/WhatsApp-Image-2022-08-03-at-11.35.54-AM.jpeg"
+            [imgSrc]="offer?.media"
+            [name]="offer?.name"
+            [price]="offer?.amount"
             ></app-cart>
         </div>
     </div>
@@ -21,7 +23,9 @@ class="container">
     >
         <div>
             <app-cart
-            imgSrc="https://drastiq8.com/wp-content/uploads/2022/08/Fichier-12.png"
+            [imgSrc]="class?.media"
+            [name]="class?.name"
+            [price]="class?.price"
             ></app-cart>
         </div>
     </div>

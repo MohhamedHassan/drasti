@@ -8,16 +8,20 @@ const routes: Routes = [
     loadChildren:() => import('src/app/screens/home/home.module').then(m =>m.HomeModule)
   },
   {
-    path:'login',
+    path:'auth',
     loadChildren:() => import('src/app/screens/auth/auth.module').then(m =>m.AuthModule)
   },
   {
-    path:'category-details',
+    path:'stage/:id',
     loadChildren:() => import('src/app/screens/stage-details/stage-details.module').then(m =>m.StageDetailsModule)
   },
   {
-    path:'classes',
+    path:'classes/:id/:spe',
     loadChildren:() => import('src/app/screens/classes/classes.module').then(m =>m.ClassesModule)
+  },
+  {
+    path:'specialist/:id/:specialist',
+    loadChildren:() => import('src/app/screens/has-specialist/has-specialist.module').then(m =>m.HasSpecialistModule)
   },
   {
     path:'class-details',
