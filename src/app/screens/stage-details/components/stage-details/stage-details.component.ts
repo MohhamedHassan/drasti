@@ -25,7 +25,7 @@ export class StageDetailsComponent implements OnInit {
     ).subscribe(
       (res:any)=> {
           this.stages=res?.data?.classes
-      //    this.banner=res?.data?.media
+          this.banner=res?.data?.media
           console.log(this.stages)
         this.loading=false
       }

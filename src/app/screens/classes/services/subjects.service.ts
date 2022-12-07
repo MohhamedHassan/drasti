@@ -18,4 +18,7 @@ export class SubjectsService {
   getOffer(id:any) {
     return this.http.get(`${environment.apiUrl}class_offers/${id}`)
   }
+  getOfferWithSpecialist(id:any,specialistId:any) {
+    return this.http.get(`${environment.apiUrl}class_offers/${id}/${specialistId}`)
+  }
 }

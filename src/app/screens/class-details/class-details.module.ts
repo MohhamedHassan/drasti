@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ClassDetailsRoutingModule } from './class-details-routing.module';
 import { ClassDetailsComponent } from './components/class-details/class-details.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
   imports: [
     CommonModule,
     ClassDetailsRoutingModule,
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    SharedModule
   ]
 })
 export class ClassDetailsModule { }

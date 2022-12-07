@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { ClassDetailsService } from '../../services/class-details.service';
 
 @Component({
   selector: 'app-class-details',
@@ -6,11 +9,50 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./class-details.component.scss']
 })
 export class ClassDetailsComponent implements OnInit {
-  items=[]
-  constructor() { }
+  classDetails:any={}
+  loading=true
+  lessons:any[]=[]
+  units:any[]=[]
+  lessonsOrUnis=0
+  constructor(private classdetailsService:ClassDetailsService,
+    private router:Router,
+    private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.items.length=10
+    this.activatedRoute.params.pipe(
+      switchMap((value:any) => {
+        return this.classdetailsService.getClassDetails(value?.id)
+      })
+    ).subscribe((res:any)=> {
+      console.log(res)
+      if(res?.data?.length) {
+        this.loading=false
+        this.classDetails=res?.data[0]
+        if(this.classDetails?.has_units) {
+          this.lessonsOrUnis=1
+          this.getUnits(this.classDetails?.id)
+        } else if(this.classDetails?.has_lessons) {
+          this.lessonsOrUnis=2
+          this.getLessons(this.classDetails?.id)
+        }
+      } else {
+        this.router.navigate(['/'])
+      }
+    })
+  
   }
-
+getUnits(id:any) {
+  this.classdetailsService.classUnites(id).subscribe(
+    (res:any) => {
+      this.units=res?.data
+    }
+  )
+}
+getLessons(id:any) {
+  this.classdetailsService.classLessons(id).subscribe(
+    (res:any) => {
+      this.lessons=res?.data
+    }
+  )
+}
 }

@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
+  submitedphonecontrol=false
   phoneControl:FormControl=
   new FormControl('',[Validators.required,Validators.pattern(/^5\d{7}$/)])
   verificationControl:FormControl=
@@ -19,7 +20,7 @@ export class ResetPasswordComponent implements OnInit {
   sendotbLoading=false
   showsendcode=true
   savePhoneNumber=''
-  counter=5
+  counter=60
   enable=true
   setIntervalVariable:any
   showForm=false
@@ -28,7 +29,7 @@ export class ResetPasswordComponent implements OnInit {
   resetPasswordForm:FormGroup=new FormGroup({})
   submited=false
   intervalLoading=false
-
+  submitedVerificationControl=false
   constructor(
     private authService:AuthService,
     private toastr:ToastrService,
@@ -61,8 +62,10 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
   verifyCode() {
+    this.submitedVerificationControl=true
     if(this.verificationControl.valid&&!this.verifyOtbLoading) {
      this.verifyOtbLoading=true
+     this.submitedVerificationControl=false
      this.authService.verify_otp({
       phone:this.savePhoneNumber,
       for:"reset", 
@@ -80,8 +83,10 @@ export class ResetPasswordComponent implements OnInit {
    }
  }
 sendOtb() {
+  this.submitedphonecontrol=true
   if(this.enable&&!this.sendotbLoading) {
     if(this.phoneControl?.errors==null) {
+      this.submitedphonecontrol=false
       this.sendotbLoading=true
      this.authService.sent_otp({
       phone:this.phoneControl?.value,
@@ -107,13 +112,13 @@ if(this.enable) {
   this.sendOtb()
 } else {
   if(!this.intervalLoading) {
-    this.counter=5
+    this.counter=60
     this.enable=false
     this.intervalLoading=true
    this.setIntervalVariable = setInterval(() => {
       this.counter-=1
       if(this.counter==0) {
-        this.counter=5
+        this.counter=60
         clearInterval(this.setIntervalVariable)
         this.enable=true
         this.intervalLoading=false

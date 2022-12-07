@@ -4,20 +4,25 @@ imgSrc=""
 <!-- end header image -->
 <section 
 style="min-height: 100vh;"
-class="container">
-<div class="row my-5">
+class="container mt-3">
+<div 
+*ngIf="offer?.length&&!loadingOffer"
+class="row my-5">
     <div class="col-md-12">
         <app-loading *ngIf="loadingOffer"></app-loading>
     </div>
     <div 
-    *ngIf="!loadingOffer"
+    *ngFor="let item of offer"
     class=" col-md-6 col-lg-4 col-xl-3 mb-4"
     >
         <div>
             <app-cart
-            [imgSrc]="offer?.media"
-            [name]="offer?.name"
-            [price]="offer?.amount"
+            (cartBtn)="pushCartIds($event)"
+            type="offer"
+            [id]="item?.id"
+            [imgSrc]="item?.media"
+            [name]="item?.name"
+            [price]="item?.price"
             ></app-cart>
         </div>
     </div>
@@ -33,6 +38,9 @@ class="container">
         >
             <div>
                 <app-cart
+                (cartBtn)="pushCartIds($event)"
+                type="subject"
+                [id]="class?.id"
                 [imgSrc]="class?.media"
                 [name]="class?.name"
                 [price]="class?.price"

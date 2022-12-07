@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren:() => import('src/app/screens/has-specialist/has-specialist.module').then(m =>m.HasSpecialistModule)
   },
   {
-    path:'class-details',
+    path:'class-details/:id',
     loadChildren:() => import('src/app/screens/class-details/class-details.module').then(m =>m.ClassDetailsModule)
   },
   {

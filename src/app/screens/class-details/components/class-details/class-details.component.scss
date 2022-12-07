@@ -20,6 +20,7 @@
   top: 20px;
        
      }
+
      .card {
         padding:10px 0;
         li {
@@ -29,6 +30,11 @@
          }
         }
         li:not(:last-of-type) {
+         padding-bottom: 20px;
+        }
+     }
+     .card.cstm {
+      li:last-of-type {
          padding-bottom: 20px;
         }
      }

@@ -1,12 +1,11 @@
 <div class="cstmCart">
     <div class="cartImg">
         <img 
-        class="img-fluid"
         [src]="imgSrc" alt="دراستي">
     </div>
     <div class="cartDetails">
         <h2 class="my-3 p-3">
-            <a routerLink="/class-details"  >
+            <a [routerLink]="['/class-details/',id]"  >
                {{name}}
             </a>
         </h2>
@@ -18,9 +17,12 @@
                 {{price}}
             </bdi>        
         </div>
-        <button class="text-center w-100 pb-3">
+        <button 
+        (click)="emitCartToParent()"
+        class="text-center w-100 pb-3">
                 <i class="fa-solid fa-cart-shopping"></i>
-               اضافة الي السلة
+                <span  *ngIf="!addeddTocart"> اضافة الي السلة</span>
+                <span  *ngIf="addeddTocart"> ازالة من السلة</span>
         </button>
     </div>
 </div>
