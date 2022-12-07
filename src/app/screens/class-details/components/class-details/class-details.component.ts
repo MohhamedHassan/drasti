@@ -25,18 +25,14 @@ export class ClassDetailsComponent implements OnInit {
       })
     ).subscribe((res:any)=> {
       console.log(res)
-      if(res?.data?.length) {
-        this.loading=false
-        this.classDetails=res?.data[0]
-        if(this.classDetails?.has_units) {
-          this.lessonsOrUnis=1
-          this.getUnits(this.classDetails?.id)
-        } else if(this.classDetails?.has_lessons) {
-          this.lessonsOrUnis=2
-          this.getLessons(this.classDetails?.id)
-        }
-      } else {
-        this.router.navigate(['/'])
+      this.loading=false
+      this.classDetails=res?.data
+      if(this.classDetails?.has_units) {
+        this.lessonsOrUnis=1
+        this.getUnits(this.classDetails?.id)
+      } else if(this.classDetails?.has_lessons) {
+        this.lessonsOrUnis=2
+        this.getLessons(this.classDetails?.id)
       }
     })
   
