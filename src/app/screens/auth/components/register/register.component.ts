@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   showVervication=false
   showsendcode=true
   enable=true
-  counter=5
+  counter=60
   setIntervalVariable:any
   sendotbLoading=false
   verifyOtbLoading=false
@@ -108,13 +108,13 @@ counterToEnable() {
     this.sendOtb()
   } else {
     if(!this.intervalLoading) {
-      this.counter=5
+      this.counter=60
       this.enable=false
       this.intervalLoading=true
      this.setIntervalVariable = setInterval(() => {
         this.counter-=1
         if(this.counter==0) {
-          this.counter=5
+          this.counter=60
           clearInterval(this.setIntervalVariable)
           this.enable=true
           this.intervalLoading=false
