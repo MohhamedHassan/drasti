@@ -9,19 +9,24 @@ export class CartComponent implements OnInit {
   @Input() imgSrc:string=''
   @Input() name:string=''
   @Input() price:string=''
+  @Input() discount:string=''
   @Input() id:string=''
   @Input() type:string=''
+  @Input() classid:any
+  @Input() speid:any
+  @Input() paid=false
   @Output() cartBtn = new EventEmitter()
-  addeddTocart=false
+  @Input() addeddTocart=false
   constructor() { }
 
   ngOnInit(): void {
   }
   emitCartToParent() {
-    this.addeddTocart=!this.addeddTocart
     this.cartBtn.emit({
       type:this.type,
-      id:this.id
+      id:this.id,
+      add:this.addeddTocart
     })
+    //this.addeddTocart=!this.addeddTocart
   }
 }

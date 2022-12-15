@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { StageDetailsService } from '../../services/stage-details.service';
@@ -14,9 +15,11 @@ export class StageDetailsComponent implements OnInit {
   banner=''
   id=''
   constructor(private activatedRoute:ActivatedRoute,
+    private title:Title,
     private stageService:StageDetailsService) { }
 
   ngOnInit(): void {
+    this.title.setTitle(` دراستي - ادرس وانت متطمن `)
     this.activatedRoute.params.pipe(
       switchMap((params:any) => {
         this.id=params?.id
@@ -24,9 +27,9 @@ export class StageDetailsComponent implements OnInit {
       })
     ).subscribe(
       (res:any)=> {
+        this.title.setTitle(res?.data?.name||` دراستي - ادرس وانت متطمن `)
           this.stages=res?.data?.classes
           this.banner=res?.data?.media
-          console.log(this.stages)
         this.loading=false
       }
     )

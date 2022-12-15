@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ConditionsRoutingModule } from './conditions-routing.module';
 import { ConditionsComponent } from './components/conditions/conditions.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ConditionsComponent } from './components/conditions/conditions.componen
   ],
   imports: [
     CommonModule,
-    ConditionsRoutingModule
+    ConditionsRoutingModule,
+    SharedModule
   ]
 })
 export class ConditionsModule { }

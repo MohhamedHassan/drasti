@@ -17,20 +17,23 @@ class="row my-5">
     >
         <div>
             <app-cart
+            [addeddTocart]="item?.cart"
             (cartBtn)="pushCartIds($event)"
             type="offer"
+            [classid]="classId"
+            [speid]="specialistId"
             [id]="item?.id"
             [imgSrc]="item?.media"
             [name]="item?.name"
             [price]="item?.price"
+            [discount]="item?.discount"
+            [paid]="item?.is_paid"
             ></app-cart>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <app-loading *ngIf="loadingsubjects"></app-loading>
-    </div>
+
     <ng-container *ngIf="!loadingsubjects">
         <div 
         class=" col-md-6 col-lg-4 col-xl-3 mb-4"
@@ -38,22 +41,59 @@ class="row my-5">
         >
             <div>
                 <app-cart
+                [addeddTocart]="class?.cart"
                 (cartBtn)="pushCartIds($event)"
                 type="subject"
+                [classid]="-1"
+                [speid]="-1"
                 [id]="class?.id"
                 [imgSrc]="class?.media"
                 [name]="class?.name"
                 [price]="class?.price"
+                [discount]="class?.discount"
+                [paid]="class?.is_paid"
                 ></app-cart>
             </div>
         </div>
     </ng-container>
-    
-    <p 
-    style="font-size:20px"
+    <div class="col-md-12">
+        <app-loading *ngIf="loadingsubjects"></app-loading>
+    </div>
+    <div
+    (click)="showMooreClasses()"
+    *ngIf="showMoreButton && !loadingsubjects"
+    class="col-md-12 mb-4">
+            <div class="text-center">
+                <button class="bluButton">
+                    عرض المزيد
+                </button>
+            </div>
+    </div>
+    <div
     *ngIf="!loadingsubjects&&!classes?.length"
-    class="text-center fw-bold text-secondary m-2">
-        لا توجد بيانات
-    </p>
+    class="col-md-12">
+        <p 
+        style="font-size:20px"
+        class="text-center fw-bold text-secondary m-2">
+            لا يوجد مواد
+        </p>
+    </div>
+
 </div>
 </section>
+<div 
+*ngIf="loading"
+style="
+display:flex;
+justify-content:center;
+align-items:center;
+position:fixed;
+top:0;
+bottom:0;
+right:0;
+left:0;
+background:rgb(235 230 230 / 50%)
+"
+>
+<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div>

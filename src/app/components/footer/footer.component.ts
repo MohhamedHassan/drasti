@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-footer',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
-  constructor() { }
+settings:any
+  constructor(private settingsService:SettingsService) { }
 
   ngOnInit(): void {
+    this.settingsService.getSettings().subscribe(
+      (res:any) => {
+        this.settings=res?.data
+      }
+    )
   }
 
 }

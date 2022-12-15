@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup,FormBuilder,Validators, FormControl } from '@angular/forms'
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from 'src/app/screens/cart/services/cart.service';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-register',
@@ -9,6 +11,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  @Input() checkout:boolean=false
+  @Output() hasAccount = new EventEmitter()
+  @Output() login = new EventEmitter()
   registerForm:FormGroup=new FormGroup({})
   verified=false
   submited=false
@@ -23,16 +28,22 @@ export class RegisterComponent implements OnInit {
   intervalLoading=false
   verificationControl:FormControl=
   new FormControl('',[Validators.required])
+  emitLogin() {
+    this.login.emit(true)
+  }
   constructor(private fb:FormBuilder,
+    private cartService:CartService,
     private toastr:ToastrService,
+    private title:Title,
     private router:Router,
     private authService:AuthService) { }
 
   ngOnInit(): void {
+    this.title.setTitle(' انشاء حساب - دراستي')
     this.registerForm=this.fb.group({
-      fname:['',Validators.required],
-      lname:['',Validators.required],
-      password:['',Validators.required],
+      fname:['',[Validators.required,Validators.minLength(6)]],
+      lname:['',[Validators.required,Validators.minLength(6)]],
+      password:['',[Validators.required,Validators.minLength(6)]],
       phone:['',[Validators.required,Validators.pattern(/^5\d{7}$/)]],
       password_confirmation:['',Validators.required],
       agree:['',Validators.required]
@@ -40,17 +51,22 @@ export class RegisterComponent implements OnInit {
   }
   register(value:any) {
     this.submited=true
-    console.log(this.registerForm)
     if(this.registerForm.valid&&this.verified&&
       (this.registerForm.get('password_confirmation')?.value == this.registerForm.get('password')?.value)
       ) {
+        value.phone=String(value.phone)
         value.device_type='web'
         this.registerLoading=true
         this.authService.register(value).subscribe(
           (res:any)=> {
             this.registerLoading=false
             localStorage.setItem('drastitoken',res?.meta?.token)
-            this.router.navigate(['/'])
+            if(!this.checkout) {
+              this.router.navigate(['/'])
+            } else {
+              this.hasAccount.emit(true)
+            }
+            this.cartService.getCart()
             this.toastr.success('تم تسجيل الدخول بنجاح')
           } , err =>  {
             this.registerLoading=false

@@ -36,61 +36,165 @@ class="class-details pt-5">
                         </h3>
                         <small>10 دروس</small>
                     </div> -->
-                    <ng-container
-                    *ngIf="lessonsOrUnis==2&&lessons?.length">
-                    <ul class="p-0 list-unstyled card cstm">
+                    <ul 
+                    *ngIf="type!='offer'"
+                    class="p-0 list-unstyled d-flex attach">
+                        <li
+                        (click)="attachOrClasses=1"
+                        [class.active]="attachOrClasses==1">المادة الدراسية</li>
+                        <li class="mx-2"></li>
                         <li 
-                        *ngFor="let item of lessons"
-                        class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
-                            <div class="w-57">
-                                <i class="fa-solid fa-book"></i>
-                               {{item?.name}} 
-                            </div>
-                            <i class="fa-solid fa-lock"></i>
-                        </li>                      
+                        (click)="attachOrClasses=2"
+                        [class.active]="attachOrClasses==2">المرفقات</li>
                     </ul>
-                    </ng-container>
-                    <ng-container
-                    *ngIf="lessonsOrUnis==1&&units?.length">
-                        <accordion
-                        *ngFor="let item of units;let i = index"
-                        class="mb-4"
-                        [isAnimated]="true">
-                            <accordion-group
-                            [isOpen]="i==0?true:false"
-                            [heading]="item?.name">
-                                <ul class="p-0 list-unstyled">
-                                    <li 
-                                    *ngFor="let sub of item?.lessons"
-                                    class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
-                                        <div class="w-57">
-                                            <i class="fa-solid fa-book"></i>
-                                           {{sub?.name}} 
-                                        </div>
-                                        <i class="fa-solid fa-lock"></i>
-                                    </li>
-                                    
-                                </ul>
-                            </accordion-group>
-                        </accordion>
-                    </ng-container>
+                    <div
+                    *ngIf="attachOrClasses==1"
+                    >
+                        <ng-container
+                        *ngIf="lessonsOrUnis==2&&lessons?.length">
+                        <ul class="p-0 list-unstyled card cstm">
+                            <li 
+                            *ngFor="let item of lessons"
+                            class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
+                                <ng-container *ngIf="!ispaid">
+                                    <div class="w-57">
+                                        <i class="fa-solid fa-book"></i>
+                                       {{item?.name}} 
+                                    </div>
+                                    <i 
+                                    class="fa-solid fa-lock"></i>
+                                </ng-container>
+                                <a 
+                                *ngIf="ispaid"
+                                [routerLink]="['/subject-videos',classDetails?.id,item?.id,-1]">
+                                        <i class="fa-solid fa-book"></i>
+                                       {{item?.name}}  
+                                </a>
+                            </li>                      
+                        </ul>
+                        </ng-container>
+                        <ng-container
+                        *ngIf="lessonsOrUnis==1&&units?.length">
+                            <accordion
+                            *ngFor="let item of units;let i = index"
+                            class="mb-4"
+                            [isAnimated]="true">
+                                <accordion-group
+                                [isOpen]="i==0?true:false"
+                                [heading]="item?.name">
+                                    <ul class="p-0 list-unstyled">
+                                        <li 
+                                        *ngFor="let sub of item?.lessons"
+                                        class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
+                                            <ng-container *ngIf="!ispaid">
+                                                <div class="w-57">
+                                                    <i class="fa-solid fa-book"></i>
+                                                   {{sub?.name}} 
+                                                </div>
+                                                <i 
+                                                *ngIf="!ispaid"
+                                                class="fa-solid fa-lock"></i>
+                                            </ng-container>
+                                            <a 
+                                        style="color:#1b52d8 !important;font-weight:bold"
+                                            *ngIf="ispaid"
+                                            [routerLink]="['/subject-videos',classDetails?.id,sub?.id,item?.id]">
+                                                    <i class="fa-solid fa-book"></i>
+                                                   {{sub?.name}}  
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </accordion-group>
+                            </accordion>
+                        </ng-container>
+                    </div>
+                    <div
+                    *ngIf="attachOrClasses==2"
+                    >
+                        <h2>المرفقات</h2>
+                        <ul 
+                        class="p-0 list-unstyled"
+                        *ngIf="classDetails?.public_attachment?.length">
+                            <li *ngFor="let attach of classDetails?.public_attachment">
+                                <a 
+                                class="attachLinks"
+                                [href]="attach?.link" target="_blank">          
+                                <i class="fa-solid fa-file"></i>
+                                {{attach?.filename}}
+                                </a>
+                            </li>
+                        </ul>
+                        <p 
+                        *ngIf="!classDetails?.public_attachment?.length"
+                        class="text-center text-secondary fw-bold">
+                            لا يوجد مرفقات
+                        </p>
+                    </div>
                 </div>
             </div>
             <!--  -->
             <div class="col-lg-4 mb-5">
                 <div class="bg-white text-center rounded overflow-hidden">
                     <!-- <video class="w-100" src="https://drastiq8.com/wp-content/uploads/2022/08/IMG_7296.mp4" controls="" controlslist="nodownload"></video> -->
-                    <img [src]="classDetails?.media" class="img-fluid" alt="دراستي">
-                    <div class="d-flex  justify-content-between align-items-center  p-3">
+                    <div 
+                    *ngIf="classDetails?.video_type=='videocipher'"
+                    [innerHTML]="savedHtml(classDetails.video_cipher)">
+
+                    </div>
+                    <div 
+                    *ngIf="classDetails?.video_type=='youtube'"
+                    [innerHTML]='savedYoutube(classDetails?.video_youtube)'>
+                        
+                    </div>
+                    <!-- <iframe src='https://www.youtube.com/embed/CCfCxPA-6LQ' 
+                    frameborder="0" allowfullscreen
+                    class="w-100"></iframe> -->
+                    <img 
+                    *ngIf="classDetails?.video_type!='videocipher'&&classDetails?.video_type!='youtube'"
+                    [src]="classDetails?.media" class="w-100" alt="دراستي">
+                    <div 
+                    *ngIf="classDetails?.discount"
+                    class="d-flex  justify-content-between align-items-center  p-3">
                         <del>د.ك{{classDetails?.price}} </del>
                         <bdi>د.ك{{classDetails?.discount}}</bdi>        
                     </div>
-                  <div class="pb-3 px-3">
-                    <button class="w-100 btn btn-primary">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        اضافة الي السلة
-                    </button>
-                  </div>
+                    <div 
+                    *ngIf="!classDetails?.discount"
+                    class="p-3">
+                        <bdi>{{classDetails?.price}}د.ك</bdi>        
+                    </div>
+                    <ng-container *ngIf="type!='offer'">
+ 
+                        <div      
+                        *ngIf="ispaid"
+                        class="pb-3 px-3 text-center">
+                           <a 
+                           [routerLink]="['/subject-videos',classDetails?.id,-1,-1]"
+                           class="bluButton"
+                           style="border-radius: 5px;"
+                           >
+                              استمرار في المزاكرة
+                          </a>
+                        </div>
+                    </ng-container>
+                    <div 
+                    *ngIf="!ispaid"
+                    class="pb-3 px-3">
+                      <button 
+                      (click)="pushCartIds()"
+                      *ngIf="!cart"
+                      class="w-100 btn btn-primary">
+                          <i class="fa-solid fa-cart-shopping"></i>
+                          اضافة الي السلة
+                      </button>
+                      <p 
+                      class="text-center text-secondary fw-bold"
+                      *ngIf="cart">
+                          تم الاضافة الي السلة
+                      </p>
+                    </div>
+
                 </div>
             </div>
             <!--  -->

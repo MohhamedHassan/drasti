@@ -8,12 +8,16 @@
                    </div>
                     <div class="icons text-center">
                         <a 
+                        *ngIf="settings?.instagram"
                         aria-label="انستجرام"
-                        href="https://www.facebook.com/"><i class="fa-brands fa-instagram"></i></a>
-                        <span class="mx-3"></span>
+                        target="_blank"
+                        [href]="settings?.instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <span    *ngIf="settings?.instagram" class="mx-3"></span>
                         <a 
-                        aria-label="واتساب"
-                        href="https://www.facebook.com/"><i class="fa-brands fa-whatsapp"></i></a>
+                        *ngIf="settings?.tiktok"
+                        aria-label="تيكتوك"
+                        target="_blank"
+                        [href]="settings?.tiktok"><i class="fa-brands fa-tiktok"></i></a>
                     </div>
                 </div>
             </div>
@@ -22,13 +26,25 @@
                 <div class="pt-4">
                     <h2 class="mb-3">تواصل معنا</h2>
                     <table>
-                        <tr class="pb-5">
-                            <td>94181196 965+</td>
+                        <tr 
+                        *ngIf="settings?.whatsapp"
+                        class="pb-5">
+                            <td>{{settings?.whatsapp}}</td>
                             <td><i class="fa-brands fa-whatsapp"></i></td>
                         </tr>
                         <tr class="pb-5">
                             <td>الكويت</td>
                             <td><i class="fa-solid fa-location-dot"></i></td>
+                        </tr>
+                        <tr class="pb-5">
+                            <td>
+                                <a 
+                                class="text-white"
+                                routerLink="/conditions">
+                                    الشروط والاحكام
+                                </a>
+                            </td>
+                            <td><i class="fa-solid fa-file-lines"></i></td>
                         </tr>
                     </table>
                 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { HomeServiceService } from '../../services/home-service.service';
 @Component({
   selector: 'app-home',
@@ -10,9 +11,12 @@ export class HomeComponent implements OnInit {
   classes:any[]=[]
   all:any[]=[]
   loading=true
-  constructor(private homeService:HomeServiceService) { }
+  constructor(private homeService:HomeServiceService,
+    private title:Title
+    ) { }
 
   ngOnInit(): void {
+    this.title.setTitle(` دراستي - ادرس وانت متطمن `)
     this.getHomeStages()
   }
 getHomeStages() {
@@ -24,7 +28,6 @@ getHomeStages() {
       this.classes.map((item:any) => item.type=2)
       this.all=[...this.stages,...this.classes]
       this.loading=false
-      console.log(this.stages)
     }
   )
 }

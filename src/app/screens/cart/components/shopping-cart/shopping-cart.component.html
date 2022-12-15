@@ -1,11 +1,15 @@
-<section style="min-height: 100vh;" class="conditions">
+<section style="min-height: 100vh;" class="conditions pb-5">
     <header class="p-2 mb-5 blueHeader">
         <h1>
             سلة المشتريات           
         </h1>
     </header>
-    <div class="container bg-white rounded p-5">
-        <div class="row">
+    <div 
+  
+    class="container bg-white rounded  p-5">
+        <div 
+        *ngIf="cartItems?.length"
+        class="row">
             <div class="col-lg-8 mb-4">
                 <div>
                     <h4>ملخص المشتريات</h4>
@@ -18,32 +22,74 @@
                               </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <ng-container 
+                                *ngFor="let item of cartItems"
+                               
+                                >
+                                <tr
+                                *ngIf="item?.has_material"
+                                >
                                     <td 
                                     style="cursor: pointer;"
                                     >
-                                        <i class="fa-solid fa-x" style="font-size: small;color:red"></i>
+                                        <i 
+                                        (click)="deleteCartItem(item?.id)"
+                                        class="fa-solid fa-x deleteicon" ></i>
+                                       <a 
+                                       class="d-inline-block"
+                                       [routerLink]="['/class-details/',item?.material?.id,'subject',-1,-1]"
+                                       >
                                         <img 
                                         style="width: 60px;"
                                         class="mx-3"
-                                        src="https://drastiq8.com/wp-content/uploads/2022/08/Sciences-300x300.png" alt="">
-                                        العلوم للصف السادس
+                                        [src]="item?.material?.media" alt="Drasti">
+                                       {{item?.material?.name}}
+                                       </a>
                                     </td>
-                                    <td>	د.ك23.990</td>
+                                    <td>
+                                        	د.ك {{item?.material?.discount||item?.material?.price}}
+                                    </td>
                                   </tr>
+                                  <tr
+                                  *ngIf="item?.has_offer"
+                                  >
+                                      <td 
+                                      style="cursor: pointer;"
+                                      >
+                                          <i 
+                                          (click)="deleteCartItem(item?.id)"
+                                          class="fa-solid fa-x deleteicon"></i>
+                                        <div class="d-inline-block">
+                                            <img 
+                                            style="width: 60px;"
+                                            class="mx-3"
+                                            [src]="item?.offer?.media" alt="Drasti">
+                                           {{item?.offer?.name}} 
+                                        </div>
+                                        <div 
+                                        class="mx-4 my-3"
+                                        *ngFor="let child of item?.offer?.materials"
+                                        >
+                                       
+                                           <a 
+                                           class="d-inline-block"
+                                           [routerLink]="['/class-details/',child?.id,'subject',-1,-1]"
+                                           >
+                                           <img 
+                                           style="width: 60px;"
+                                           class="mx-3"
+                                           [src]="child?.media" alt="Drasti">
+                                          {{child?.name}}
+                                            </a>
+                                        </div>
+                                      </td>
+                                      <td>	د.ك {{item?.offer?.discount||item?.offer?.price}}</td>
+                                    </tr>
+                                </ng-container>
+                                
+                     
                               <tr>
-                                <td 
-                                style="cursor: pointer;"
-                                >
-                                    <i class="fa-solid fa-x" style="font-size: small;color:red"></i>
-                                    <img 
-                                    style="width: 60px;"
-                                    class="mx-3"
-                                    src="https://drastiq8.com/wp-content/uploads/2022/08/Sciences-300x300.png" alt="">
-                                    العلوم للصف السادس
-                                </td>
-                                <td>	د.ك23.990</td>
-                              </tr>
+
                             </tbody>
                           </table>
                     </div>
@@ -57,11 +103,11 @@
                         <tr 
                         style="border-bottom: 1px solid #b7cde1;">
                             <th class="p-2">المجموع</th>
-                            <td class="p-2">د.ك71.970</td>
+                            <td class="p-2">د.ك {{cartService.total}}</td>
                         </tr>
                         <tr>
                             <th class="p-2">الاجمالي</th>
-                            <td class="p-2">د.ك71.970</td>
+                            <td class="p-2">د.ك {{cartService.total}}</td>
                         </tr>
                     </table>
                     <a 
@@ -75,19 +121,45 @@
             </div>
             <!--  -->
         </div>
-        <div class="row mt-4">
-            <div class="col-md-6 mb-4"
-            *ngFor="let stage of stages"
-            >
-                <div>
-                    <div>
-                        <app-cart
-                        name="test"
-                        imgSrc="https://drastiq8.com/wp-content/uploads/2022/08/Fichier-12.png"
-                        ></app-cart>
-                    </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+  
+            <div class="col-md-6 mb-4">
+                <div 
+                *ngIf="!loading&&!cartItems?.length"
+                class="my-5 text-center">
+                    <h2 class="text-center text-secondary mb-3">
+                        سلة مشترياتك فارغة حاليًا.
+                    </h2>
+                    <a 
+                    style="border-radius: 5px"
+                    routerLink="/"
+                    class="bluButton text-center d-inline-block"
+                    >
+                       العودة للمتجر
+                    </a>
                 </div>
             </div>
+            <div class="col-md-3"></div>
         </div>
+        <app-recomended></app-recomended>
+
     </div>
+
 </section>
+<div 
+*ngIf="loading"
+style="
+display:flex;
+justify-content:center;
+align-items:center;
+position:fixed;
+top:0;
+bottom:0;
+right:0;
+left:0;
+background:rgb(235 230 230 / 50%)
+"
+>
+<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div>

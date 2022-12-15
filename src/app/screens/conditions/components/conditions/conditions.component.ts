@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-conditions',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConditionsComponent implements OnInit {
 
-  constructor() { }
+  settings:any
+  loading=true
+  constructor(private settingsService:SettingsService,
+    private title:Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('الشروط  والأحكام')
+    this.settingsService.getSettings().subscribe(
+      (res:any) => {
+        this.settings=res?.data?.description
+        this.loading=false
+      }
+    )
   }
 
 }

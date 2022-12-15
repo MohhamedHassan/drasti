@@ -2,16 +2,29 @@
 style="min-height: 100vh;"
 class="login">
     <app-header 
+    [hidden]="checkout"
     imgSrc="assets/header.png"
     ></app-header>
     <!-- end header -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2 col-lg-3"></div>
-            <div class="col-md-8 col-lg-6">
+    <div 
+    [class.container]="!checkout"
+    class="">
+        <div 
+        [class.row]="!checkout"
+       >
+            <div 
+            [hidden]="checkout"
+            class="col-md-2 col-lg-3"></div>
+            <div 
+            [ngClass]="{
+                'col-md-8': !checkout,
+                'col-lg-6': !checkout
+            }"
+           >
                 <div>
-                    <h2>انشاء حساب</h2>
+                    <h2    [hidden]="checkout">انشاء حساب</h2>
                     <form 
+                    [class.page]="!checkout"
                     (ngSubmit)="register(registerForm.value)"
                     [formGroup]="registerForm"
                     class="row">
@@ -27,7 +40,7 @@ class="login">
                                 *ngIf="(registerForm.get('fname')?.errors!=null&&registerForm.get('fname')?.touched) || 
                                 (registerForm.get('fname')?.errors!=null&&submited)"
                                 class="text-danger my-1">
-                                    هذا الحقل مطلوب
+                                   لا يقل عن ثلاثة حروف
                                 </p>
                             </div>
                         </div>
@@ -44,7 +57,7 @@ class="login">
                                 *ngIf="(registerForm.get('lname')?.errors!=null&&registerForm.get('lname')?.touched) || 
                                 (registerForm.get('lname')?.errors!=null&&submited)"
                                 class="text-danger my-1">
-                                    هذا الحقل مطلوب
+                                لا يقل عن ثلاثة حروف
                                 </p>
                             </div>
                         </div>
@@ -142,7 +155,7 @@ class="login">
                                 *ngIf="(registerForm.get('password')?.errors!=null&&registerForm.get('password')?.touched) || 
                                 (registerForm.get('password')?.errors!=null&&submited)"
                                 class="text-danger my-1">
-                                    هذا الحقل مطلوب
+                                   لا يقل عن ست حروف
                                 </p>
                             </div>
                         </div>
@@ -156,10 +169,10 @@ class="login">
                                 formControlName="password_confirmation"
                                 type="password" class="form-control">
                                 <p 
-                                *ngIf="(registerForm.get('password_confirmation')?.errors!=null&&registerForm.get('password_confirmation')?.touched) || 
-                                (registerForm.get('password_confirmation')?.errors!=null&&submited)"
+                                *ngIf="(registerForm.get('password_confirmation')?.value !== registerForm.get('password')?.value&&registerForm.get('password_confirmation')?.touched) || 
+                                (registerForm.get('password_confirmation')?.value !== registerForm.get('password')?.value&&submited)"
                                 class="text-danger my-1">
-                                    هذا الحقل مطلوب
+                                    كلمة المرور غير متطابقة
                                 </p>
                             </div>
                         </div>
@@ -196,7 +209,9 @@ class="login">
                                 class="fas fa-circle-notch fa-spin"></i>  
                             </button>
                         </div>
-                        <div class="my-1">
+                        <div 
+                        *ngIf="!checkout"
+                        class="my-1">
                             <a 
                             style="text-decoration: underline !important;"
                             class="text-primary"
@@ -204,11 +219,25 @@ class="login">
                                تسجيل الدخول
                             </a>
                         </div>  
+                        <div 
+                
+                        *ngIf="checkout"
+                        class="my-1">
+                            <a 
+                            style="text-decoration: underline !important;cursor: pointer;"
+                            class="text-primary"
+                            (click)="emitLogin()"
+                            >
+                               تسجيل الدخول
+                            </a>
+                        </div>  
                     </form>
                
                 </div>
             </div>
-            <div class="col-md-2 col-md-3"></div>
+            <div 
+            [hidden]="checkout"
+            class="col-md-2 col-md-3"></div>
         </div>
     </div>
 </section>

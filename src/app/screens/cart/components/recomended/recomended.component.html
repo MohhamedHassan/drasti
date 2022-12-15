@@ -1,0 +1,39 @@
+<div class="row mt-4">
+    <div class="col-md-3 mb-4"
+    *ngFor="let class of recomended"
+    >
+        <div>
+            <div>
+                <app-cart
+                [addeddTocart]="class?.cart"
+                (cartBtn)="pushCartIds($event)"
+                type="subject"
+                [classid]="-1"
+                [speid]="-1"
+                [id]="class?.id"
+                [imgSrc]="class?.media"
+                [name]="class?.name"
+                [price]="class?.price"
+                [discount]="class?.discount"
+                [paid]="class?.is_paid"
+                ></app-cart>
+            </div>
+        </div>
+    </div>        
+</div>
+<div 
+*ngIf="loading"
+style="
+display:flex;
+justify-content:center;
+align-items:center;
+position:fixed;
+top:0;
+bottom:0;
+right:0;
+left:0;
+background:rgb(235 230 230 / 50%)
+"
+>
+<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div>

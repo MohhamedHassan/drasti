@@ -12,6 +12,20 @@ $grayColor: #b1b8c9;
 $lightBlue:#1b52d8;
 
 // end variables
+.attach {
+    li {
+       font-weight: bold;
+       color: $grayColor;
+       border-bottom: 2px solid transparent;
+       padding-bottom:10px;
+       cursor: pointer;
+    }
+    li.active {
+        color:$blueColor;
+        border-bottom: 2px solid $blueColor;
+    }
+ }
+
 label {
     margin-bottom: 5px;
 }
@@ -81,7 +95,9 @@ a {
         color:white !important
     }
 }
-
+.bluButton[disabled]{
+    background-color:#86a9cd !important
+}
 // end glopal
 nav {
     background-color: $navbarBG;
@@ -90,6 +106,7 @@ nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     .mainlogo {
@@ -186,12 +203,13 @@ footer {
 // end footer
 .login {
     form {
-        border: 1px solid #b7cde1;
-        padding: 30px;
         margin: 20px 0;
         border-radius: 5px;
     }
-
+    form.page{
+        border: 1px solid #b7cde1;
+        padding: 30px;
+    }
     label {
         font-weight: bold;
     }
@@ -214,6 +232,9 @@ footer {
 }
 @media only screen and (max-width: 600px) {
     .login {
+        form.page{
+            padding: 10px;
+        }
         .phonenumberRight {
             width: 75%;
         }
@@ -337,8 +358,23 @@ footer {
 
 // end css loading
 
+.attachLinks {
+    display: block;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #F4F7F8;
+    margin-bottom: 10px;
+    color:#4b5981 !important;
+    border: 1px solid #e8eff1;
+ }
 
-
-
+ @media only screen and (max-width: 600px) {
+    nav {
+        .bluButton {
+            padding: 8px 8px 13px 9px !important;   
+            font-size: small
+        }
+    }
+ }
 
 @import 'ngx-toastr/toastr';

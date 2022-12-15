@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
@@ -32,12 +33,14 @@ export class ResetPasswordComponent implements OnInit {
   submitedVerificationControl=false
   constructor(
     private authService:AuthService,
+    private title:Title,
     private toastr:ToastrService,
     private fb:FormBuilder,
     private router:Router
   ) { }
 
   ngOnInit(): void {
+    this.title.setTitle(' اعادة تعيين كلمة المرور - دراستي')
     this.resetPasswordForm = this.fb.group({
       phone:[this.savePhoneNumber],
       password:['',[Validators.required,Validators.minLength(4)]],

@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { CartService } from '../../cart/services/cart.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+    private router:Router,
+    public cartService:CartService) { }
   login(body:any) {
     return this.http.post(`${environment.apiUrl}login`,body)
   }
@@ -22,5 +26,14 @@ export class AuthService {
   }
   resetPassword(body:any) {
     return this.http.post(`${environment.apiUrl}reset_password`,body)
+  }
+  logout() {
+    return this.http.post(`${environment.apiUrl}logout`,{}).subscribe(
+      res => { 
+        this.cartService.cartItems.next([])
+        localStorage.removeItem('drastitoken')
+        this.router.navigate(['/'])
+      }
+    )
   }
 }

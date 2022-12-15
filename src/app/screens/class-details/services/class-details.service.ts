@@ -11,10 +11,14 @@ export class ClassDetailsService {
   getClassDetails(id:any) {
     return this.http.get(`${environment.apiUrl}material/${id}`)
   }
+  getOfferDetails(id:any) {
+    return this.http.get(`${environment.apiUrl}class_offers/${id}`)
+  }
   classUnites(id:any) {
     return this.http.get(`${environment.apiUrl}material_units/${id}`)
   }
   classLessons(id:any) {
     return this.http.get(`${environment.apiUrl}material_lessons/${id}`) 
   }
+
 }

@@ -2,15 +2,27 @@
 style="min-height: 100vh;"
 class="login">
     <app-header 
+    *ngIf="!checkout"
     imgSrc="assets/header.png"
     ></app-header>
     <!-- end header -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2 col-lg-3"></div>
-            <div class="col-md-8 col-lg-6">
+    <div 
+    [class.container]="!checkout"
+    class="">
+        <div 
+        [class.row]="!checkout"
+        class="">
+            <div 
+            *ngIf="!checkout"
+            class="col-md-2 col-lg-3"></div>
+            <div 
+            [ngClass]="{
+                'col-md-8': !checkout,
+                'col-lg-6': !checkout
+            }"
+            class="">
                 <div>
-                    <h2>تسجيل الدخول</h2>
+                    <h2  [hidden]="checkout">تسجيل الدخول</h2>
                     <form
                     [formGroup]="loginForm"
                     (ngSubmit)="login(loginForm.value)"
@@ -21,6 +33,7 @@ class="login">
                             </label>
                             <div class="d-flex align-items-center mb-3">
                                 <input 
+                                min="1"
                                 onKeyPress="if(this.value.length==8) return false;"
                                 formControlName="phone"
                                 type="number" class="form-control phonenumberRight">
@@ -60,7 +73,9 @@ class="login">
                                 *ngIf="loginloading"
                                 class="fas fa-circle-notch fa-spin"></i>
                             </button>
-                            <div class="my-1">
+                            <div 
+                            *ngIf="!checkout"
+                            class="my-1">
                                 <a 
                                 style="text-decoration: underline;"
                                 class="text-primary"
@@ -74,10 +89,23 @@ class="login">
                             <label class="mx-1" for="rememberme">تزكرني</label><br> -->
                         </div>
                         <!--  -->
-                        <div class="form-group">
+                        <div 
+                        *ngIf="!checkout"
+                        class="form-group">
                             <button
                             type="button"
                             routerLink="/auth/register"
+                            class="bluButton submitinput w-100 text-center"
+                            >
+                            أنشاء حساب 
+                            </button>
+                        </div>
+                        <div 
+                        *ngIf="checkout"
+                        (click)="emitRegister()"
+                        class="form-group">
+                            <button
+                            type="button"
                             class="bluButton submitinput w-100 text-center"
                             >
                             أنشاء حساب 

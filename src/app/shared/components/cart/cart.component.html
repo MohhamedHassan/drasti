@@ -5,24 +5,70 @@
     </div>
     <div class="cartDetails">
         <h2 class="my-3 p-3">
-            <a [routerLink]="['/class-details/',id]"  >
+            <a [routerLink]="['/class-details/',id,type,classid,speid]"  >
                {{name}}
             </a>
         </h2>
         <hr>
         <div class="d-flex  justify-content-between align-items-center mb-3 px-3">
-            <!-- <del>د.ك23.990</del> -->
-            <bdi>
-                د.ك
-                {{price}}
-            </bdi>        
+            <ng-container *ngIf="discount">
+                <del>
+                    د.ك
+                    {{price}}
+                </del>
+                <bdi>
+                    د.ك
+                    {{discount}}
+                </bdi> 
+            </ng-container>
+            <ng-container *ngIf="!discount">
+
+                <bdi>
+                    د.ك
+                    {{price}}
+                </bdi> 
+            </ng-container>
+                   
         </div>
-        <button 
-        (click)="emitCartToParent()"
-        class="text-center w-100 pb-3">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span  *ngIf="!addeddTocart"> اضافة الي السلة</span>
-                <span  *ngIf="addeddTocart"> ازالة من السلة</span>
-        </button>
+        <div style="min-height: 45px;text-align: center;">
+            <ng-container *ngIf="!paid">
+                <button 
+                *ngIf="!addeddTocart"
+                (click)="emitCartToParent()"
+                class="text-center w-100 pb-3">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span  > اضافة الي السلة</span>
+                </button>
+                <!-- <i 
+                *ngIf="addeddTocart"
+                style="border-radius: 50%;padding: 10px;"
+                class="fa-solid fa-check bg-success text-white"></i> -->
+                <p 
+                style="color:#215387 !important;font-weight: bold;
+                font-size: 18px;"
+                class="text-center"
+                *ngIf="addeddTocart">
+                    تم الاضافة الي السلة
+                </p>
+            </ng-container>
+            <ng-container *ngIf="paid&&type!='offer'">
+                <a 
+                style="color:#215387 !important;font-weight: bold;
+                font-size: 18px;"
+                [routerLink]="['/subject-videos',id,-1,-1]">
+                    استمرار في المزاكرة
+                </a>
+            </ng-container>
+            <ng-container *ngIf="paid&&type=='offer'">
+                <p 
+                style="color:#215387 !important;font-weight: bold;
+                font-size: 18px;"
+                class="text-center"
+                >
+                    تم الشراء
+                </p>
+            </ng-container>
+            
+        </div>
     </div>
 </div>

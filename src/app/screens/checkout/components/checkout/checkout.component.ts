@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-checkout',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-
-  constructor() { }
+  hasAccount=false
+  registerOrLogin=1
+  constructor(private title:Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('    اتمام الطلب - دراستي')
+    if(!!localStorage.getItem('drastitoken')) {
+      this.hasAccount=true
+    } 
   }
 
 }

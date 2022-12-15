@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { StageDetailsService } from 'src/app/screens/stage-details/services/stage-details.service';
@@ -14,9 +15,11 @@ export class HasSpecialistComponent implements OnInit {
   banner:any
   id:any
   constructor(private activatedRoute:ActivatedRoute,
+    private title:Title,
     private stageService:StageDetailsService) { }
 
   ngOnInit(): void {
+    this.title.setTitle(` دراستي - ادرس وانت متطمن `)
     this.activatedRoute.params.pipe(
       switchMap((params:any) => {
         this.id=params?.specialist
@@ -29,7 +32,6 @@ export class HasSpecialistComponent implements OnInit {
           })?.has_specialties
           this.banner=res?.data.media
         this.loading=false
-        console.log(this.stages)
       }
     )
   }

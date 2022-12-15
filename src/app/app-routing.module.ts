@@ -24,12 +24,16 @@ const routes: Routes = [
     loadChildren:() => import('src/app/screens/has-specialist/has-specialist.module').then(m =>m.HasSpecialistModule)
   },
   {
-    path:'class-details/:id',
+    path:'class-details/:id/:type/:class/:spe',
     loadChildren:() => import('src/app/screens/class-details/class-details.module').then(m =>m.ClassDetailsModule)
   },
   {
     path:'conditions',
     loadChildren:() => import('src/app/screens/conditions/conditions.module').then(m =>m.ConditionsModule)
+  },
+  {
+    path:'subject-videos/:id/:lessonid/:unitid',
+    loadChildren:() => import('src/app/screens/subject-videos/subject-videos.module').then(m =>m.SubjectVideosModule)
   },
   {
     path:'cart',

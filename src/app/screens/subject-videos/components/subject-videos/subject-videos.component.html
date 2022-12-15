@@ -1,0 +1,138 @@
+<section 
+style="min-height:100vh"
+class="class-details">
+<app-loading *ngIf="loading"></app-loading>
+    <div
+    [hidden]="loading"
+    class="container-fluid">
+        <div class="row">
+            <div
+            [hidden]="hdeSidebar"
+            class="col-lg-4 mb-2 order-2 order-lg-1">
+                <div class="pb-2">
+                    <p 
+                    class="p-3 rounded m-0"
+                    style="background:#f1f6f8;text-align:center;border: 1px solid #e0e9ec;">
+                        <i class="fa-solid fa-book-open text-primary"></i>
+                        المنهج
+                    </p>
+                    <div
+                    class="resp"
+                    >
+                        <ng-container
+                        *ngIf="lessons?.length">
+                        <ul class="p-0 list-unstyled card cstm">
+                            <li 
+                            *ngFor="let item of lessons"
+                            class="d-flex justify-content-between align-items-center" style="border-top:1px solid #C2BEC9">
+                                <div class="w-57">
+                                    <i class="fa-solid fa-book"></i>
+                                   {{item?.name}} 
+                                </div>
+                                <i class="fa-solid fa-lock"></i>
+                            </li>                      
+                        </ul>
+                        </ng-container>
+                        <ng-container
+                        *ngIf="units?.length">
+                            <accordion
+                            *ngFor="let item of units;let i = index"
+                            class="mb-2"
+                            [isAnimated]="true">
+                                <accordion-group
+                                [isOpen]="unitid==item?.id"
+                                [heading]="item?.name">
+                                    <ul class="p-0 list-unstyled">
+                                        <li 
+                                        (click)="opendvideo=sub;lessonid=sub?.id;scrll()"
+                                        *ngFor="let sub of item?.lessons"
+                                        [ngStyle]="{
+                                            'background':lessonid==sub?.id?'#F7F8F9':'transparent'
+                                        }"
+                                        class="py-3" 
+                                        style="border-top:1px solid #C2BEC9;cursor: pointer;">
+                                            <div class="w-57">
+                                                <i class="fa-solid fa-book"></i>
+                                               {{sub?.name}} 
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                </accordion-group>
+                            </accordion>
+                        </ng-container>
+                   
+                    </div>
+                </div>
+
+            </div>
+            <!--  -->
+            <div 
+            [ngClass]="{
+                'col-lg-8 ': !hdeSidebar,
+                'col-lg-12 ': hdeSidebar
+            }"
+            class="mb-2 order-1 order-lg-2">
+                <div>
+                    <div  
+                    class="px-3 d-flex flex-column flex-md-row justify-content-between align-items-center"
+                    style="background:#1B52D8">
+                        <div >
+                            <p 
+                            (click)="hdeSidebar=!hdeSidebar"
+                            style="background-color: #1B52A9;font-size: 20px;cursor: pointer;"
+                            class="m-0 p-3 d-none d-lg-inline-block">
+                                <i 
+                                [ngClass]="{
+                                    'fa-chevron-left': !hdeSidebar,
+                                    'fa-chevron-right': hdeSidebar
+                                }"
+                                class="fa-solid  text-white"></i>
+                            </p>
+                   
+                            <span class="mx-2"></span>
+                            <a 
+                            class="text-white"
+                           routerLink="/">
+                           <i class="fa-solid fa-house"></i>
+                                الرئيسية
+                            </a>
+                        </div>
+                        <p 
+                       *ngIf="opendvideo?.name"
+                        class="p-3 text-center text-white rounded m-0">
+                            <i class="fa-solid fa-book"></i>
+                          {{opendvideo?.name}}
+                        </p>
+                        <div class="px-3"></div>
+                    </div>
+                    <div 
+                    class="text-center my-2"
+                    *ngIf="opendvideo?.video_type=='videocipher'"
+                    [innerHTML]="savedHtml(opendvideo.video_cipher)">
+
+                    </div>
+                    <div 
+                    class="my-2"
+                    *ngIf="opendvideo?.video_type=='youtube'"
+                    [innerHTML]='savedYoutube(opendvideo?.video_youtube)'>
+                        
+                    </div>
+                    <h6 *ngIf="opendvideo?.attachment?.length">المرفقات</h6>
+                    <ul 
+                    class="p-0 list-unstyled"
+                    *ngIf="opendvideo?.attachment?.length">
+                        <li *ngFor="let attach of opendvideo?.attachment">
+                            <a 
+                            class="attachLinks"
+                            [href]="attach?.link" target="_blank">          
+                            <i class="fa-solid fa-file"></i>
+                            {{attach?.filename}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

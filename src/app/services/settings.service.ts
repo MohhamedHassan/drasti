@@ -5,11 +5,10 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class HomeServiceService {
+export class SettingsService {
 
   constructor(private http:HttpClient) { }
-  getHomeStages() {
-    return this.http.get(`${environment.apiUrl}stages_classes_home`)
+  getSettings() {
+    return this.http.get(`${environment.apiUrl}settings`)
   }
-
 }
