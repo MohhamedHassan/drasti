@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PaymentFailedComponent } from './components/payment-failed/payment-failed.component';
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,14 @@ const routes: Routes = [
   {
     path:'checkout',
     loadChildren:() => import('src/app/screens/checkout/checkout.module').then(m =>m.CheckoutModule)
+  },
+  {
+    path:'payment-success',
+    component:PaymentSuccessComponent
+  },
+  {
+    path:'payment-failed',
+    component:PaymentFailedComponent
   },
   {
     path:'**',
