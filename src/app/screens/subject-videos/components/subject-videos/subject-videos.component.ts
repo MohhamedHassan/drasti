@@ -97,8 +97,11 @@ getLessons(id:any) {
     }
   )
 }
-savedYoutube(link:any) {
-  return this._sanitizer.bypassSecurityTrustHtml(`<iframe src=${link} class="w-100"></iframe>`)
+savedYoutube(link:any):any {
+  if(link) {
+    let id =  link.slice(link.indexOf('v=')+2,link.lastIndexOf('&'))
+    return this._sanitizer.bypassSecurityTrustHtml(`<iframe src='https://www.youtube.com/embed/${id}' class="w-100"></iframe>`)
+  }
 }
 scrll() {
   window.scroll(0,0)

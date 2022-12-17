@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   @Output() hasAccount = new EventEmitter()
   @Output() login = new EventEmitter()
   registerForm:FormGroup=new FormGroup({})
+  cartitems:any[]=[]
   verified=false
   submited=false
   showVervication=false
@@ -39,7 +40,9 @@ export class RegisterComponent implements OnInit {
     private authService:AuthService) { }
 
   ngOnInit(): void {
-    this.title.setTitle(' انشاء حساب - دراستي')
+    if(!this.checkout) {
+      this.title.setTitle(' انشاء حساب - دراستي')
+    }
     this.registerForm=this.fb.group({
       fname:['',[Validators.required,Validators.minLength(6)]],
       lname:['',[Validators.required,Validators.minLength(6)]],
@@ -47,6 +50,9 @@ export class RegisterComponent implements OnInit {
       phone:['',[Validators.required,Validators.pattern(/^5\d{7}$/)]],
       password_confirmation:['',Validators.required],
       agree:['',Validators.required]
+    })
+    this.cartService.cartItems.subscribe((cart:any) =>  {
+      this.cartitems=cart
     })
   }
   register(value:any) {
@@ -59,14 +65,38 @@ export class RegisterComponent implements OnInit {
         this.registerLoading=true
         this.authService.register(value).subscribe(
           (res:any)=> {
-            this.registerLoading=false
             localStorage.setItem('drastitoken',res?.meta?.token)
-            if(!this.checkout) {
-              this.router.navigate(['/'])
+            if(this.cartitems?.length) {
+              console.log(this.cartitems)
+              let offer_ids:any[]=[]
+              let material_ids:any[]=[]
+              this.cartitems.forEach(element => {
+                  if(element?.has_offer) offer_ids.push(element?.offer?.id)
+                  if(element?.has_material) material_ids.push(element?.material?.id)
+              });
+              this.cartService.addToCart({
+                offer_ids:offer_ids,
+                material_ids:material_ids
+              }).subscribe((response:any) => {
+                this.cartService.getCart()
+                this.cartService.cartItems.subscribe((cart:any) =>  {
+                  if(this.checkout) {
+                    this.hasAccount.emit(true)
+                  this.registerLoading=false
+                  }
+                })
+              })
             } else {
-              this.hasAccount.emit(true)
+              if(this.checkout) {
+                this.hasAccount.emit(true)
+              this.registerLoading=false
+              }
+              this.cartService.getCart()
             }
-            this.cartService.getCart()
+            if(!this.checkout) {
+              this.registerLoading=false
+              this.router.navigate(['/'])
+            } 
             this.toastr.success('تم تسجيل الدخول بنجاح')
           } , err =>  {
             this.registerLoading=false

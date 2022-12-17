@@ -22,7 +22,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   exports:[
     HeaderComponent,

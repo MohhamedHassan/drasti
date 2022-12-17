@@ -18,6 +18,7 @@ export class CartService {
   }
   getCart() {
     return this.http.get(`${environment.apiUrl}my_cart`).subscribe((res:any)=> {
+      console.log(res)
       this.total=res?.data?.total
       if( res?.data?.cartdetails) this.cartItems.next(res?.data?.cartdetails)
       else this.cartItems.next([])
@@ -25,5 +26,8 @@ export class CartService {
   }
   getRecomnded() {
     return this.http.get(`${environment.apiUrl}recommed_materials`) 
+  }
+  addOrder(body:any) {
+    return this.http.post(`${environment.apiUrl}add_order`,body) 
   }
 }

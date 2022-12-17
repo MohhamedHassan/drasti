@@ -147,9 +147,6 @@ class="class-details pt-5">
                     [innerHTML]='savedYoutube(classDetails?.video_youtube)'>
                         
                     </div>
-                    <!-- <iframe src='https://www.youtube.com/embed/CCfCxPA-6LQ' 
-                    frameborder="0" allowfullscreen
-                    class="w-100"></iframe> -->
                     <img 
                     *ngIf="classDetails?.video_type!='videocipher'&&classDetails?.video_type!='youtube'"
                     [src]="classDetails?.media" class="w-100" alt="دراستي">

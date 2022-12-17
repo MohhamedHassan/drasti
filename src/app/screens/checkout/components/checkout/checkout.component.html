@@ -43,34 +43,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>العلوم للصف السادس </td>
-                                    <td>د.ك71.970</td>
-                                </tr>
-                                <tr>
-                                    <td>العلوم للصف السادس </td>
-                                    <td>د.ك71.970</td>
-                                </tr>
-                                <tr>
-                                    <td>العلوم للصف السادس </td>
-                                    <td>د.ك71.970</td>
-                                </tr>
-                                <tr>
-                                    <th>المجموع</th>
-                                    <th>د.ك71.970</th>
-                                </tr>
-                                <tr>
-                                    <th>رسوم بوابة الدفع :</th>
-                                    <th>د.ك71.970</th>
+                                <tr *ngFor="let item of cartItems">
+                                    <td>  {{item?.material?.name || item?.offer?.name}} </td>
+                                    <td 
+                                    *ngIf="item?.has_material"
+                                    >
+                                        د.ك {{item?.material?.discount||item?.material?.price}}
+                                     </td>
+                                     <td 
+                                     *ngIf="item?.has_offer"
+                                     >
+                                     د.ك {{item?.offer?.discount||item?.offer?.price}}
+                                      </td>
                                 </tr>
                                 <tr>
                                     <th>الاجمالي</th>
-                                    <th>د.ك71.970</th>
+                                    <th>        د.ك {{cartService.total}}</th>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;">
+                    <!-- <div style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;">
                          <input type="radio" id="one" name="fav_language" value="one">
                          <label for="one">
                             <img src="https://drastiq8.com/wp-content/plugins/No%20invoice%20woocommerce%20-%20Knet/assets/knet.png"
@@ -86,11 +79,15 @@
                            class="img-fluid"
                            alt="">
                         </label>
-                   </div>
+                   </div> -->
                     <button 
-                    [disabled]="!hasAccount"
+                    (click)="checkout()"
+                    [disabled]="!hasAccount||checkoutLoading"
                     style="border-radius: 5px" class="w-100 bluButton text-center">
                         تأكيد الطلب
+                        <i 
+                        *ngIf="checkoutLoading"
+                        class="fas fa-circle-notch fa-spin"></i>
                     </button>
                 </div>
             </div>
