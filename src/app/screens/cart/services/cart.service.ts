@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class CartService {
   cartItems:any = new BehaviorSubject(null)
   total=0
+  showCopon=false
   constructor(private http:HttpClient) { }
   addToCart(body:any) {
     return this.http.post(`${environment.apiUrl}add_to_cart`,body)
@@ -18,14 +19,16 @@ export class CartService {
   }
   getCart() {
     return this.http.get(`${environment.apiUrl}my_cart`).subscribe((res:any)=> {
-      console.log(res)
       this.total=res?.data?.total
       if( res?.data?.cartdetails) this.cartItems.next(res?.data?.cartdetails)
       else this.cartItems.next([])
     })
   }
   getRecomnded() {
-    return this.http.get(`${environment.apiUrl}recommed_materials`) 
+    return this.http.get(`${environment.apiUrl}recommed_materials_offers`) 
+  }
+  verifyCopon(value:string) {
+    return this.http.get(`${environment.apiUrl}coupon/${value}`) 
   }
   addOrder(body:any) {
     return this.http.post(`${environment.apiUrl}add_order`,body) 

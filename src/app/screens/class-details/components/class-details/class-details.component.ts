@@ -106,7 +106,6 @@ export class ClassDetailsComponent implements OnInit {
               this.cart=true
             }
           })
-          console.log(this.classDetails?.id)
         } else {
           this.cartitems.forEach((cartItem:any) => {
             if(this.classDetails?.id==cartItem?.offer?.id) {

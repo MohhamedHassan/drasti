@@ -7,6 +7,7 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { LoadingComponent } from './components/loading/loading.component';
+import { PricePipe } from '../pipes/price.pipe';
 
 
 
@@ -14,7 +15,8 @@ import { LoadingComponent } from './components/loading/loading.component';
   declarations: [
     HeaderComponent,
     CartComponent,
-    LoadingComponent
+    LoadingComponent,
+    PricePipe
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     FormsModule,
     HttpClientModule,
     ToastrModule,
-    LoadingComponent
+    LoadingComponent,
+    PricePipe
   ]
 })
 export class SharedModule { }

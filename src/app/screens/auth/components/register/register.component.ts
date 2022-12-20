@@ -67,7 +67,6 @@ export class RegisterComponent implements OnInit {
           (res:any)=> {
             localStorage.setItem('drastitoken',res?.meta?.token)
             if(this.cartitems?.length) {
-              console.log(this.cartitems)
               let offer_ids:any[]=[]
               let material_ids:any[]=[]
               this.cartitems.forEach(element => {

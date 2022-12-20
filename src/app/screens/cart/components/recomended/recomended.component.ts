@@ -14,10 +14,12 @@ export class RecomendedComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.getRecomnded().subscribe((res:any) =>  {
-      this.recomended=res?.data
-      this.recomended.map((item:any)=> {
-        item.cart=false
-      })
+      this.recomended=res?.data?.materials
+      if(Array.isArray(this.recomended)){
+        this.recomended.map((item:any)=> {
+          item.cart=false
+        })
+      } 
       this.getCart()
     })
   }
@@ -47,6 +49,7 @@ export class RecomendedComponent implements OnInit {
       if(res) {
         this.cart= res
         this.recomended.forEach((element:any) => {
+          element.cart=false
             this.cart.forEach((cartItem:any) => {
               if(element?.id==cartItem?.material?.id) {
                 element.cart=true

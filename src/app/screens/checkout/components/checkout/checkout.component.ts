@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/screens/cart/services/cart.service';
 
@@ -15,9 +15,13 @@ export class CheckoutComponent implements OnInit {
   cartItems:any[]=[]
   loading=true
   checkoutLoading=false
+  copontype=''
+  coponamount=-1
+  coponid=null
   constructor(private title:Title,
     private router:Router,
     public cartService:CartService,
+    private activatedroute:ActivatedRoute,
     private toastr:ToastrService
     ) { }
 
@@ -26,7 +30,15 @@ export class CheckoutComponent implements OnInit {
     if(!!localStorage.getItem('drastitoken')) {
       this.hasAccount=true
     } 
-    this.getCart()
+    this.activatedroute.queryParamMap.subscribe(
+      (res:any) =>  {
+        this.copontype=res?.params?.copontype
+        this.coponamount=Number(res?.params?.coponamount)
+        this.coponid=res?.params?.coponid
+        this.getCart()
+      }
+    )
+    
   }
 
   getCart() {
@@ -40,7 +52,6 @@ export class CheckoutComponent implements OnInit {
           if(!this.cartItems?.length) {
             this.router.navigate(['/cart'])
           } else {
-            console.log(res)
             if(!!localStorage.getItem('drastitoken')==false) {
               let price = 0
               this.cartItems.forEach(item => {
@@ -49,6 +60,14 @@ export class CheckoutComponent implements OnInit {
               })
               this.cartService.total=price
             } 
+            if(this.cartService.total) {
+              if(this.copontype=='percentage') {
+                this.cartService.total = this.cartService.total -  (this.cartService.total*this.coponamount/100) 
+              }
+              else if (this.copontype=='fixed') {
+                this.cartService.total = this.cartService.total -  this.coponamount
+              }
+            }
           }
 
         }
@@ -71,7 +90,7 @@ checkout()  {
           ids.push(element?.id)
       });
       if(!!localStorage.getItem('drastitoken')) {
-        this.cartService.addOrder({cartdetail_ids:ids}).subscribe((res:any) =>  {
+        this.cartService.addOrder({cartdetail_ids:ids,coupon_id:this.coponid}).subscribe((res:any) =>  {
           window.open(res?.data, '_blank');
           this.router.navigate(['/'])
         })

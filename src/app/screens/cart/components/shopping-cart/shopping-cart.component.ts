@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
 
 @Component({
@@ -12,10 +13,16 @@ export class ShoppingCartComponent implements OnInit {
   loading=true
   cartItems:any[]=[]
   total:any
+  verifyCoponLoading=false
+  disablecopon=false
+  copontype=''
+  coponamount=-1
+  coponid=null
   constructor(
     private title:Title,
+    private toastr:ToastrService,
     public cartService:CartService) { }
-    deleteCartItem(id:any) {
+    deleteCartItem(id:any,index:any) {
       if(!!localStorage.getItem('drastitoken')) {
         this.loading=true
         this.cartService.deleteItemFromCart({
@@ -25,7 +32,7 @@ export class ShoppingCartComponent implements OnInit {
           
         })
       } else {
-        this.cartItems.splice(this.cartItems.findIndex(item=>item?.id==id),1)
+        this.cartItems.splice(index,1)
         this.cartService.cartItems.next(this.cartItems)
       }
 
@@ -60,5 +67,38 @@ getCart() {
      }
     }
   )
+}
+checkcoponinput(value:string):boolean {
+  if(value.trim().length==0) {
+    return true
+  }
+  else return false 
+}
+verifyCopon(value:string) {
+  if(value.trim().length>0) {
+    this.verifyCoponLoading=true
+    this.cartService.verifyCopon(value).subscribe((res:any) =>  {
+      this.verifyCoponLoading=false
+      this.toastr.success(`  
+      تهانينا لك حصلت علي  
+      ${res?.data?.amount}
+      ${res?.data?.type=='percentage' ? '%' : 'دينار'}
+      ` )
+      this.disablecopon=true
+      //cartService.total
+      if(this.cartService.total) {
+        if(res?.data?.type=='percentage') {
+          this.cartService.total = this.cartService.total -  (this.cartService.total*res?.data?.amount/100) 
+     
+        }
+        else this.cartService.total = this.cartService.total -  res?.data?.amount
+      }
+      this.coponamount=res?.data?.amount
+      this.copontype=res?.data?.type
+      this.coponid=res?.data?.id
+    },err =>  {
+      this.verifyCoponLoading=false
+    })
+  }
 }
 }

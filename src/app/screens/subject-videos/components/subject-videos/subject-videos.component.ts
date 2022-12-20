@@ -82,8 +82,6 @@ getUnits(id:any) {
           }
        })
       }
-
-      console.log(this.opendvideo)
       this.loading=false
 
     }
