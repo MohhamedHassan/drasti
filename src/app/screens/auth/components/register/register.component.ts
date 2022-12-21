@@ -44,15 +44,15 @@ export class RegisterComponent implements OnInit {
       this.title.setTitle(' انشاء حساب - دراستي')
     }
     this.registerForm=this.fb.group({
-      fname:['',[Validators.required,Validators.minLength(6)]],
-      lname:['',[Validators.required,Validators.minLength(6)]],
+      fname:['',[Validators.required,Validators.minLength(3)]],
+      lname:['',[Validators.required,Validators.minLength(3)]],
       password:['',[Validators.required,Validators.minLength(6)]],
       phone:['',[Validators.required,Validators.pattern(/^5\d{7}$/)]],
       password_confirmation:['',Validators.required],
       agree:['',Validators.required]
     })
     this.cartService.cartItems.subscribe((cart:any) =>  {
-      this.cartitems=cart
+      if(cart) this.cartitems=cart
     })
   }
   register(value:any) {

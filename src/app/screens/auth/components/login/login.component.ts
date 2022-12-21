@@ -62,10 +62,12 @@ login(value:any) {
           }).subscribe((response:any) => {
             this.cartService.getCart()
             this.cartService.cartItems.subscribe((cart:any) =>  {
-              if(this.checkout) {
-                this.hasAccount.emit(true)
-              this.loginloading=false
-              }
+               
+                  if(this.checkout) {
+                    this.hasAccount.emit(true)
+                  this.loginloading=false
+                  }
+                
             })
           })
         } else {

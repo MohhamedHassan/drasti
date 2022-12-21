@@ -22,6 +22,7 @@ export class ClassDetailsComponent implements OnInit {
   cart=false
   cartitems:any[]=[]
   attachOrClasses=1
+  attchments:any[]=[]
   constructor(private classdetailsService:ClassDetailsService,
       private _sanitizer:DomSanitizer,
     private title:Title,
@@ -31,6 +32,7 @@ export class ClassDetailsComponent implements OnInit {
     private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    window.scroll(0,0)
     this.title.setTitle(` دراستي - ادرس وانت متطمن `)
     this.activatedRoute.params.subscribe((value:any) =>  {
       this.type=value?.type
@@ -41,6 +43,7 @@ export class ClassDetailsComponent implements OnInit {
               if(res?.data?.length) {
                   if(Array.isArray(res?.data)) {
                     this.classDetails=res?.data.find((item:any) => item?.id==value?.id)
+                    this.ispaid= this.classDetails?.is_paid
                   }
               }
               this.title.setTitle(this.classDetails?.name) 
@@ -54,6 +57,7 @@ export class ClassDetailsComponent implements OnInit {
               if(res?.data?.length) {
                 if(Array.isArray(res?.data)) {
                   this.classDetails=res?.data.find((item:any) => item?.id==value?.id)
+                  this.ispaid= this.classDetails?.is_paid
                 }
               }
               this.getCart()
@@ -67,6 +71,12 @@ export class ClassDetailsComponent implements OnInit {
  
             this.classDetails=res?.data
             this.ispaid=res?.data?.is_paid
+            if(this.ispaid) {
+              this.attchments = [...res?.data?.public_attachment,...res?.data?.private_attachment]
+            }
+            else {
+              this.attchments = res?.data?.public_attachment
+            }
             this.title.setTitle(this.classDetails?.name) 
             if(this.classDetails?.has_units) {
               this.lessonsOrUnis=1

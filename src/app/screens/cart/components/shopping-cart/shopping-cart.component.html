@@ -166,7 +166,9 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <app-recomended></app-recomended>
+        <app-recomended
+        *ngIf="cartItems?.length"
+        ></app-recomended>
 
     </div>
 

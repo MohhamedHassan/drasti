@@ -26,14 +26,15 @@
              class="bluButton">
                     تسجيل الدخول     
             </a>
-            <a 
+            <button
+            [disabled]="authService.logoutloading"
             style="cursor: pointer;"
             *ngIf="islogin()"
             aria-label="تسجيل الخروج"
             (click)="authService.logout()"
             class="bluButton">
                    تسجيل الخروج     
-           </a>
+           </button>
     </div>
     <!-- end login parent -->
    </div>

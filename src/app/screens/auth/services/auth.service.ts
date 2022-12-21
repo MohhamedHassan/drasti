@@ -8,7 +8,7 @@ import { CartService } from '../../cart/services/cart.service';
   providedIn: 'root'
 })
 export class AuthService {
-
+  logoutloading=false
   constructor(private http:HttpClient,
     private router:Router,
     public cartService:CartService) { }
@@ -27,13 +27,15 @@ export class AuthService {
   resetPassword(body:any) {
     return this.http.post(`${environment.apiUrl}reset_password`,body)
   }
-  logout() {
-    return this.http.post(`${environment.apiUrl}logout`,{}).subscribe(
-      res => { 
-        this.cartService.cartItems.next([])
-        localStorage.removeItem('drastitoken')
-        this.router.navigate(['/'])
-      }
-    )
-  }
+  logout():any {
+    this.logoutloading=true
+      return this.http.post(`${environment.apiUrl}logout`,{}).subscribe(
+        res => { 
+          this.cartService.cartItems.next([])
+          localStorage.removeItem('drastitoken')
+          this.router.navigate(['/'])
+          this.logoutloading=false
+        }
+      )
+    }
 }

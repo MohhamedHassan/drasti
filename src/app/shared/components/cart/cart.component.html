@@ -10,8 +10,10 @@
             </a>
         </h2>
         <hr>
-        <div class="d-flex  justify-content-between align-items-center mb-3 px-3">
-            <ng-container *ngIf="discount">
+        <div 
+     style="min-height: 35px;"
+        class="d-flex  justify-content-between align-items-center mb-3 px-3">
+            <ng-container *ngIf="discount&&!paid">
                 <del>
                     د.ك
                     {{price}}
@@ -21,7 +23,7 @@
                     {{discount}}
                 </bdi> 
             </ng-container>
-            <ng-container *ngIf="!discount">
+            <ng-container *ngIf="!discount&&!paid">
 
                 <bdi>
                     د.ك
@@ -43,13 +45,14 @@
                 *ngIf="addeddTocart"
                 style="border-radius: 50%;padding: 10px;"
                 class="fa-solid fa-check bg-success text-white"></i> -->
-                <p 
+                <a
+                routerLink="/cart"
                 style="color:#215387 !important;font-weight: bold;
                 font-size: 18px;"
                 class="text-center"
                 *ngIf="addeddTocart">
-                    تم الاضافة الي السلة
-                </p>
+                    عرض السلة
+                </a>
             </ng-container>
             <ng-container *ngIf="paid&&type!='offer'">
                 <a 
@@ -60,13 +63,13 @@
                 </a>
             </ng-container>
             <ng-container *ngIf="paid&&type=='offer'">
-                <p 
+                <a 
                 style="color:#215387 !important;font-weight: bold;
                 font-size: 18px;"
                 class="text-center"
-                >
-                    تم الشراء
-                </p>
+                [routerLink]="['/class-details/',id,type,classid,speid]">
+                    عرض الباقة
+                </a>
             </ng-container>
             
         </div>
