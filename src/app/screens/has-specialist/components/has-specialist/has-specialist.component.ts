@@ -32,7 +32,7 @@ export class HasSpecialistComponent implements OnInit {
           })?.has_specialties
           this.banner=res?.data?.classes.find((item:any) => {         
             return item?.id==this.id
-          })?.media
+          })?.header_image
         this.loading=false
       }
     )

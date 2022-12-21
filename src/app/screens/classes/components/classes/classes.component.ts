@@ -22,6 +22,7 @@ export class ClassesComponent implements OnInit {
   classId=-1
   specialistId=-1
   page=1
+  banner:any
   constructor(private activatedroute:ActivatedRoute,
     private title:Title,
     private cartService:CartService,
@@ -40,6 +41,7 @@ export class ClassesComponent implements OnInit {
                 this.classes.map((item:any)=> {
                   item.cart=false
                 })
+                this.banner=this.classes[0]?.class?.header_image
                 this.getCart()
               }
               this.loadingsubjects=false
@@ -67,6 +69,7 @@ export class ClassesComponent implements OnInit {
             this.classes.map((item:any)=> {
               item.cart=false
             })
+            this.banner=this.classes[0]?.class?.header_image
             this.getCart()
           }
           this.loadingsubjects=false

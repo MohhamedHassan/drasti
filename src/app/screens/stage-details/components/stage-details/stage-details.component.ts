@@ -29,7 +29,7 @@ export class StageDetailsComponent implements OnInit {
       (res:any)=> {
         this.title.setTitle(res?.data?.name||` دراستي - ادرس وانت متطمن `)
           this.stages=res?.data?.classes
-          this.banner=res?.data?.media
+          this.banner=res?.data?.header_image
         this.loading=false
       }
     )
