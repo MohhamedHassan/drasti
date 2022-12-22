@@ -58,6 +58,7 @@ export class ClassDetailsComponent implements OnInit {
     window.scroll(0,0)
     this.title.setTitle(` دراستي - ادرس وانت متطمن `)
     this.activatedRoute.params.subscribe((value:any) =>  {
+      this.loading=true
       this.type=value?.type
       if(value?.type=='offer') {
         if(value?.spe==-1) {
@@ -92,6 +93,7 @@ export class ClassDetailsComponent implements OnInit {
           )
         }
       } else {
+        this.offerSubjects=[]
         this.classdetailsService.getClassDetails(value?.id).subscribe((res:any)=> {
       
  
@@ -193,6 +195,7 @@ pushCartIds() {
       this.getCart()
     }
   } else if(this.type=='subject') {
+  
     if(!!localStorage.getItem('drastitoken')) {
       this.loading=true
         this.cartService.addToCart({

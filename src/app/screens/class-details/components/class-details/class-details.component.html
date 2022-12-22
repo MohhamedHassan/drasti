@@ -37,7 +37,7 @@ class="class-details pt-5">
                         [class.active]="attachOrClasses==2">المرفقات</li>
                     </ul>
                     <div
-                    *ngIf="attachOrClasses==1"
+                    *ngIf="attachOrClasses==1&&type!='offer'"
                     >
                         <ng-container
                         *ngIf="lessonsOrUnis==2&&lessons?.length">
@@ -100,7 +100,7 @@ class="class-details pt-5">
  
                     </div>
                     <div
-                    *ngIf="attachOrClasses==2"
+                    *ngIf="attachOrClasses==2&&type!='offer'"
                     >
                         <h2>المرفقات</h2>
                         <ul 
@@ -190,34 +190,37 @@ class="class-details pt-5">
             </div>
             <!--  -->
         </div>
-        <h2 *ngIf="!loading&&offerSubjects?.length">المواد</h2>
+        <ng-container *ngIf="type=='offer'">
+            <h2 *ngIf="!loading&&offerSubjects?.length">المواد</h2>
 
-<swiper  
-class="mrginBottom"
-[config]="swpieroptions">
-
-    <ng-container *ngFor="let class of offerSubjects;let i = index">
-        <ng-template swiperSlide>
-            <div
-            >
-
-                <app-cart
-                [showaddButton]="true"
-                [addeddTocart]="class?.cart"
-                type="subject"
-                [classid]="-1"
-                [speid]="-1"
-                [id]="class?.id"
-                [imgSrc]="class?.media"
-                [name]="class?.name"
-                [price]="class?.price"
-                [discount]="class?.discount"
-                [paid]="class?.is_paid"
-                ></app-cart>
-            </div>
-        </ng-template>
-    </ng-container>
-
-</swiper>
+            <swiper  
+            class="mrginBottom"
+            [config]="swpieroptions">
+            
+                <ng-container *ngFor="let class of offerSubjects;let i = index">
+                    <ng-template swiperSlide>
+                        <div
+                        >
+            
+                            <app-cart
+                            [showaddButton]="true"
+                            [addeddTocart]="class?.cart"
+                            type="subject"
+                            [classid]="-1"
+                            [speid]="-1"
+                            [id]="class?.id"
+                            [imgSrc]="class?.media"
+                            [name]="class?.name"
+                            [price]="class?.price"
+                            [discount]="class?.discount"
+                            [paid]="class?.is_paid"
+                            ></app-cart>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            
+            </swiper>
+        </ng-container>
+        
     </div>
 </section>
