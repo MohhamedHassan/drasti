@@ -32,7 +32,9 @@
             </ng-container>
                    
         </div>
-        <div style="min-height: 45px;text-align: center;">
+        <div
+        *ngIf="!showaddButton"
+        style="min-height: 45px;text-align: center;">
             <ng-container *ngIf="!paid">
                 <button 
                 *ngIf="!addeddTocart"

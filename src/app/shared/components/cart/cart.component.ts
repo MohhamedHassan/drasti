@@ -17,6 +17,7 @@ export class CartComponent implements OnInit {
   @Input() paid=false
   @Output() cartBtn = new EventEmitter()
   @Input() addeddTocart=false
+  @Input() showaddButton=false
   constructor() { }
 
   ngOnInit(): void {

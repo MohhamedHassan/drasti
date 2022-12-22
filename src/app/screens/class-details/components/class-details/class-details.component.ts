@@ -5,13 +5,36 @@ import { switchMap } from 'rxjs';
 import { CartService } from 'src/app/screens/cart/services/cart.service';
 import { SubjectsService } from 'src/app/screens/classes/services/subjects.service';
 import { ClassDetailsService } from '../../services/class-details.service';
-
+import SwiperCore, { Navigation,Pagination } from 'swiper';
+SwiperCore.use([Navigation,Pagination]);
 @Component({
   selector: 'app-class-details',
   templateUrl: './class-details.component.html',
   styleUrls: ['./class-details.component.scss']
 })
 export class ClassDetailsComponent implements OnInit {
+  swpieroptions: any = {
+    slidesPerView: 3,
+    spaceBetween: "50",
+    pagination: false,
+    navigation: "true",
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }
+  
+  }
+  offerSubjects:any[]=[]
   classDetails:any={}
   ispaid=false
   loading=true
@@ -43,6 +66,8 @@ export class ClassDetailsComponent implements OnInit {
               if(res?.data?.length) {
                   if(Array.isArray(res?.data)) {
                     this.classDetails=res?.data.find((item:any) => item?.id==value?.id)
+                    console.log(this.classDetails)
+                    this.offerSubjects=this.classDetails?.materials
                     this.ispaid= this.classDetails?.is_paid
                   }
               }
@@ -57,6 +82,7 @@ export class ClassDetailsComponent implements OnInit {
               if(res?.data?.length) {
                 if(Array.isArray(res?.data)) {
                   this.classDetails=res?.data.find((item:any) => item?.id==value?.id)
+                  this.offerSubjects=this.classDetails?.materials
                   this.ispaid= this.classDetails?.is_paid
                 }
               }

@@ -97,6 +97,7 @@ class="class-details pt-5">
                                 </accordion-group>
                             </accordion>
                         </ng-container>
+ 
                     </div>
                     <div
                     *ngIf="attachOrClasses==2"
@@ -189,5 +190,34 @@ class="class-details pt-5">
             </div>
             <!--  -->
         </div>
+        <h2 *ngIf="!loading&&offerSubjects?.length">المواد</h2>
+
+<swiper  
+class="mrginBottom"
+[config]="swpieroptions">
+
+    <ng-container *ngFor="let class of offerSubjects;let i = index">
+        <ng-template swiperSlide>
+            <div
+            >
+
+                <app-cart
+                [showaddButton]="true"
+                [addeddTocart]="class?.cart"
+                type="subject"
+                [classid]="-1"
+                [speid]="-1"
+                [id]="class?.id"
+                [imgSrc]="class?.media"
+                [name]="class?.name"
+                [price]="class?.price"
+                [discount]="class?.discount"
+                [paid]="class?.is_paid"
+                ></app-cart>
+            </div>
+        </ng-template>
+    </ng-container>
+
+</swiper>
     </div>
 </section>
