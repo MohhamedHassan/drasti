@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-
+import SwiperCore, { Navigation,Pagination } from 'swiper';
+SwiperCore.use([Navigation,Pagination]);
 @Component({
   selector: 'app-recomended',
   templateUrl: './recomended.component.html',
@@ -10,9 +11,31 @@ export class RecomendedComponent implements OnInit {
   recomended:any[]=[]
   loading=false
   cart:any[]=[]
+  swpieroptions: any = {
+    slidesPerView: 3,
+    spaceBetween: "50",
+    pagination: false,
+    navigation: "true",
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }
+  
+  }
   constructor(public cartService:CartService) { }
 
   ngOnInit(): void {
+    
     this.cartService.getRecomnded().subscribe((res:any) =>  {
       this.recomended=res?.data?.materials
       if(Array.isArray(this.recomended)){

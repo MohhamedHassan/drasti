@@ -1,10 +1,14 @@
 <h2 *ngIf="!loading&&recomended?.length">نرشح لك</h2>
-<div class="row mt-4">
-    <div class="col-md-3 mb-4"
-    *ngFor="let class of recomended"
-    >
-        <div>
-            <div>
+
+<swiper  
+class="mrginBottom"
+[config]="swpieroptions">
+
+    <ng-container *ngFor="let class of recomended;let i = index">
+        <ng-template swiperSlide>
+            <div
+            >
+
                 <app-cart
                 [addeddTocart]="class?.cart"
                 (cartBtn)="pushCartIds($event)"
@@ -19,9 +23,10 @@
                 [paid]="class?.is_paid"
                 ></app-cart>
             </div>
-        </div>
-    </div>        
-</div>
+        </ng-template>
+    </ng-container>
+
+</swiper>
 <div 
 *ngIf="loading"
 style="

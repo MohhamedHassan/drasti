@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { LoadingComponent } from './components/loading/loading.component';
 import { PricePipe } from '../pipes/price.pipe';
-
+import { SwiperModule } from 'swiper/angular';
 
 
 @NgModule({
@@ -24,9 +24,11 @@ import { PricePipe } from '../pipes/price.pipe';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SwiperModule,
   ],
   exports:[
+    SwiperModule,
     HeaderComponent,
     CartComponent,
     ReactiveFormsModule,
