@@ -123,13 +123,13 @@ class="class-details">
                     allowFullScreen="true"
                     [cachedSrc]="opendvideo.video_url"
                     *ngIf="opendvideo?.video_type=='videocipher'"
-                     class="w-100" style="height:360px"></iframe>
+                     class="w-100" style="height:70vh"></iframe>
                     <iframe 
                     allow="encrypted-media"
                     allowFullScreen="true"
                     [cachedSrc]="savedYoutube(opendvideo?.video_youtube)"
                     *ngIf="opendvideo?.video_type=='youtube'"
-                     class="w-100" style="height:360px"></iframe>
+                     class="w-100" style="height:70vh"></iframe>
                     <h6 *ngIf="opendvideo?.attachment?.length">المرفقات</h6>
                     <ul 
                     class="p-0 list-unstyled"
