@@ -18,20 +18,24 @@
         class="d-flex  justify-content-between align-items-center mb-3 px-3">
             <ng-container *ngIf="discount&&!paid">
                 <del>
-                    د.ك
+               
                     {{price}}
+                    د.ك
                 </del>
                 <bdi>
-                    د.ك
+                  
                     {{discount}}
+                    د.ك
                 </bdi> 
             </ng-container>
             <ng-container *ngIf="!discount&&!paid">
-
+                <div class="px-2"></div>
                 <bdi>
-                    د.ك
+                  
                     {{price}}
+                    د.ك
                 </bdi> 
+        
             </ng-container>
                    
         </div>

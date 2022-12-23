@@ -64,6 +64,23 @@
         color:#3052D8;
         text-decoration: none;
      }
+     .swiper-button-next,
+     .swiper-button-prev  {    
+         background: #0034C2 !important;
+         color:white !important;
+         border-radius: 50% !important;
+         width: 40px;
+         height: 40px;
+         text-align: center;
+         line-height: 40px;
+         &:after {
+             font-size: 20px;
+             font-weight: bold;
+         }
+     }
+     .swiper-pagination-bullet-active {
+         background-color: #0034C2 !important;
+     }
     }
 
 .cstmdel {
@@ -75,3 +92,4 @@
       font-size: 20px;
    }
 }
+

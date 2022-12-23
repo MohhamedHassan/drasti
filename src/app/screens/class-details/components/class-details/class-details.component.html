@@ -157,20 +157,30 @@ class="class-details pt-5">
                     [src]="classDetails?.media" class="w-100" alt="دراستي">
                     <ng-container         *ngIf="!ispaid">
                         <div 
+                        style="text-align: left;direction: ltr;"
                         *ngIf="classDetails?.discount"
-                        class="d-flex  justify-content-between align-items-center  p-3">
-                            <del
-                            class="cstmdel"
-                            style="color: #4b5981;"
-                            >د.ك{{classDetails?.price}} </del>
+                        class="d-flex   flex-wrap justify-content-between align-items-center  p-3">
+                    
                             <bdi
                             class="cstmdel"
                             style="color: #4b5981"
-                            >د.ك{{classDetails?.discount}}</bdi>        
+                            >
+                            {{classDetails?.discount}}
+                            د.ك
+                        </bdi>  
+                        <del
+                        class="cstmdel"
+                        style="color: #4b5981;"
+                        >
+                        {{classDetails?.price}}
+                        د.ك 
+                    </del>      
                         </div>
                         <div 
                         *ngIf="!classDetails?.discount"
-                        class="p-3">
+                        class="p-3"
+                        style="text-align: left !important;"
+                        >
                             <bdi
                             class="cstmdel"
                             style="color: #4b5981"
@@ -183,10 +193,10 @@ class="class-details pt-5">
  
                         <div      
                         *ngIf="ispaid"
-                        class="pb-3 px-3 my-2 text-center">
+                        class="pb-3 px-3 my-2 text-center  ">
                            <a 
                            [routerLink]="['/subject-videos',classDetails?.id,-1,-1]"
-                           class="bluButton"
+                           class="bluButton d-inline-block"
                            style="border-radius: 5px;"
                            >
                               استمرار في المزاكرة
@@ -206,9 +216,9 @@ class="class-details pt-5">
 
                       <a
                       routerLink="/cart"
-                      style="color:#215387 !important;font-weight: bold;
+                      style="font-weight: bold;border-radius: 5px;
                       font-size: 18px;"
-                      class="text-center"
+                          class="bluButton text-center d-block"
                       *ngIf="cart">
                           عرض السلة
                       </a>

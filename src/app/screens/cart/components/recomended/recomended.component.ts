@@ -26,7 +26,7 @@ export class RecomendedComponent implements OnInit {
         spaceBetween: 10,
       },
       1024: {
-        slidesPerView: 4,
+        slidesPerView: 5,
         spaceBetween: 40,
       },
     }
