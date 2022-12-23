@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { TestDirective } from './test.directive';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    TestDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

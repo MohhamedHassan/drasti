@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -51,9 +51,12 @@ export class ClassDetailsComponent implements OnInit {
     private title:Title,
     private cartService:CartService,
     private subjectsService:SubjectsService,
+    private ref: ChangeDetectorRef,
     private router:Router,
     private activatedRoute:ActivatedRoute) { }
-
+    // ngAfterViewInit() {
+    //   this.ref.detach()
+    // }
   ngOnInit(): void {
     window.scroll(0,0)
     this.title.setTitle(` دراستي - ادرس وانت متطمن `)
@@ -127,10 +130,11 @@ export class ClassDetailsComponent implements OnInit {
   savedYoutube(link:any):any {
     if(link) {
       let id =  link.slice(link.indexOf('v=')+2,link.lastIndexOf('&'))
-      return this._sanitizer.bypassSecurityTrustHtml(`<iframe src='https://www.youtube.com/embed/${id}' class="w-100"></iframe>`)
+      // return this._sanitizer.bypassSecurityTrustHtml(`<iframe src='https://www.youtube.com/embed/${id}' class="w-100" style="height:360px"></iframe>`)
+      return `https://www.youtube.com/embed/${id}`
     }
   }
-
+ 
   savedHtml(content:string) {
     return this._sanitizer.bypassSecurityTrustHtml(content)
   }

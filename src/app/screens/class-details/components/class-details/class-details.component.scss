@@ -65,3 +65,13 @@
         text-decoration: none;
      }
     }
+
+.cstmdel {
+   font-size: 35px;
+   font-weight: 500
+}
+@media only screen and (max-width: 768px) {
+   .cstmdel {
+      font-size: 20px;
+   }
+}

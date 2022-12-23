@@ -1,6 +1,29 @@
-<header class="mb-4" >
-    <img [src]="imgSrc" alt="دراستي" 
+<header 
+class="mb-4 position-relative" >
+    <img 
+    *ngIf="!text"
+    [src]="imgSrc" alt="دراستي" 
     style="max-height: 200px;"
     class="img-fluid w-100">
+    <div
+
+    [style.backgroundImage]="urll()"
+    style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+
+    "
+    *ngIf="text"
+    class="text-center headercstm">
+       
+        <h1 
+        class="h1cstm"
+        style="color: white; ;">
+            {{text}}
+        </h1>
+    </div>
 </header>
 <!-- end header image -->

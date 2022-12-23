@@ -106,7 +106,7 @@ class="class-details">
                         </p>
                         <div class="px-3"></div>
                     </div>
-                    <div 
+                    <!-- <div 
                     class="text-center my-2"
                     *ngIf="opendvideo?.video_type=='videocipher'"
                     [innerHTML]="savedHtml(opendvideo.video_cipher)">
@@ -117,7 +117,19 @@ class="class-details">
                     *ngIf="opendvideo?.video_type=='youtube'"
                     [innerHTML]='savedYoutube(opendvideo?.video_youtube)'>
                         
-                    </div>
+                    </div> -->
+                    <iframe 
+                    allow="encrypted-media"
+                    allowFullScreen="true"
+                    [cachedSrc]="opendvideo.video_url"
+                    *ngIf="opendvideo?.video_type=='videocipher'"
+                     class="w-100" style="height:360px"></iframe>
+                    <iframe 
+                    allow="encrypted-media"
+                    allowFullScreen="true"
+                    [cachedSrc]="savedYoutube(opendvideo?.video_youtube)"
+                    *ngIf="opendvideo?.video_type=='youtube'"
+                     class="w-100" style="height:360px"></iframe>
                     <h6 *ngIf="opendvideo?.attachment?.length">المرفقات</h6>
                     <ul 
                     class="p-0 list-unstyled"

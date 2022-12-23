@@ -23,6 +23,8 @@ export class ClassesComponent implements OnInit {
   specialistId=-1
   page=1
   banner:any
+  stagename=''
+  spename=''
   constructor(private activatedroute:ActivatedRoute,
     private title:Title,
     private cartService:CartService,
@@ -41,6 +43,11 @@ export class ClassesComponent implements OnInit {
                 this.classes.map((item:any)=> {
                   item.cart=false
                 })
+                if(this.classes?.length) {
+                  this.stagename = `
+                    ${this.classes[0]?.class?.name}
+                  `
+                }
                 this.banner=this.classes[0]?.class?.header_image
                 this.getCart()
               }
@@ -66,9 +73,15 @@ export class ClassesComponent implements OnInit {
           (res:any)=> {
             if(res?.data?.length) {
             this.classes=res?.data
+            if(this.classes?.length) {
+              this.stagename = `
+                ${this.classes[0]?.class?.name} ${this.classes[0]?.class?.has_specialties[this.classes[0]?.class?.has_specialties.findIndex((ite:any) => ite?.id==this.specialistId)]?.name}
+              `
+            }
             this.classes.map((item:any)=> {
               item.cart=false
             })
+            console.log(this.classes)
             this.banner=this.classes[0]?.class?.header_image
             this.getCart()
           }

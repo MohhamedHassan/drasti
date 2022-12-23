@@ -14,6 +14,7 @@ export class HasSpecialistComponent implements OnInit {
   stages:any
   banner:any
   id:any
+  stagename=''
   constructor(private activatedRoute:ActivatedRoute,
     private title:Title,
     private stageService:StageDetailsService) { }
@@ -30,10 +31,13 @@ export class HasSpecialistComponent implements OnInit {
         this.stages= res?.data?.classes.find((item:any) => {         
             return item?.id==this.id
           })?.has_specialties
-          console.log(this.stages)
+          console.log(res)
           this.banner=res?.data?.classes.find((item:any) => {         
             return item?.id==this.id
           })?.header_image
+          this.stagename=res?.data?.classes.find((item:any) => {         
+            return item?.id==this.id
+          })?.name
         this.loading=false
       }
     )

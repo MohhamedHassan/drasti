@@ -1,0 +1,15 @@
+.h1cstm {
+    font-size: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    .h1cstm {
+        font-size: 30px;
+    }
+
+}
+@media only screen and (max-width: 768px) {
+    .headercstm {
+        background-position:center;
+    }
+}

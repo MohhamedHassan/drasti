@@ -127,16 +127,31 @@ class="class-details pt-5">
             <div class="col-lg-4 mb-5">
                 <div class="bg-white text-center rounded overflow-hidden">
                     <!-- <video class="w-100" src="https://drastiq8.com/wp-content/uploads/2022/08/IMG_7296.mp4" controls="" controlslist="nodownload"></video> -->
-                    <div 
+                    <!-- <div 
+                 
                     *ngIf="classDetails?.video_type=='videocipher'"
                     [innerHTML]="savedHtml(classDetails.video_cipher)">
 
-                    </div>
-                    <div 
+                    </div> -->
+
+              
+                    <!-- <div 
                     *ngIf="classDetails?.video_type=='youtube'"
                     [innerHTML]='savedYoutube(classDetails?.video_youtube)'>
                         
-                    </div>
+                    </div> -->
+                    <iframe 
+                    allow="encrypted-media"
+                    allowFullScreen="true"
+                    [cachedSrc]="classDetails?.video_url"
+                    *ngIf="classDetails?.video_type=='videocipher'"
+                     class="w-100" style="height:360px"></iframe>
+                    <iframe 
+                    allow="encrypted-media"
+                    allowFullScreen="true"
+                    [cachedSrc]="savedYoutube(classDetails?.video_youtube)"
+                    *ngIf="classDetails?.video_type=='youtube'"
+                     class="w-100" style="height:360px"></iframe>
                     <img 
                     *ngIf="classDetails?.video_type!='videocipher'&&classDetails?.video_type!='youtube'"
                     [src]="classDetails?.media" class="w-100" alt="دراستي">
@@ -144,13 +159,22 @@ class="class-details pt-5">
                         <div 
                         *ngIf="classDetails?.discount"
                         class="d-flex  justify-content-between align-items-center  p-3">
-                            <del>د.ك{{classDetails?.price}} </del>
-                            <bdi>د.ك{{classDetails?.discount}}</bdi>        
+                            <del
+                            class="cstmdel"
+                            style="color: #4b5981;"
+                            >د.ك{{classDetails?.price}} </del>
+                            <bdi
+                            class="cstmdel"
+                            style="color: #4b5981"
+                            >د.ك{{classDetails?.discount}}</bdi>        
                         </div>
                         <div 
                         *ngIf="!classDetails?.discount"
                         class="p-3">
-                            <bdi>{{classDetails?.price}}د.ك</bdi>        
+                            <bdi
+                            class="cstmdel"
+                            style="color: #4b5981"
+                            >{{classDetails?.price}}د.ك</bdi>        
                         </div>
                     </ng-container>
                     
@@ -179,11 +203,15 @@ class="class-details pt-5">
                           <i class="fa-solid fa-cart-shopping"></i>
                           اضافة الي السلة
                       </button>
-                      <p 
-                      class="text-center text-secondary fw-bold"
+
+                      <a
+                      routerLink="/cart"
+                      style="color:#215387 !important;font-weight: bold;
+                      font-size: 18px;"
+                      class="text-center"
                       *ngIf="cart">
-                          تم الاضافة الي السلة
-                      </p>
+                          عرض السلة
+                      </a>
                     </div>
 
                 </div>
@@ -203,6 +231,7 @@ class="class-details pt-5">
                         >
             
                             <app-cart
+                            [small]="true"
                             [showaddButton]="true"
                             [addeddTocart]="class?.cart"
                             type="subject"

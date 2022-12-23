@@ -9,6 +9,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoadingComponent } from './components/loading/loading.component';
 import { PricePipe } from '../pipes/price.pipe';
 import { SwiperModule } from 'swiper/angular';
+import { IframeDirective } from './directive/iframe.directive';
+import { DirecifraneDirective } from './directive/direcifrane.directive';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { SwiperModule } from 'swiper/angular';
     HeaderComponent,
     CartComponent,
     LoadingComponent,
-    PricePipe
+    PricePipe,
+    IframeDirective,
+    DirecifraneDirective
   ],
   imports: [
     CommonModule,
@@ -36,7 +40,9 @@ import { SwiperModule } from 'swiper/angular';
     HttpClientModule,
     ToastrModule,
     LoadingComponent,
-    PricePipe
+    PricePipe,
+    IframeDirective,
+    DirecifraneDirective
   ]
 })
 export class SharedModule { }

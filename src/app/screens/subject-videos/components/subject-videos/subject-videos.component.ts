@@ -98,9 +98,10 @@ getLessons(id:any) {
 savedYoutube(link:any):any {
   if(link) {
     let id =  link.slice(link.indexOf('v=')+2,link.lastIndexOf('&'))
-    return this._sanitizer.bypassSecurityTrustHtml(`<iframe 
-    style="min-height:70vh"
-    src='https://www.youtube.com/embed/${id}' class="w-100"></iframe>`)
+    // return this._sanitizer.bypassSecurityTrustHtml(`<iframe 
+    // style="min-height:70vh"
+    // src='https://www.youtube.com/embed/${id}' class="w-100"></iframe>`)
+    return `https://www.youtube.com/embed/${id}`
   }
 }
 scrll() {

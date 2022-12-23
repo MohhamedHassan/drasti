@@ -5,11 +5,13 @@ import { ClassDetailsRoutingModule } from './class-details-routing.module';
 import { ClassDetailsComponent } from './components/class-details/class-details.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UrlDirective } from './url.directive';
 
 
 @NgModule({
   declarations: [
-    ClassDetailsComponent
+    ClassDetailsComponent,
+    UrlDirective
   ],
   imports: [
     CommonModule,
