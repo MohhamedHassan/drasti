@@ -18,6 +18,7 @@ export class ShoppingCartComponent implements OnInit {
   copontype=''
   coponamount=-1
   coponid=null
+  discount=0
   constructor(
     private title:Title,
     private toastr:ToastrService,
@@ -38,7 +39,9 @@ export class ShoppingCartComponent implements OnInit {
 
     }
   ngOnInit(): void {
- 
+ this.cartService.discount.subscribe(res =>  {
+  this.discount=res
+ })
     this.title.setTitle('سلة المشتريات - دراستي')
 this.getCart()
   }
@@ -88,10 +91,15 @@ verifyCopon(value:string) {
       //cartService.total
       if(this.cartService.total) {
         if(res?.data?.type=='percentage') {
-          this.cartService.total = this.cartService.total -  (this.cartService.total*res?.data?.amount/100) 
-     
+          this.discount=this.cartService.total * res?.data?.amount/100
         }
-        else this.cartService.total = this.cartService.total -  res?.data?.amount
+        else     this.discount = res?.data?.amount
+    
+      } else {
+        if(res?.data?.type=='percentage') {
+          this.discount=this.cartService.total * res?.data?.amount/100
+        }
+        else     this.discount = res?.data?.amount
       }
       this.coponamount=res?.data?.amount
       this.copontype=res?.data?.type

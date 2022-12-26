@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     })
     this.cartService.cartItems.subscribe((cart:any) =>  {
       this.cartitems=cart
+      console.log(this.cartitems)
     })
   }
 login(value:any) {
@@ -47,9 +48,11 @@ login(value:any) {
      this.loginloading=true
      this.authservice.login(value).subscribe(
       (res:any) => {
-       
+   
         localStorage.setItem('drastitoken',res?.meta?.token)
+        this.authservice.set_online_offline(1)
         if(this.cartitems?.length) {
+          console.log(this.cartitems)
           let offer_ids:any[]=[]
           let material_ids:any[]=[]
           this.cartitems.forEach(element => {
@@ -88,5 +91,7 @@ login(value:any) {
      )
   }
 }
+
+
 
 }

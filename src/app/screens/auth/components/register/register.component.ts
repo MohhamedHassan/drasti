@@ -66,6 +66,7 @@ export class RegisterComponent implements OnInit {
         this.authService.register(value).subscribe(
           (res:any)=> {
             localStorage.setItem('drastitoken',res?.meta?.token)
+            this.authService.set_online_offline(1)
             if(this.cartitems?.length) {
               let offer_ids:any[]=[]
               let material_ids:any[]=[]
@@ -135,6 +136,7 @@ export class RegisterComponent implements OnInit {
       code:this.verificationControl.value
       }).subscribe(
          (res:any) =>  {
+ 
            this.verifyOtbLoading=false
            this.verificationControl.reset()
            this.toastr.success(res?.message)

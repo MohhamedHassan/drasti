@@ -100,9 +100,10 @@
                 <div>
                     <h4>اجمال سلة المشتريات</h4>
                     <div 
-                    *ngIf="cartService.showCopon&&!disablecopon"
+                    *ngIf="cartService.showCopon"
                     class="my-2 flex-md-row flex-column d-flex">
                         <input
+                        [readonly]="disablecopon"
                         (input)="checkcoponinput(copon.value)"
                         #copon
                         placeholder="اضف كود الخصم"
@@ -110,7 +111,7 @@
                         <span class="m-2"></span>
                         <button
                         (click)="verifyCopon(copon.value)"
-                        [disabled]="verifyCoponLoading||checkcoponinput(copon.value)"
+                        [disabled]="verifyCoponLoading||checkcoponinput(copon.value)||disablecopon"
                         style="border-radius: 10px !important;"
                         class="bluButton text-center">
                             تحقق
@@ -124,12 +125,13 @@
                         style="border-bottom: 1px solid #b7cde1;">
                             <th class="p-2">المجموع</th>
                             <td class="p-2">
-                                د.ك {{cartService.total|price}}
+                                د.ك  {{cartService.total|price}}
                             </td>
                         </tr>
                         <tr>
                             <th class="p-2">الاجمالي</th>
-                            <td class="p-2">د.ك {{cartService.total|price}}</td>
+                            <td class="p-2">د.ك 
+                                {{cartService.total>discount ? (cartService.total-discount|price) : '0'}}</td>
                         </tr>
                     </table>
 

@@ -16,7 +16,7 @@ export class CheckoutComponent implements OnInit {
   loading=true
   checkoutLoading=false
   copontype=''
-  coponamount=-1
+  coponamount=0
   coponid=null
   constructor(private title:Title,
     private router:Router,

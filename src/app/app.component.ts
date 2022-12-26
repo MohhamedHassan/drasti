@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
+import { AuthService } from './screens/auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'drasti';
+  
+
+ 
+
+constructor(private authService:AuthService) {
+  window.addEventListener("beforeunload", (event) => {
+    event.preventDefault();
+    event.returnValue = "Unsaved modifications";
+    return event;
+ });
+}
+
+
+@HostListener("window:beforeunload", ["$event"])
+beforeUnloadHandler(event) {
+  this.authService.set_online_offline(0)
+}
 }

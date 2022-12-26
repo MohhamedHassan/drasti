@@ -38,4 +38,7 @@ export class AuthService {
         }
       )
     }
+    set_online_offline(status:number) {
+      this.http.post(`${environment.apiUrl}set_online_offline`,{"is_online":status}).subscribe(res => console.log())
+    }
 }

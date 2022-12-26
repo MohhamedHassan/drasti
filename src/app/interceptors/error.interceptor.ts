@@ -17,7 +17,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     private toastr: ToastrService) {
 }
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(catchError((err:any) => {
+    return next.handle(request).pipe(
+      catchError((err:any) => {
       let errorMessages = err?.error?.errors
       if(Array.isArray(errorMessages)&&errorMessages?.length) {
         for(let i = 0 ; i <errorMessages?.length ; i++) {
@@ -34,7 +35,8 @@ export class ErrorInterceptor implements HttpInterceptor {
        // this.router.navigate(['/'])
       } 
       return throwError(err)
-    }))
+    })
+    )
   }
 
 }

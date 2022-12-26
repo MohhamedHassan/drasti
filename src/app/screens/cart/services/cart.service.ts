@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CartService {
   cartItems:any = new BehaviorSubject(null)
+  discount= new BehaviorSubject(0)
   total=0
   showCopon=false
   constructor(private http:HttpClient) { }

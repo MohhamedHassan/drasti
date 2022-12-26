@@ -56,6 +56,10 @@
                                      د.ك {{item?.offer?.discount||item?.offer?.price}}
                                       </td>
                                 </tr>
+                                <tr *ngIf="coponamount>0">
+                                    <th>الخصم</th>
+                                    <th>   د.ك {{coponamount|price}}</th>
+                                </tr>
                                 <tr>
                                     <th>الاجمالي</th>
                                     <th>   د.ك {{cartService.total|price}}</th>
