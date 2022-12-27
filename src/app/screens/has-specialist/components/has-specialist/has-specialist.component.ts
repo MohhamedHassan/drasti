@@ -31,7 +31,6 @@ export class HasSpecialistComponent implements OnInit {
         this.stages= res?.data?.classes.find((item:any) => {         
             return item?.id==this.id
           })?.has_specialties
-          console.log(res)
           this.banner=res?.data?.classes.find((item:any) => {         
             return item?.id==this.id
           })?.header_image

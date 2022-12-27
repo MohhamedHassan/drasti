@@ -70,7 +70,6 @@ export class ClassDetailsComponent implements OnInit {
               if(res?.data?.length) {
                   if(Array.isArray(res?.data)) {
                     this.classDetails=res?.data.find((item:any) => item?.id==value?.id)
-                    console.log(this.classDetails)
                     this.offerSubjects=this.classDetails?.materials
                     this.ispaid= this.classDetails?.is_paid
                   }

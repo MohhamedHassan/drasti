@@ -61,7 +61,6 @@ getCart() {
           if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
         })
         this.total=price
-        console.log(price)
       }
      if(!!localStorage.getItem('drastitoken')) {
         if(res) this.loading=false
@@ -105,7 +104,7 @@ verifyCopon(value:string) {
       this.copontype=res?.data?.type
       this.coponid=res?.data?.id
       this.cartService.coponid.next({
-        coponamount:res?.data?.amount,
+        coponamount:this.discount,
         copontype:res?.data?.type,
         coponid:res?.data?.id
       })

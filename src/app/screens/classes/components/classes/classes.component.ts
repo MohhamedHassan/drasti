@@ -81,7 +81,6 @@ export class ClassesComponent implements OnInit {
             this.classes.map((item:any)=> {
               item.cart=false
             })
-            console.log(this.classes)
             this.banner=this.classes[0]?.class?.header_image
             this.getCart()
           }
