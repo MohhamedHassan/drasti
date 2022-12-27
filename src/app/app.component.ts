@@ -22,6 +22,8 @@ constructor(private authService:AuthService) {
 
 @HostListener("window:beforeunload", ["$event"])
 beforeUnloadHandler(event) {
-  this.authService.set_online_offline(0)
+  if(!!localStorage.getItem('drastitoken')) {
+    this.authService.set_online_offline(0)
+  }
 }
 }
