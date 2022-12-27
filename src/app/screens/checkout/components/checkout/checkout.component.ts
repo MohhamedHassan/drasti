@@ -18,6 +18,8 @@ export class CheckoutComponent implements OnInit {
   copontype=''
   coponamount=0
   coponid=null
+  total=0
+  discount
   constructor(private title:Title,
     private router:Router,
     public cartService:CartService,
@@ -30,15 +32,15 @@ export class CheckoutComponent implements OnInit {
     if(!!localStorage.getItem('drastitoken')) {
       this.hasAccount=true
     } 
-    this.activatedroute.queryParamMap.subscribe(
-      (res:any) =>  {
-        this.copontype=res?.params?.copontype
-        this.coponamount=Number(res?.params?.coponamount)
-        this.coponid=res?.params?.coponid
+
+    this.cartService.coponid.subscribe(res =>  {
+        if(res)   {
+          this.copontype=res?.copontype
+          this.coponamount=Number(res?.coponamount)
+          this.coponid=res?.coponid
+        }
         this.getCart()
-      }
-    )
-    
+    })
   }
 
   getCart() {
@@ -52,22 +54,20 @@ export class CheckoutComponent implements OnInit {
           if(!this.cartItems?.length) {
             this.router.navigate(['/cart'])
           } else {
-            if(!!localStorage.getItem('drastitoken')==false) {
-              let price = 0
-              this.cartItems.forEach(item => {
-                if(item?.has_material) price+=item?.material?.discount||item?.material?.price
-                if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
-              })
-              this.cartService.total=price
-            } 
-            if(this.cartService.total) {
-              if(this.copontype=='percentage') {
-                this.cartService.total = this.cartService.total -  (this.cartService.total*this.coponamount/100) 
-              }
-              else if (this.copontype=='fixed') {
-                this.cartService.total = this.cartService.total -  this.coponamount
-              }
-            }
+            let price = 0
+            this.cartItems.forEach(item => {
+              if(item?.has_material) price+=item?.material?.discount||item?.material?.price
+              if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
+            })
+            this.total=price
+            // if(this.total) {
+            //   if(this.copontype=='percentage') {
+            //     this.total = this.total -  (this.total*this.coponamount/100) 
+            //   }
+            //   else if (this.copontype=='fixed') {
+            //     this.total = this.total -  this.coponamount
+            //   }
+            // }
           }
 
         }

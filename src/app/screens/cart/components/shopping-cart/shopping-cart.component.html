@@ -125,20 +125,19 @@
                         style="border-bottom: 1px solid #b7cde1;">
                             <th class="p-2">المجموع</th>
                             <td class="p-2">
-                                د.ك  {{cartService.total|price}}
+                                د.ك  {{total|price}}
                             </td>
                         </tr>
                         <tr>
                             <th class="p-2">الاجمالي</th>
                             <td class="p-2">د.ك 
-                                {{cartService.total>discount ? (cartService.total-discount|price) : '0'}}</td>
+                                {{total>discount ? (total-discount|price) : '0'}}</td>
                         </tr>
                     </table>
 
                     <a 
                     style="border-radius: 5px"
                     routerLink="/checkout"
-                    [queryParams]="{coponamount,copontype,coponid}"
                     class="bluButton text-center  d-block"
                     >
                         التقدم لاتمام الطلب

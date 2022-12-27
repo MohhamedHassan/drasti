@@ -12,7 +12,7 @@ export class ShoppingCartComponent implements OnInit {
 
   loading=true
   cartItems:any[]=[]
-  total:any
+  total=0
   verifyCoponLoading=false
   disablecopon=false
   copontype=''
@@ -39,9 +39,10 @@ export class ShoppingCartComponent implements OnInit {
 
     }
   ngOnInit(): void {
- this.cartService.discount.subscribe(res =>  {
-  this.discount=res
- })
+    this.cartService.coponid.next(null)
+//  this.cartService.discount.subscribe(res =>  {
+//   this.discount=res
+//  })
     this.title.setTitle('سلة المشتريات - دراستي')
 this.getCart()
   }
@@ -54,14 +55,13 @@ getCart() {
     (res:any) =>  {
       if(res) {
         this.cartItems=res 
-        if(!!localStorage.getItem('drastitoken')==false) {
-          let price = 0
-          this.cartItems.forEach(item => {
-            if(item?.has_material) price+=item?.material?.discount||item?.material?.price
-            if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
-          })
-          this.cartService.total=price
-        } 
+        let price = 0
+        this.cartItems.forEach(item => {
+          if(item?.has_material) price+=item?.material?.discount||item?.material?.price
+          if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
+        })
+        this.total=price
+        console.log(price)
       }
      if(!!localStorage.getItem('drastitoken')) {
         if(res) this.loading=false
@@ -89,21 +89,26 @@ verifyCopon(value:string) {
       ` )
       this.disablecopon=true
       //cartService.total
-      if(this.cartService.total) {
+      if(this.total) {
         if(res?.data?.type=='percentage') {
-          this.discount=this.cartService.total * res?.data?.amount/100
+          this.discount=this.total * res?.data?.amount/100
         }
         else     this.discount = res?.data?.amount
     
       } else {
         if(res?.data?.type=='percentage') {
-          this.discount=this.cartService.total * res?.data?.amount/100
+          this.discount=this.total * res?.data?.amount/100
         }
         else     this.discount = res?.data?.amount
       }
       this.coponamount=res?.data?.amount
       this.copontype=res?.data?.type
       this.coponid=res?.data?.id
+      this.cartService.coponid.next({
+        coponamount:res?.data?.amount,
+        copontype:res?.data?.type,
+        coponid:res?.data?.id
+      })
     },err =>  {
       this.verifyCoponLoading=false
     })
