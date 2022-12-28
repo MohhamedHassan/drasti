@@ -39,14 +39,15 @@ export class CheckoutComponent implements OnInit {
           this.coponamount=Number(res?.coponamount)
           this.coponid=res?.coponid
         }
+        console.log(res)
         this.getCart()
     })
   }
 
   getCart() {
-    if(!!localStorage.getItem('drastitoken')) {
-      this.cartService.getCart()
-    }
+    // if(!!localStorage.getItem('drastitoken')) {
+    //   this.cartService.getCart()
+    // }
     this.cartService.cartItems.subscribe(
       (res:any) =>  {
         if(res) {

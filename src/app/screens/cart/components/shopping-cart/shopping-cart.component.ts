@@ -19,6 +19,7 @@ export class ShoppingCartComponent implements OnInit {
   coponamount=-1
   coponid=null
   discount=0
+  discountPersintg=0
   constructor(
     private title:Title,
     private toastr:ToastrService,
@@ -62,6 +63,11 @@ getCart() {
         })
         this.total=price
       }
+      if(this.discountPersintg) {
+        this.discount=this.total * this.discountPersintg/100
+      }
+    
+
      if(!!localStorage.getItem('drastitoken')) {
         if(res) this.loading=false
      } else {
@@ -91,26 +97,36 @@ verifyCopon(value:string) {
       if(this.total) {
         if(res?.data?.type=='percentage') {
           this.discount=this.total * res?.data?.amount/100
+          this.discountPersintg=res?.data?.amount
         }
-        else     this.discount = res?.data?.amount
+        else     {
+          this.discount = res?.data?.amount
+          this.discountPersintg=0
+        }
     
       } else {
         if(res?.data?.type=='percentage') {
           this.discount=this.total * res?.data?.amount/100
+          this.discountPersintg=res?.data?.amount
         }
-        else     this.discount = res?.data?.amount
+        else     {
+          this.discount = res?.data?.amount
+        this.discountPersintg=0
+        }
       }
       this.coponamount=res?.data?.amount
       this.copontype=res?.data?.type
       this.coponid=res?.data?.id
-      this.cartService.coponid.next({
-        coponamount:this.discount,
-        copontype:res?.data?.type,
-        coponid:res?.data?.id
-      })
+
     },err =>  {
       this.verifyCoponLoading=false
     })
   }
+}
+coponidnext() {
+  this.cartService.coponid.next({
+    coponamount:this.discount,
+    coponid:this.coponid
+  })
 }
 }
