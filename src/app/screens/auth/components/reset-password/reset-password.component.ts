@@ -21,7 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   sendotbLoading=false
   showsendcode=true
   savePhoneNumber=''
-  counter=60
+  counter=180
   enable=true
   setIntervalVariable:any
   showForm=false
@@ -115,13 +115,13 @@ if(this.enable) {
   this.sendOtb()
 } else {
   if(!this.intervalLoading) {
-    this.counter=60
+    this.counter=180
     this.enable=false
     this.intervalLoading=true
    this.setIntervalVariable = setInterval(() => {
       this.counter-=1
       if(this.counter==0) {
-        this.counter=60
+        this.counter=180
         clearInterval(this.setIntervalVariable)
         this.enable=true
         this.intervalLoading=false

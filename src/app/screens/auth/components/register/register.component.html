@@ -82,7 +82,7 @@ class="login">
                                 </p>
                                 <p
                                 *ngIf="showsendcode" 
-                                style="cursor: pointer;"
+                                style="cursor: pointer;font-size: 19px;"
                                 (click)="sendOtb()"
                                 class="mb-3 text-primary fw-bold">
                                     أرسال رمز التحقق
@@ -104,21 +104,21 @@ class="login">
                                     class="text-danger my-1">
                                         هذا الحقل مطلوب
                                     </p> -->
-                                    <p
+                                    <button
                                     style="cursor: pointer;"
                                     (click)="verifyCode()"
-                                    class="mb-1 text-primary">
-                                       أنقر هنا للتحقق 
+                                    class="mb-1 btn btn-primary my-1">
+                                       أضغط هنا للتحقق 
                                        <i 
                                        *ngIf="verifyOtbLoading"
                                        class="fas fa-circle-notch fa-spin"></i> 
-                                    </p>
+                                    </button>
                                     <div class="mt-3">
                                         <p class="mb-1 fw-bold"
                                         style="color:green;word-wrap: break-word;"
                                         >
                                            أدخل رمز التحقق المرسل الي 
-                                           {{registerForm.get('phne')}} 
+                                           {{registerForm.get('phone').value}} 
                                            <bdi
                                            style="color:green"
                                            >965+</bdi>
