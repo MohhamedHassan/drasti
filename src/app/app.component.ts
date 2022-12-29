@@ -12,11 +12,14 @@ export class AppComponent {
  
 
 constructor(private authService:AuthService) {
-  window.addEventListener("beforeunload", (event) => {
-    event.preventDefault();
-    event.returnValue = "Unsaved modifications";
-    return event;
- });
+  if(!!localStorage.getItem('drastitoken')) {
+    this.authService.set_online_offline(1)
+  }
+//   window.addEventListener("beforeunload", (event) => {
+//     event.preventDefault();
+//     event.returnValue = "Unsaved modifications";
+//     return event;
+//  });
 }
 
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NotUserGuard } from './guards/not-user.guard';
 import { UserGuard } from './guards/user.guard';
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
   },
   {
     path:'subject-videos/:id/:lessonid/:unitid',
+    canActivate:[NotUserGuard],
     loadChildren:() => import('src/app/screens/subject-videos/subject-videos.module').then(m =>m.SubjectVideosModule)
   },
   {
@@ -43,6 +45,11 @@ const routes: Routes = [
   {
     path:'checkout',
     loadChildren:() => import('src/app/screens/checkout/checkout.module').then(m =>m.CheckoutModule)
+  },
+  {
+    path:'my-courses',
+    canActivate:[NotUserGuard],
+    loadChildren:() => import('src/app/screens/my-courses/my-courses.module').then(m =>m.MyCoursesModule)
   },
   {
     path:'**',

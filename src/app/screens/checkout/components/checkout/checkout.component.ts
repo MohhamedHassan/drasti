@@ -39,7 +39,6 @@ export class CheckoutComponent implements OnInit {
           this.coponamount=Number(res?.coponamount)
           this.coponid=res?.coponid
         }
-        console.log(res)
         this.getCart()
     })
   }
