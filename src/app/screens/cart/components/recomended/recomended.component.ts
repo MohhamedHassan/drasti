@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import SwiperCore, { Navigation,Pagination } from 'swiper';
 import { Subscription } from 'rxjs';
+import { SubjectsService } from 'src/app/screens/classes/services/subjects.service';
 SwiperCore.use([Navigation,Pagination]);
 @Component({
   selector: 'app-recomended',
@@ -34,7 +35,8 @@ export class RecomendedComponent implements OnInit {
     }
   
   }
-  constructor(public cartService:CartService) { }
+  constructor(public cartService:CartService,
+    private subjectsService:SubjectsService) { }
 
   ngOnInit(): void {
     
@@ -81,6 +83,24 @@ export class RecomendedComponent implements OnInit {
         if(!!localStorage.getItem('drastitoken')==false) {
           let materials = this.cart.filter(i=>i.has_material)
           console.log(materials)
+          if (materials?.length) {
+            this.subjectsService.getSubjects(materials[0]?.material?.class_id,1).subscribe(
+              (res:any)=> {
+                  if(res?.data?.length) {
+                    this.recomended=res?.data
+                    this.recomended.forEach((element:any) => {
+                      element.cart=false
+                        this.cart.forEach((cartItem:any) => {
+                          if(element?.id==cartItem?.material?.id) {
+                            element.cart=true
+                          }
+                        })
+                    });
+            
+                  }
+              }
+            )
+          }
           // here
         } 
         this.recomended.forEach((element:any) => {
