@@ -14,8 +14,11 @@ export class MyCoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.myCoursesService.getMyCourses().subscribe(
-      res =>  {
-       
+      (res:any) =>  {
+       this.offer=res?.data.filter(i => i.material==null)
+       this.classes=res?.data.filter(i => i.offer==null)
+       this.classes= this.classes.map(i => i.material)
+       this.offer= this.offer.map(i => i.offer)
         this.loading=false
       }
     )

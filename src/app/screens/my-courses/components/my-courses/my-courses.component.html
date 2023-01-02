@@ -19,18 +19,18 @@ class="row my-5">
     class=" col-md-6 col-lg-4 col-xl-3 mb-4"
     >
         <div>
-            <!-- <app-cart
+            <app-cart
             [addeddTocart]="item?.cart"
             type="offer"
-            [classid]="classId"
-            [speid]="specialistId"
+            [classid]="item?.class_id"
+            [speid]="item?.specialty?.id ||-1"
             [id]="item?.id"
             [imgSrc]="item?.media"
             [name]="item?.name"
             [price]="item?.price"
             [discount]="item?.discount"
             [paid]="item?.is_paid"
-            ></app-cart> -->
+            ></app-cart>
         </div>
     </div>
 </div>

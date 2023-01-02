@@ -1,4 +1,6 @@
-<section style="min-height: 100vh;" class="conditions pb-5">
+<section 
+
+style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
     <header class="p-2 mb-5 blueHeader">
         <h1>
             اتمام الطلب
@@ -60,30 +62,46 @@
                                     <th>الخصم</th>
                                     <th>   د.ك {{coponamount|price}}</th>
                                 </tr>
-                                <tr>
+                                <tr *ngIf="chosenPaymentWay=='2'">
+                                    <th>رسوم بوابة الدفع </th>
+                                    <th>   د.ك {{(total-coponamount)*.025|price}} </th>
+                                </tr>
+                                <tr *ngIf="chosenPaymentWay=='2'">
                                     <th>الاجمالي</th>
-                                    <th>   د.ك {{total-coponamount|price}} </th>
+                                    <th>   د.ك {{(total-coponamount) + ((total-coponamount)*.025)|price}} </th>
+                                </tr>
+                                <tr *ngIf="chosenPaymentWay=='1'">
+                                    <th>الاجمالي</th>
+                                    <th>   د.ك {{(total-coponamount) |price}} </th>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- <div style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;">
-                         <input type="radio" id="one" name="fav_language" value="one">
+                    <div 
+                    [style.borderColor]="chosenPaymentWay=='1' ? '#2b6cb0' : '#cbd5e0'"
+                    style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;display: flex;">
+                         <input 
+                         [(ngModel)]="chosenPaymentWay"
+                         type="radio" id="one" name="payemntWay" value="1">
                          <label for="one">
-                            <img src="https://drastiq8.com/wp-content/plugins/No%20invoice%20woocommerce%20-%20Knet/assets/knet.png"
+                            <img src="assets/knet.png"
                             class="img-fluid"
                             alt="">
                          </label>
                     </div>
-                    <div style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;">
-                        <input type="radio" id="two" name="fav_language" value="two">
+                    <div
+                    [style.borderColor]="chosenPaymentWay=='2' ? '#2b6cb0' : '#cbd5e0'"
+                    style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;display: flex;">
+                        <input
+                        [(ngModel)]="chosenPaymentWay"
+                        type="radio" id="two" name="payemntWay" value="2">
                         <span class="mx-2"></span>
                         <label for="two">
-                           <img src="https://drastiq8.com/wp-content/plugins/No%20invoice%20woocommerce%20-%20Credit%20Card/assets/cc.png"
+                           <img src="assets/cc.png"
                            class="img-fluid"
                            alt="">
                         </label>
-                   </div> -->
+                   </div>
                     <button 
                     (click)="checkout()"
                     [disabled]="!hasAccount||checkoutLoading"

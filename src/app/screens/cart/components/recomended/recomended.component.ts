@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import SwiperCore, { Navigation,Pagination } from 'swiper';
+import { Subscription } from 'rxjs';
 SwiperCore.use([Navigation,Pagination]);
 @Component({
   selector: 'app-recomended',
@@ -11,6 +12,7 @@ export class RecomendedComponent implements OnInit {
   recomended:any[]=[]
   loading=false
   cart:any[]=[]
+  tounsubscribe:Subscription
   swpieroptions: any = {
     slidesPerView: 3,
     spaceBetween: "50",
@@ -36,15 +38,20 @@ export class RecomendedComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.cartService.getRecomnded().subscribe((res:any) =>  {
-      this.recomended=res?.data?.materials
-      if(Array.isArray(this.recomended)){
-        this.recomended.map((item:any)=> {
-          item.cart=false
-        })
-      } 
+    if(!!localStorage.getItem('drastitoken')) {
+      this.cartService.getRecomnded().subscribe((res:any) =>  {
+        this.recomended=res?.data?.materials
+        if(Array.isArray(this.recomended)){
+          this.recomended.map((item:any)=> {
+            item.cart=false
+          })
+        } 
+        this.getCart()
+      })
+    } else {
       this.getCart()
-    })
+    }
+
   }
   pushCartIds(event:any) {
     if(event?.type=='subject') {
@@ -68,9 +75,14 @@ export class RecomendedComponent implements OnInit {
     }
   }
   getCart() {
-    this.cartService.cartItems.subscribe((res:any)=> {
+   this.tounsubscribe= this.cartService.cartItems.subscribe((res:any)=> {
       if(res) {
         this.cart= res
+        if(!!localStorage.getItem('drastitoken')==false) {
+          let materials = this.cart.filter(i=>i.has_material)
+          console.log(materials)
+          // here
+        } 
         this.recomended.forEach((element:any) => {
           element.cart=false
             this.cart.forEach((cartItem:any) => {
@@ -83,5 +95,10 @@ export class RecomendedComponent implements OnInit {
       }
     })
  
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.tounsubscribe.unsubscribe()
   }
 }

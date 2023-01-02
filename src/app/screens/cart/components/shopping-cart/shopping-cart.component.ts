@@ -56,6 +56,7 @@ getCart() {
     (res:any) =>  {
       if(res) {
         this.cartItems=res 
+        console.log(this.cartItems)
         let price = 0
         this.cartItems.forEach(item => {
           if(item?.has_material) price+=item?.material?.discount||item?.material?.price

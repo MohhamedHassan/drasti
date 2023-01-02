@@ -20,6 +20,8 @@ export class CheckoutComponent implements OnInit {
   coponid=null
   total=0
   discount
+  chosenPaymentWay='1'
+  ids:any[]=[]
   constructor(private title:Title,
     private router:Router,
     public cartService:CartService,
@@ -41,6 +43,7 @@ export class CheckoutComponent implements OnInit {
         }
         this.getCart()
     })
+
   }
 
   getCart() {
@@ -68,6 +71,9 @@ export class CheckoutComponent implements OnInit {
             //     this.total = this.total -  this.coponamount
             //   }
             // }
+            this.cartItems.forEach((element:any) => {
+              this.ids.push(element?.id)
+          });
           }
 
         }
@@ -80,21 +86,16 @@ export class CheckoutComponent implements OnInit {
     )
   }
 checkout()  {
-  if(!!localStorage.getItem('drastitoken')&&! this.checkoutLoading) {
+
+  if(!!localStorage.getItem('drastitoken')) {
     this.checkoutLoading=true
-    this.cartService.getCart()
-    this.cartService.cartItems.subscribe((res:any) =>  {
-      let cart = res
-      let ids:any = []
-      cart.forEach((element:any) => {
-          ids.push(element?.id)
-      });
-      if(!!localStorage.getItem('drastitoken')) {
-        this.cartService.addOrder({cartdetail_ids:ids,coupon_id:this.coponid}).subscribe((res:any) =>  {
-          window.open(res?.data, '_blank');
-          this.router.navigate(['/'])
-        })
-      }
+    this.cartService.addOrder({
+      cartdetail_ids:this.ids,
+      coupon_id:this.coponid,
+      pay_by:Number(this.chosenPaymentWay)
+    }).subscribe((res:any) =>  {
+      window.open(res?.data, '_blank');
+      this.router.navigate(['/'])
     })
   }
 }
