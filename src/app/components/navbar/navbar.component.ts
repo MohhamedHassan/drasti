@@ -15,6 +15,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     if(!!localStorage.getItem('drastitoken')) {
       this.cartService.getCart()
+    } else {
+      this.cartService.cartItems.next([])
     } 
     this.cartService.cartItems.subscribe((res:any) =>  {
       if(res) {

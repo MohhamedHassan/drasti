@@ -71,6 +71,7 @@ export class CheckoutComponent implements OnInit {
             //     this.total = this.total -  this.coponamount
             //   }
             // }
+            this.ids=[]
             this.cartItems.forEach((element:any) => {
               this.ids.push(element?.id)
           });

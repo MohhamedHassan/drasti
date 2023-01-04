@@ -16,12 +16,12 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                     <app-register
                     *ngIf="registerOrLogin==1"
                     [checkout]="true"
-                    (hasAccount)="hasAccount=true"
+                    (hasAccount)="hasAccount=true;getCart()"
                     (login)="registerOrLogin=2"
                     ></app-register>
                     <app-login
                     [checkout]="true"
-                    (hasAccount)="hasAccount=true"
+                    (hasAccount)="hasAccount=true;getCart()"
                     (register)="registerOrLogin=1"
                     *ngIf="registerOrLogin==2"
                     ></app-login>
