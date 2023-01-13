@@ -34,7 +34,7 @@
              *ngIf="!islogin()"
              aria-label="تسجيل الدخول"
              routerLink="/auth/login"
-             class="bluButton">
+             class="bluButton login">
              <i class="fa-solid fa-right-to-bracket d-md-none"></i>
                <span class="d-none d-md-inline">
                   تسجيل الدخول
@@ -47,7 +47,7 @@
             *ngIf="islogin()"
             aria-label="تسجيل الخروج"
             (click)="authService.logout()"
-            class="bluButton">
+            class="bluButton logout">
             <i class="fa-solid fa-right-to-bracket d-md-none"></i> 
             <span class="d-none d-md-inline">
                تسجيل الخروج
