@@ -8,7 +8,7 @@ class="class-details pt-5">
     <i 
     (click)="showChatBox=true;scrollChatBox();"
     *ngIf="islogin() && classDetails?.is_paid&&classDetails?.has_chat&&type!='offer'&&showChatBox==false"
-    style="color:#b1b8c9;font-size:30px;position:fixed;bottom:20px;right:20px;cursor:pointer"
+    style="color:#b1b8c9;font-size:30px;position:fixed;bottom:20px;right:20px;cursor:pointer;z-index:11111111111"
     class="fa-solid fa-comment"></i>
         <div 
         class="row">
