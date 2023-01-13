@@ -92,4 +92,38 @@
       font-size: 20px;
    }
 }
+.chatbox {
+   position: fixed;
+   bottom: 0;
+   left: 20px;
+   width: 340px;
+
+   border: 1px solid #cfcfcf;
+   background-color: white;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   .body {
+      height: 50vh;
+      overflow: auto;
+   }
+   input {
+      width: 80%; 
+      border-radius: 20px;
+      border: none;
+      background-color: #e6e8ec;
+      outline: none;
+      padding: 5px 10px;
+   }
+   .footer {
+      i {
+         cursor: pointer;
+         color: #0034C2;;
+      }
+   }
+}
+@media only screen and (max-width: 600px) {
+   .chatbox {
+      width: 250px;
+   }
+}
 

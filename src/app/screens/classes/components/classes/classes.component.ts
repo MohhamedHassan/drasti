@@ -41,7 +41,8 @@ export class ClassesComponent implements OnInit {
               if(res?.data?.length) {
                 this.classes=res?.data
                 this.classes.map((item:any)=> {
-                  item.cart=false
+                  item.cart=false,
+                  item.speid=-1
                 })
                 if(this.classes?.length) {
                   this.stagename = `
@@ -79,7 +80,8 @@ export class ClassesComponent implements OnInit {
               `
             }
             this.classes.map((item:any)=> {
-              item.cart=false
+              item.cart=false,
+              item.speid=value?.spe
             })
             this.banner=this.classes[0]?.class?.header_image
             this.getCart()

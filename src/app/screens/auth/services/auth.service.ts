@@ -29,20 +29,22 @@ export class AuthService {
   }
   logout():any {
     this.logoutloading=true
-    this.http.post(`${environment.apiUrl}set_online_offline`,{"is_online":status}).subscribe(res => 
-        {
-          this.http.post(`${environment.apiUrl}logout`,{}).subscribe(
-            res => { 
-              this.cartService.cartItems.next([])
-              localStorage.removeItem('drastitoken')
-              this.router.navigate(['/'])
-              this.logoutloading=false
-            }
-          )
+    // this.http.post(`${environment.apiUrl}set_online_offline`,{"is_online":status}).subscribe(res => 
+    //     {
+      
+    //     }
+    //   )
+
+      this.http.post(`${environment.apiUrl}logout`,{}).subscribe(
+        res => { 
+          this.cartService.cartItems.next([])
+          localStorage.removeItem('drastitoken')
+          localStorage.removeItem('userid')
+          localStorage.removeItem('username')
+          this.router.navigate(['/'])
+          this.logoutloading=false
         }
       )
-
-     
     }
     set_online_offline(status:number) {
       this.http.post(`${environment.apiUrl}set_online_offline`,{"is_online":status}).subscribe(res => console.log())

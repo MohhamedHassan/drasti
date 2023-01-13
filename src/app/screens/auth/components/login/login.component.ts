@@ -5,12 +5,16 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
 import { CartService } from 'src/app/screens/cart/services/cart.service';
+import { FirebaseApp, initializeApp } from 'firebase/app';
+import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  app: FirebaseApp;
+  db: Database;
   returnPassword:boolean=false
   loginForm:FormGroup=new FormGroup({})
   submited=false
@@ -30,6 +34,17 @@ export class LoginComponent implements OnInit {
     private authservice:AuthService) { }
 
   ngOnInit(): void {
+    this.app = initializeApp({
+      apiKey: "AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc",
+      authDomain: "drasti-37a06.firebaseapp.com",
+      databaseURL: "https://drasti-37a06-default-rtdb.firebaseio.com",
+      projectId: "drasti-37a06",
+      storageBucket: "drasti-37a06.appspot.com",
+      messagingSenderId: "850147128578",
+      appId: "1:850147128578:web:2153add74417b85d4fbe1b",
+      measurementId: "G-41JEDDFQT2"
+    });
+    this.db = getDatabase(this.app);
     if(!this.checkout) {
       this.title.setTitle('تسجل الدخول - دراستي')
     }
@@ -49,7 +64,12 @@ login(value:any) {
       (res:any) => {
    
         localStorage.setItem('drastitoken',res?.meta?.token)
-        this.authservice.set_online_offline(1)
+        localStorage.setItem('userid',res?.data?.id)
+        localStorage.setItem('username',`${res?.data?.fname} ${res?.data?.lname}`)
+        set(ref(this.db, `Auth/${res?.data?.id}`), {
+          user_token:res?.meta?.token
+        });
+        //this.authservice.set_online_offline(1)
         if(this.cartitems?.length) {
           let offer_ids:any[]=[]
           let material_ids:any[]=[]

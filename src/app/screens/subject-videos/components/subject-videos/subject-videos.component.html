@@ -122,7 +122,7 @@ class="class-details">
                     allow="encrypted-media"
                     allowFullScreen="true"
                     [cachedSrc]="opendvideo.video_url"
-                    *ngIf="opendvideo?.video_type=='videocipher'"
+                    *ngIf="(opendvideo?.video_type=='videocipher'||opendvideo?.video_type=='vimeo') && opendvideo?.video_url"
                      class="w-100" style="height:70vh"></iframe>
                     <iframe 
                     allow="encrypted-media"

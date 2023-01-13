@@ -5,12 +5,16 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/screens/cart/services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { FirebaseApp, initializeApp } from 'firebase/app';
+import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  app: FirebaseApp;
+  db: Database;
   @Input() checkout:boolean=false
   @Output() hasAccount = new EventEmitter()
   @Output() login = new EventEmitter()
@@ -40,6 +44,17 @@ export class RegisterComponent implements OnInit {
     private authService:AuthService) { }
 
   ngOnInit(): void {
+    this.app = initializeApp({
+      apiKey: "AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc",
+      authDomain: "drasti-37a06.firebaseapp.com",
+      databaseURL: "https://drasti-37a06-default-rtdb.firebaseio.com",
+      projectId: "drasti-37a06",
+      storageBucket: "drasti-37a06.appspot.com",
+      messagingSenderId: "850147128578",
+      appId: "1:850147128578:web:2153add74417b85d4fbe1b",
+      measurementId: "G-41JEDDFQT2"
+    });
+    this.db = getDatabase(this.app);
     if(!this.checkout) {
       this.title.setTitle(' انشاء حساب - دراستي')
     }
@@ -66,7 +81,12 @@ export class RegisterComponent implements OnInit {
         this.authService.register(value).subscribe(
           (res:any)=> {
             localStorage.setItem('drastitoken',res?.meta?.token)
-            this.authService.set_online_offline(1)
+            localStorage.setItem('userid',res?.data?.id)
+            localStorage.setItem('username',`${res?.data?.fname} ${res?.data?.lname}`)
+            set(ref(this.db, `Auth/${res?.data?.id}`), {
+              user_token:res?.meta?.token
+            });
+         //   this.authService.set_online_offline(1)
             if(this.cartitems?.length) {
               let offer_ids:any[]=[]
               let material_ids:any[]=[]

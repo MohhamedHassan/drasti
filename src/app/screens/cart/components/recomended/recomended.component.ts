@@ -80,54 +80,13 @@ export class RecomendedComponent implements OnInit {
    this.tounsubscribe= this.cartService.cartItems.subscribe((res:any)=> {
       if(res) {
         this.cart= res
-        console.log(this.cart)
         if(!!localStorage.getItem('drastitoken')==false) {
           let materials = this.cart.filter(i=>i.has_material)
-          console.log(materials)
           if (materials?.length) {
-            this.subjectsService.getSubjects(materials[0]?.material?.class_id,1).subscribe(
-              (res:any)=> {
-                  if(res?.data?.length) {
-                    this.recomended=res?.data
-                    this.recomended.forEach((element:any) => {
-                      element.cart=false
-                        this.cart.forEach((cartItem:any) => {
-                          if(element?.id==cartItem?.material?.id) {
-                            element.cart=true
-                          }
-                        })
-                    });
-                    if(this.cart?.length && this.recomended?.length) {
-                      for(let i = 0 ; i < this.cart.length;i++) {
-                        for(let j = 0 ; j < this.recomended.length;j++) {
-                          if(this.cart[i]?.has_material && this.cart[i]?.material?.id == this.recomended[j]?.id) {
-                            this.recomended[j].display='none'
-                          }
-                          if(this.cart[i]?.has_offer) {
-                            for (let y = 0 ; y < this.cart[i]?.offer?.materials?.length;y++) {
-                              if( this.cart[i]?.offer?.materials[y]?.id == this.recomended[j]?.id) {
-                                this.recomended[j].display='none'
-                              }
-                            }
-                           
-                          }
-                        }
-                      }
-                    }
-                    this.recomended = this.recomended.filter(i => i?.display!='none')
-                    console.log(this.recomended)
-            console.log(this.recomended)
-                  }
-              }
-            )
-          } else {
-            let offers = this.cart.filter(i=>i.has_offer)
-            if(offers?.length) {
-              console.log('one')
-              this.subjectsService.getSubjects(offers[0]?.offer?.class_id,1).subscribe(
+            if(materials[0]?.material?.speid==-1) {
+              this.subjectsService.getSubjects(materials[0]?.material?.class_id,1).subscribe(
                 (res:any)=> {
                     if(res?.data?.length) {
-                      console.log('2')
                       this.recomended=res?.data
                       this.recomended.forEach((element:any) => {
                         element.cart=false
@@ -138,19 +97,14 @@ export class RecomendedComponent implements OnInit {
                           })
                       });
                       if(this.cart?.length && this.recomended?.length) {
-                        console.log('3')
                         for(let i = 0 ; i < this.cart.length;i++) {
                           for(let j = 0 ; j < this.recomended.length;j++) {
                             if(this.cart[i]?.has_material && this.cart[i]?.material?.id == this.recomended[j]?.id) {
                               this.recomended[j].display='none'
                             }
                             if(this.cart[i]?.has_offer) {
-                              console.log('4')
-                              console.log(this.cart[i]?.offer?.materials)
                               for (let y = 0 ; y < this.cart[i]?.offer?.materials?.length;y++) {
-                                console.log('5')
                                 if( this.cart[i]?.offer?.materials[y]?.id == this.recomended[j]?.id) {
-                                  console.log('5')
                                   this.recomended[j].display='none'
                                 }
                               }
@@ -160,7 +114,78 @@ export class RecomendedComponent implements OnInit {
                         }
                       }
                       this.recomended = this.recomended.filter(i => i?.display!='none')
-                      console.log(this.recomended)
+                    }
+                }
+              )
+            } else {
+              this.subjectsService.getSubjectsWithSpecialist(materials[0]?.material?.class_id,materials[0]?.material?.speid,1).subscribe(
+                (res:any)=> {
+                    if(res?.data?.length) {
+                      this.recomended=res?.data
+                      this.recomended.forEach((element:any) => {
+                        element.cart=false
+                          this.cart.forEach((cartItem:any) => {
+                            if(element?.id==cartItem?.material?.id) {
+                              element.cart=true
+                            }
+                          })
+                      });
+                      if(this.cart?.length && this.recomended?.length) {
+                        for(let i = 0 ; i < this.cart.length;i++) {
+                          for(let j = 0 ; j < this.recomended.length;j++) {
+                            if(this.cart[i]?.has_material && this.cart[i]?.material?.id == this.recomended[j]?.id) {
+                              this.recomended[j].display='none'
+                            }
+                            if(this.cart[i]?.has_offer) {
+                              for (let y = 0 ; y < this.cart[i]?.offer?.materials?.length;y++) {
+                                if( this.cart[i]?.offer?.materials[y]?.id == this.recomended[j]?.id) {
+                                  this.recomended[j].display='none'
+                                }
+                              }
+                             
+                            }
+                          }
+                        }
+                      }
+                      this.recomended = this.recomended.filter(i => i?.display!='none')
+                    }
+                }
+              )
+            }
+           
+          } else {
+            let offers = this.cart.filter(i=>i.has_offer)
+            if(offers?.length) {
+              this.subjectsService.getSubjects(offers[0]?.offer?.class_id,1).subscribe(
+                (res:any)=> {
+                    if(res?.data?.length) {
+                      this.recomended=res?.data
+                      this.recomended.forEach((element:any) => {
+                        element.cart=false
+                          this.cart.forEach((cartItem:any) => {
+                            if(element?.id==cartItem?.material?.id) {
+                              element.cart=true
+                            }
+                          })
+                      });
+                      if(this.cart?.length && this.recomended?.length) {
+                        for(let i = 0 ; i < this.cart.length;i++) {
+                          for(let j = 0 ; j < this.recomended.length;j++) {
+                            if(this.cart[i]?.has_material && this.cart[i]?.material?.id == this.recomended[j]?.id) {
+                              this.recomended[j].display='none'
+                            }
+                            if(this.cart[i]?.has_offer) {
+                              for (let y = 0 ; y < this.cart[i]?.offer?.materials?.length;y++) {
+                                if( this.cart[i]?.offer?.materials[y]?.id == this.recomended[j]?.id) {
+                                  this.recomended[j].display='none'
+                                }
+                              }
+                             
+                            }
+                          }
+                        }
+                      }
+                      this.recomended = this.recomended.filter(i => i?.display!='none')
                     }
                 }
               )

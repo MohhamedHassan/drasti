@@ -32,6 +32,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       if ([401, 403].indexOf(err.status) !== -1) {
         this.cartService.cartItems.next([])
         localStorage.removeItem('drastitoken')
+        localStorage.removeItem('userid')
+        localStorage.removeItem('username')
        // this.router.navigate(['/'])
       } 
       return throwError(err)

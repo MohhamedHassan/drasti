@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { CartComponent } from './components/cart/cart.component';
 import { RouterModule } from '@angular/router';
@@ -11,7 +11,7 @@ import { PricePipe } from '../pipes/price.pipe';
 import { SwiperModule } from 'swiper/angular';
 import { IframeDirective } from './directive/iframe.directive';
 import { DirecifraneDirective } from './directive/direcifrane.directive';
-
+import {AngularFireStorageModule} from  '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import { DirecifraneDirective } from './directive/direcifrane.directive';
     DirecifraneDirective
   ],
   imports: [
+    AngularFireStorageModule,
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
@@ -32,6 +33,7 @@ import { DirecifraneDirective } from './directive/direcifrane.directive';
     SwiperModule,
   ],
   exports:[
+    AngularFireStorageModule,
     SwiperModule,
     HeaderComponent,
     CartComponent,
@@ -43,6 +45,6 @@ import { DirecifraneDirective } from './directive/direcifrane.directive';
     PricePipe,
     IframeDirective,
     DirecifraneDirective
-  ]
+  ],providers:[DatePipe]
 })
 export class SharedModule { }

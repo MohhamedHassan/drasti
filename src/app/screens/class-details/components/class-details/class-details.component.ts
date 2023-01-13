@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -6,6 +6,11 @@ import { CartService } from 'src/app/screens/cart/services/cart.service';
 import { SubjectsService } from 'src/app/screens/classes/services/subjects.service';
 import { ClassDetailsService } from '../../services/class-details.service';
 import SwiperCore, { Navigation,Pagination } from 'swiper';
+import { FirebaseApp, initializeApp } from 'firebase/app';
+import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {AngularFireStorage} from "@angular/fire/compat/storage"
+import { DatePipe } from '@angular/common';
 SwiperCore.use([Navigation,Pagination]);
 @Component({
   selector: 'app-class-details',
@@ -13,6 +18,11 @@ SwiperCore.use([Navigation,Pagination]);
   styleUrls: ['./class-details.component.scss']
 })
 export class ClassDetailsComponent implements OnInit {
+  @ViewChild('boxchat') boxchat:ElementRef
+  showChatBox=false
+  messages:any=[]
+  app: FirebaseApp;
+  db: Database;
   swpieroptions: any = {
     slidesPerView: 3,
     spaceBetween: "50",
@@ -46,7 +56,11 @@ export class ClassDetailsComponent implements OnInit {
   cartitems:any[]=[]
   attachOrClasses=1
   attchments:any[]=[]
+  classid
   constructor(private classdetailsService:ClassDetailsService,
+    private angularFireStore:AngularFireStorage,
+      private datepipe:DatePipe,
+        private afs: AngularFirestore,
       private _sanitizer:DomSanitizer,
     private title:Title,
     private cartService:CartService,
@@ -57,10 +71,83 @@ export class ClassDetailsComponent implements OnInit {
     // ngAfterViewInit() {
     //   this.ref.detach()
     // }
+    scrollChatBox() {
+      setTimeout(() => {
+        if(this.boxchat) {
+          this.boxchat.nativeElement.scrollTop= this.boxchat.nativeElement.scrollHeight
+        }
+      },10)
+    }
+    onImageChange(event) {
+      const img:any = event?.target?.files[0]
+      console.log(img) 
+      let reference = this.angularFireStore.ref('message_images/'+`photo_message_${this.datepipe.transform(new Date,'yyyy-MM-dd h:mm:ss')}`)
+      reference.put(img).then(() =>  {
+        reference.getDownloadURL().subscribe(imageurl =>  {
+          let date = new Date()
+          set(ref(this.db, `Messages/${this.classid}/${localStorage.getItem('userid')}/${this.afs.createId()}`), {
+            date:this.datepipe.transform(date,'yyyy-MM-dd h:mm:ss'),
+            from:localStorage.getItem('username'),
+            from_id:localStorage.getItem('userid'),
+            message_content:imageurl,
+            to:this.classDetails?.name,
+            to_id:this.classid,
+            type:"photo"
+          });
+        })
+      })
+    }
   ngOnInit(): void {
+
+    this.app = initializeApp({
+      apiKey: "AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc",
+      authDomain: "drasti-37a06.firebaseapp.com",
+      databaseURL: "https://drasti-37a06-default-rtdb.firebaseio.com",
+      projectId: "drasti-37a06",
+      storageBucket: "drasti-37a06.appspot.com",
+      messagingSenderId: "850147128578",
+      appId: "1:850147128578:web:2153add74417b85d4fbe1b",
+      measurementId: "G-41JEDDFQT2"
+    });
+    this.db = getDatabase(this.app);
     window.scroll(0,0)
     this.title.setTitle(` دراستي - ادرس وانت متطمن `)
     this.activatedRoute.params.subscribe((value:any) =>  {
+      this.classid=value?.id
+      const authRef = ref(this.db, 'Messages');
+      onValue(authRef, (snapshot: any) => {
+        this.messages=[]
+        if(!!localStorage.getItem('drastitoken')) { 
+          const data = snapshot.val();
+          let subjectMessages =null
+          for (let i in data) {
+            if(i==value?.id) subjectMessages=data[i]
+          }
+          if(subjectMessages) {
+            let currentUserMessages = null
+            for (let i in subjectMessages) {
+              if(i==localStorage.getItem('userid')) currentUserMessages=subjectMessages[i]
+            }
+            if(currentUserMessages) {
+              for (let i in currentUserMessages) {
+                this.messages.push(currentUserMessages[i])
+              }
+              this.messages =  this.messages.sort(function(a,b){
+                let left:any =new Date(a.date)
+                let right:any = new Date(b.date)
+                return left - right 
+              })
+            }
+            console.log(data)
+          }
+          setTimeout(() => {
+            if(this.boxchat) {
+              this.boxchat.nativeElement.scrollTop= this.boxchat.nativeElement.scrollHeight
+            }
+          },10)
+
+        }
+      });
       this.loading=true
       this.type=value?.type
       if(value?.type=='offer') {
@@ -70,6 +157,7 @@ export class ClassDetailsComponent implements OnInit {
               if(res?.data?.length) {
                   if(Array.isArray(res?.data)) {
                     this.classDetails=res?.data.find((item:any) => item?.id==value?.id)
+                    this.classDetails.speid=-1
                     this.offerSubjects=this.classDetails?.materials
                     this.ispaid= this.classDetails?.is_paid
                   }
@@ -100,6 +188,7 @@ export class ClassDetailsComponent implements OnInit {
       
  
             this.classDetails=res?.data
+            this.classDetails.speid=value?.spe
             this.ispaid=res?.data?.is_paid
             if(this.ispaid) {
               this.attchments = [...res?.data?.public_attachment,...res?.data?.private_attachment]
@@ -123,7 +212,6 @@ export class ClassDetailsComponent implements OnInit {
     })
     
 
-   
     
   }
   savedYoutube(link:any):any {
@@ -220,6 +308,29 @@ pushCartIds() {
         this.getCart()
 
     }
+  }
+}
+get userid() {
+  return localStorage.getItem('userid')
+}
+islogin() {
+  return !!localStorage.getItem('drastitoken')
+}
+sendMessage(input:any) {
+  let inputValue = input.value
+  if(inputValue.toString().trim().length>0) {
+    let date = new Date()
+    set(ref(this.db, `Messages/${this.classid}/${localStorage.getItem('userid')}/${this.afs.createId()}`), {
+      date:this.datepipe.transform(date,'yyyy-MM-dd h:mm:ss'),
+      from:localStorage.getItem('username'),
+      from_id:localStorage.getItem('userid'),
+      message_content:inputValue,
+      to:this.classDetails?.name,
+      to_id:this.classid,
+      type:"text"
+    });
+    input.value=''
+   
   }
 }
 }

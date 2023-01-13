@@ -11,22 +11,35 @@ import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
-import { TestDirective } from './test.directive';
-
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import {AngularFireModule} from '@angular/fire/compat'
+import {AngularFireAuthModule} from '@angular/fire/compat/auth'
+import {AngularFirestoreModule} from '@angular/fire/compat/firestore'
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    NotFoundComponent,
-    TestDirective
+    NotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc",
+      authDomain: "drasti-37a06.firebaseapp.com",
+      databaseURL: "https://drasti-37a06-default-rtdb.firebaseio.com",
+      projectId: "drasti-37a06",
+      storageBucket: "drasti-37a06.appspot.com",
+      messagingSenderId: "850147128578",
+      appId: "1:850147128578:web:2153add74417b85d4fbe1b",
+      measurementId: "G-41JEDDFQT2"
+    }),
   ],
   providers: [
     {
