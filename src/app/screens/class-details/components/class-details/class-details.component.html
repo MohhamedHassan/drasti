@@ -149,8 +149,8 @@ class="class-details pt-5">
                     <iframe 
                     allow="encrypted-media"
                     allowFullScreen="true"
-                    [cachedSrc]="classDetails?.video_url"
-                    *ngIf="(classDetails?.video_type=='videocipher'||classDetails?.video_type=='vimeo') && classDetails?.video_url"
+                    [cachedSrc]="classDetails?.video_url || classDetails?.video_vimeo_url"
+                    *ngIf="(classDetails?.video_type=='videocipher'||classDetails?.video_type=='vimeo')"
                      class="w-100" style="height:360px"></iframe>
                     <iframe 
                     allow="encrypted-media"

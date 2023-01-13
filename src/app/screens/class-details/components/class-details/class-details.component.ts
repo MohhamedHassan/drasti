@@ -80,7 +80,7 @@ export class ClassDetailsComponent implements OnInit {
     }
     onImageChange(event) {
       const img:any = event?.target?.files[0]
-      console.log(img) 
+
       let reference = this.angularFireStore.ref('message_images/'+`photo_message_${this.datepipe.transform(new Date,'yyyy-MM-dd h:mm:ss')}`)
       reference.put(img).then(() =>  {
         reference.getDownloadURL().subscribe(imageurl =>  {
@@ -138,7 +138,6 @@ export class ClassDetailsComponent implements OnInit {
                 return left - right 
               })
             }
-            console.log(data)
           }
           setTimeout(() => {
             if(this.boxchat) {
