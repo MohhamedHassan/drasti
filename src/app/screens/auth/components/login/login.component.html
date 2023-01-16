@@ -34,9 +34,8 @@ class="login">
                             <div class="d-flex align-items-center mb-3">
                                 <input 
                                 min="1"
-                                onKeyPress="if(this.value.length==8) return false;"
                                 formControlName="phone"
-                                type="number" class="form-control phonenumberRight">
+                              class="form-control phonenumberRight">
                                 <input 
                                 value="+965" readonly class="form-control phonenumberLeft">
                             </div>
@@ -44,7 +43,7 @@ class="login">
                             *ngIf="(loginForm.get('phone')?.errors!=null&&loginForm.get('phone')?.touched) || 
                             (loginForm.get('phone')?.errors!=null&&submited)"
                             class="text-danger my-2">
-                            يبدأ رقم الهاتف ب 5 و لا يقل عن ثمانية أرقام
+                          يرجى ادخال رقم هاتف صحيح
                             </p>
                         </div>
                         <!--  -->
@@ -52,9 +51,19 @@ class="login">
                             <label for="password">
                                 كلمة المرور <span class="redstar">*</span>
                             </label>
-                            <input 
-                            formControlName="password"
-                            id="password" type="password" class="form-control">
+                            <div class="position-relative">
+                                <input 
+                                formControlName="password"
+                                 [type]="password?'password':'text'" class="form-control">
+                                <i 
+                                [ngClass]="{
+                                    'fa-eye': password,
+                                    'fa-eye-slash': !password
+                                }"
+                                (click)="password=!password"
+                                style="position: absolute;top: 11px;left: 11px;cursor: pointer;"
+                                class="fa-solid "></i>
+                            </div>
                             <p 
                             *ngIf="(loginForm.get('password')?.errors!=null&&loginForm.get('password')?.touched) || 
                             (loginForm.get('password')?.errors!=null&&submited)"

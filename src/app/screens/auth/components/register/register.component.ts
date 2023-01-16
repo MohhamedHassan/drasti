@@ -13,9 +13,12 @@ import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  password=true
+  password2=true
   app: FirebaseApp;
   db: Database;
   @Input() checkout:boolean=false
+  @Input() registerclick:boolean=false
   @Output() hasAccount = new EventEmitter()
   @Output() login = new EventEmitter()
   registerForm:FormGroup=new FormGroup({})
@@ -32,7 +35,7 @@ export class RegisterComponent implements OnInit {
   registerLoading=false
   intervalLoading=false
   verificationControl:FormControl=
-  new FormControl('',[Validators.required])
+  new FormControl('',[Validators.required,Validators.pattern(/^[569]\d{7}$/)])
   emitLogin() {
     this.login.emit(true)
   }
@@ -42,7 +45,12 @@ export class RegisterComponent implements OnInit {
     private title:Title,
     private router:Router,
     private authService:AuthService) { }
-
+ngOnChanges(changes): void {
+ if(changes?.registerclick?.currentValue) {
+      this.register(this.registerForm.value)
+ }
+  
+}
   ngOnInit(): void {
     this.app = initializeApp({
       apiKey: "AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc",
@@ -59,10 +67,10 @@ export class RegisterComponent implements OnInit {
       this.title.setTitle(' انشاء حساب - دراستي')
     }
     this.registerForm=this.fb.group({
-      fname:['',[Validators.required,Validators.minLength(3)]],
-      lname:['',[Validators.minLength(3)]],
-      password:['',[Validators.required,Validators.minLength(6)]],
-      phone:['',[Validators.required,Validators.pattern(/^5\d{7}$/)]],
+      fname:['',[Validators.required]],
+      lname:[''],
+      password:['',[Validators.required,Validators.minLength(4)]],
+      phone:['',[Validators.required,Validators.pattern(/^[569]\d{7}$/)]],
       password_confirmation:['',Validators.required],
       agree:['',Validators.required]
     })
@@ -72,7 +80,7 @@ export class RegisterComponent implements OnInit {
   }
   register(value:any) {
     this.submited=true
-    if(this.registerForm.valid&&this.verified&&
+    if(!this.registerLoading&&this.registerForm.valid&&this.verified&&
       (this.registerForm.get('password_confirmation')?.value == this.registerForm.get('password')?.value)
       ) {
         value.phone=String(value.phone)

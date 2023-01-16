@@ -13,6 +13,7 @@ import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  password=true
   app: FirebaseApp;
   db: Database;
   returnPassword:boolean=false
@@ -49,9 +50,13 @@ export class LoginComponent implements OnInit {
       this.title.setTitle('تسجل الدخول - دراستي')
     }
     this.loginForm = this.fb.group({
-      phone:['',[Validators.required,Validators.pattern(/^5\d{7}$/)]],
+      phone:['',[Validators.required,Validators.pattern(/^[569]\d{7}$/)]],
       password:['',Validators.required],
     })
+    //    this.loginForm = this.fb.group({
+    //   phone:[''],
+    //   password:[''],
+    // })
     this.cartService.cartItems.subscribe((cart:any) =>  {
       this.cartitems=cart
     })

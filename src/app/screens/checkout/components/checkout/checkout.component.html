@@ -14,14 +14,15 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                 <div>
                     <h4 class="mb-4">تفاصيل الفاتورة</h4>
                     <app-register
+                    [registerclick]="registerClick"
                     *ngIf="registerOrLogin==1"
                     [checkout]="true"
-                    (hasAccount)="hasAccount=true;getCart()"
+                    (hasAccount)="hasAccount=true;checkout() "
                     (login)="registerOrLogin=2"
                     ></app-register>
                     <app-login
                     [checkout]="true"
-                    (hasAccount)="hasAccount=true;getCart()"
+                    (hasAccount)="hasAccount=true;checkout() "
                     (register)="registerOrLogin=1"
                     *ngIf="registerOrLogin==2"
                     ></app-login>
@@ -46,7 +47,23 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of cartItems">
-                                    <td>  {{item?.material?.name || item?.offer?.name}} </td>
+                                    <td>  
+                                        {{item?.material?.name || item?.offer?.name}}
+                                        <ng-container *ngIf="item?.has_offer">
+                                            <div 
+                                            class="mx-4 my-3"
+                                            *ngFor="let child of item?.offer?.materials"
+                                            >
+                                           
+                                               <a 
+                                               class="d-inline-block"
+                                               >
+                                              {{child?.name}}
+                                                </a>
+                                            </div>
+                                        </ng-container>
+                                        
+                                    </td>
                                     <td 
                                     *ngIf="item?.has_material"
                                     >
@@ -104,7 +121,7 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                    </div>
                     <button 
                     (click)="checkout()"
-                    [disabled]="!hasAccount||checkoutLoading"
+                    [disabled]="checkoutLoading"
                     style="border-radius: 5px" class="w-100 bluButton text-center">
                         تأكيد الطلب
                         <i 

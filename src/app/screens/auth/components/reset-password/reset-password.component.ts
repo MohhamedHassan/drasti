@@ -11,9 +11,11 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
+  password=true
+  password2=true
   submitedphonecontrol=false
   phoneControl:FormControl=
-  new FormControl('',[Validators.required,Validators.pattern(/^5\d{7}$/)])
+  new FormControl('',[Validators.required])
   verificationControl:FormControl=
   new FormControl('',[Validators.required])
   verifyOtbLoading=false

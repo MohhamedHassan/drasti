@@ -22,7 +22,7 @@ class="login">
             }"
            >
                 <div>
-                    <h2    [hidden]="checkout">انشاء حساب</h2>
+                    <h2    [hidden]="checkout">أنشاء حساب</h2>
                     <form 
                     [class.page]="!checkout"
                     (ngSubmit)="register(registerForm.value)"
@@ -40,7 +40,7 @@ class="login">
                                 *ngIf="(registerForm.get('fname')?.errors!=null&&registerForm.get('fname')?.touched) || 
                                 (registerForm.get('fname')?.errors!=null&&submited)"
                                 class="text-danger my-1">
-                                   لا يقل عن ثلاثة حروف
+                                هذا الحقل مطلوب
                                 </p>
                             </div>
                         </div>
@@ -67,10 +67,9 @@ class="login">
                                 <label>رقم الهاتف</label>
                                 <div class="d-flex align-items-center mb-2">
                                     <input 
-                                    onKeyPress="if(this.value.length==8) return false;"
                                     min="1"
                                     formControlName="phone"
-                                    type="number" class="form-control phonenumberRight">
+                                class="form-control phonenumberRight">
                                     <input 
                                     value="965+" readonly class="form-control phonenumberLeft">
                                 </div>
@@ -78,7 +77,7 @@ class="login">
                                 *ngIf="(registerForm.get('phone')?.errors!=null&&registerForm.get('phone')?.touched) || 
                                 (registerForm.get('phone')?.errors!=null&&submited)"
                                 class="text-danger my-2">
-                                يبدأ رقم الهاتف ب 5 و لا يقل عن ثمانية أرقام
+                              يرجى ادخال رقم هاتف صحيح
                                 </p>
                                 <p
                                 *ngIf="showsendcode" 
@@ -148,14 +147,25 @@ class="login">
                                 <label  >
                                      أنشاء كلمة مرور للحساب <span class="redstar">*</span>
                                 </label>
-                                <input
-                                formControlName="password"
-                                type="password" class="form-control">
+                                <div class="position-relative">
+                                    <input 
+                                    formControlName="password"
+                                     [type]="password?'password':'text'" class="form-control">
+                                    <i 
+                                    [ngClass]="{
+                                        'fa-eye': password,
+                                        'fa-eye-slash': !password
+                                    }"
+                                    (click)="password=!password"
+                                    style="position: absolute;top: 11px;left: 11px;cursor: pointer;"
+                                    class="fa-solid "></i>
+                                </div>
+
                                 <p 
                                 *ngIf="(registerForm.get('password')?.errors!=null&&registerForm.get('password')?.touched) || 
                                 (registerForm.get('password')?.errors!=null&&submited)"
                                 class="text-danger my-1">
-                                   لا يقل عن ست حروف
+                                   لا يقل عن اربع حروف
                                 </p>
                             </div>
                         </div>
@@ -165,9 +175,19 @@ class="login">
                                 <label  >
                                      تأكيد كلمة المرور   <span class="redstar">*</span>
                                 </label>
-                                <input 
-                                formControlName="password_confirmation"
-                                type="password" class="form-control">
+                                <div class="position-relative">
+                                    <input 
+                                    formControlName="password_confirmation"
+                                     [type]="password2?'password':'text'" class="form-control">
+                                    <i 
+                                    [ngClass]="{
+                                        'fa-eye': password2,
+                                        'fa-eye-slash': !password2
+                                    }"
+                                    (click)="password2=!password2"
+                                    style="position: absolute;top: 11px;left: 11px;cursor: pointer;"
+                                    class="fa-solid "></i>
+                                </div>
                                 <p 
                                 *ngIf="(registerForm.get('password_confirmation')?.value !== registerForm.get('password')?.value&&registerForm.get('password_confirmation')?.touched) || 
                                 (registerForm.get('password_confirmation')?.value !== registerForm.get('password')?.value&&submited)"
@@ -199,7 +219,9 @@ class="login">
                                 هذا الحقل مطلوب
                             </p>
                         </div>
-                        <div class="col-lg-12">
+                        <div
+                        *ngIf="!checkout"
+                        class="col-lg-12">
                             <button 
                             [disabled]="registerLoading"
                             class="bluButton submitinput w-100 text-center">
@@ -209,6 +231,8 @@ class="login">
                                 class="fas fa-circle-notch fa-spin"></i>  
                             </button>
                         </div>
+
+                        <app-loading *ngIf="registerLoading&&checkout"></app-loading>
                         <div 
                         *ngIf="!checkout"
                         class="my-1">
@@ -219,7 +243,7 @@ class="login">
                                تسجيل الدخول
                             </a>
                         </div>  
-                        <div 
+                        <!-- <div 
                 
                         *ngIf="checkout"
                         class="my-1">
@@ -230,7 +254,7 @@ class="login">
                             >
                                تسجيل الدخول
                             </a>
-                        </div>  
+                        </div>   -->
                     </form>
                
                 </div>
