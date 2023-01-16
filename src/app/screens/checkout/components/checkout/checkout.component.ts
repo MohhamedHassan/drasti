@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,7 @@ import { CartService } from 'src/app/screens/cart/services/cart.service';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit,OnDestroy {
   registerClick=false
   hasAccount=false
   registerOrLogin=1
@@ -25,6 +25,7 @@ export class CheckoutComponent implements OnInit {
   chosenPaymentWay='1'
   ids:any[]=[]
   subscribtion:Subscription
+  subscribtion2:Subscription
   constructor(private title:Title,
     private router:Router,
     public cartService:CartService,
@@ -90,7 +91,7 @@ export class CheckoutComponent implements OnInit {
     )
   }
 checkout()  {
-  this.subscribtion= this.cartService.cartItems.subscribe(
+  this.subscribtion2= this.cartService.cartItems.subscribe(
     (res:any) =>  {
       if(res) {
         this.cartItems=res 
@@ -131,5 +132,6 @@ ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
   this.subscribtion.unsubscribe()
+  this.subscribtion2.unsubscribe()
 }
 }
