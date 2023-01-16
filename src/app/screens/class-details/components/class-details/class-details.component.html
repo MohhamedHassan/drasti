@@ -5,6 +5,8 @@ class="class-details pt-5">
     <div 
     *ngIf="!loading"
     class="container">
+
+
     <i 
     (click)="showChatBox=true;scrollChatBox();"
     *ngIf="islogin() && classDetails?.is_paid&&classDetails?.has_chat&&type!='offer'&&showChatBox==false"
@@ -149,8 +151,8 @@ class="class-details pt-5">
                     <iframe 
                     allow="encrypted-media"
                     allowFullScreen="true"
-                    [cachedSrc]="classDetails?.video_url || classDetails?.video_vimeo_url"
-                    *ngIf="(classDetails?.video_type=='videocipher'||classDetails?.video_type=='vimeo')"
+                    [cachedSrc]="classDetails?.video_url || classDetails?.video_vimeo_url || classDetails?.video_upload"
+                    *ngIf="(classDetails?.video_type=='videocipher'||classDetails?.video_type=='vimeo'||classDetails?.video_type=='upload')"
                      class="w-100" style="height:360px"></iframe>
                     <iframe 
                     allow="encrypted-media"
@@ -158,8 +160,11 @@ class="class-details pt-5">
                     [cachedSrc]="savedYoutube(classDetails?.video_youtube)"
                     *ngIf="classDetails?.video_type=='youtube'"
                      class="w-100" style="height:360px"></iframe>
+
+                     
+
                     <img 
-                    *ngIf="classDetails?.video_type!='videocipher'&&classDetails?.video_type!='youtube'&&classDetails?.video_type!='vimeo'"
+                    *ngIf="classDetails?.video_type!='videocipher'&&classDetails?.video_type!='youtube'&&classDetails?.video_type!='vimeo'&&classDetails?.video_type!='upload'"
                     [src]="classDetails?.media" class="w-100" alt="دراستي">
                     <ng-container         *ngIf="!ispaid">
                         <div 
