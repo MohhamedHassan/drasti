@@ -131,7 +131,11 @@ checkout()  {
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
+ if(this.subscribtion) {
   this.subscribtion.unsubscribe()
+ }
+ if(this.subscribtion2) {
   this.subscribtion2.unsubscribe()
+ }
 }
 }
