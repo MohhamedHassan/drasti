@@ -71,7 +71,8 @@ ngOnChanges(changes): void {
       fname:['',[Validators.required]],
       lname:[''],
       password:['',[Validators.required,Validators.minLength(4)]],
-      phone:['',[Validators.required,Validators.pattern(/^[569]\d{7}$/)]],
+      phone:['',[Validators.required,
+        Validators.pattern(/^[569٥٦٩][\u0660-\u0669]{7}$|^[569٥٦٩]\d{7}$/)]],
       password_confirmation:['',Validators.required],
       agree:['',Validators.required]
     })

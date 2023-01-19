@@ -57,7 +57,8 @@ export class LoginComponent implements OnInit {
       this.title.setTitle('تسجل الدخول - دراستي')
     }
     this.loginForm = this.fb.group({
-      phone:['',[Validators.required,Validators.pattern(/^[569٥٦٩]\d{7}$/)]],
+      phone:['',[Validators.required,
+        Validators.pattern(/^[569٥٦٩][\u0660-\u0669]{7}$|^[569٥٦٩]\d{7}$/)]],
       password:['',Validators.required],
     })
     //    this.loginForm = this.fb.group({
