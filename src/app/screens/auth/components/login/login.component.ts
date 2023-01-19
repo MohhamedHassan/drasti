@@ -13,6 +13,7 @@ import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  @Input() registerclick=0
   password=true
   app: FirebaseApp;
   db: Database;
@@ -27,6 +28,12 @@ export class LoginComponent implements OnInit {
   emitRegister() {
     this.register.emit(true)
   }
+  ngOnChanges(changes): void {
+    if(changes?.registerclick?.currentValue) {
+         this.login(this.loginForm.value)
+    }
+     
+   }
   constructor(private fb:FormBuilder,
     private title:Title,
     private router:Router,
@@ -50,7 +57,7 @@ export class LoginComponent implements OnInit {
       this.title.setTitle('تسجل الدخول - دراستي')
     }
     this.loginForm = this.fb.group({
-      phone:['',[Validators.required,Validators.pattern(/^[569]\d{7}$/)]],
+      phone:['',[Validators.required,Validators.pattern(/^[569٥٦٩]\d{7}$/)]],
       password:['',Validators.required],
     })
     //    this.loginForm = this.fb.group({
@@ -95,6 +102,8 @@ login(value:any) {
                   }
                 
             })
+          } ,err =>  {
+            this.loginloading=false
           })
         } else {
           if(this.checkout) {

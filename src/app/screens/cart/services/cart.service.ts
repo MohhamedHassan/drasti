@@ -26,6 +26,9 @@ export class CartService {
       else this.cartItems.next([])
     })
   }
+  getcartProducts() {
+    return this.http.get(`${environment.apiUrl}my_cart`)
+  }
   getRecomnded() {
     return this.http.get(`${environment.apiUrl}recommed_materials_offers`) 
   }

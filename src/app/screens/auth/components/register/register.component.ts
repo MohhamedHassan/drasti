@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   app: FirebaseApp;
   db: Database;
   @Input() checkout:boolean=false
-  @Input() registerclick:boolean=false
+  @Input() registerclick=0
   @Output() hasAccount = new EventEmitter()
   @Output() login = new EventEmitter()
   registerForm:FormGroup=new FormGroup({})
@@ -34,8 +34,8 @@ export class RegisterComponent implements OnInit {
   verifyOtbLoading=false
   registerLoading=false
   intervalLoading=false
-  verificationControl:FormControl=
-  new FormControl('',[Validators.required,Validators.pattern(/^[569]\d{7}$/)])
+  verificationControl:FormControl= 
+  new FormControl('',[Validators.required])
   emitLogin() {
     this.login.emit(true)
   }
@@ -47,6 +47,7 @@ export class RegisterComponent implements OnInit {
     private authService:AuthService) { }
 ngOnChanges(changes): void {
  if(changes?.registerclick?.currentValue) {
+  console.log(changes?.registerclick?.currentValue)
       this.register(this.registerForm.value)
  }
   
@@ -113,6 +114,8 @@ ngOnChanges(changes): void {
                   this.registerLoading=false
                   }
                 })
+              } ,err =>  {
+                this.registerLoading=false
               })
             } else {
               if(this.checkout) {
@@ -128,6 +131,7 @@ ngOnChanges(changes): void {
             this.toastr.success('تم تسجيل الدخول بنجاح')
           } , err =>  {
             this.registerLoading=false
+            if(!this.verified) this.showVervication=true
           }
         )
     }
@@ -175,7 +179,7 @@ ngOnChanges(changes): void {
            this.verifyOtbLoading=false 
          }
       )
-   }
+   } 
  }
 
 counterToEnable() {

@@ -11,7 +11,7 @@ import { CartService } from 'src/app/screens/cart/services/cart.service';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit,OnDestroy {
-  registerClick=false
+  registerClick=0
   hasAccount=false
   registerOrLogin=1
   cartItems:any[]=[]
@@ -57,6 +57,7 @@ export class CheckoutComponent implements OnInit,OnDestroy {
     this.subscribtion= this.cartService.cartItems.subscribe(
       (res:any) =>  {
         if(res) {
+          console.log(res)
           this.cartItems=res 
           if(!this.cartItems?.length) {
             this.router.navigate(['/cart'])
@@ -75,10 +76,10 @@ export class CheckoutComponent implements OnInit,OnDestroy {
             //     this.total = this.total -  this.coponamount
             //   }
             // }
-            this.ids=[]
-            this.cartItems.forEach((element:any) => {
-              this.ids.push(element?.id)
-          });
+          //   this.ids=[]
+          //   this.cartItems.forEach((element:any) => {
+          //     this.ids.push(element?.id)
+          // });
           }
          
         }
@@ -91,41 +92,38 @@ export class CheckoutComponent implements OnInit,OnDestroy {
     )
   }
 checkout()  {
-  this.subscribtion2= this.cartService.cartItems.subscribe(
-    (res:any) =>  {
-      if(res) {
-        this.cartItems=res 
-        if(!this.cartItems?.length) {
-          this.router.navigate(['/cart'])
-        } else {
+  if( !this.checkoutLoading) {
+    if(!!localStorage.getItem('drastitoken')) {
+      this.subscribtion2= this.cartService.getcartProducts().subscribe(
+        (res:any) =>  {
+          this.cartItems=res?.data?.cartdetails 
           let price = 0
           this.cartItems.forEach(item => {
             if(item?.has_material) price+=item?.material?.discount||item?.material?.price
             if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
+            this.ids.push(item?.id)
           })
-          this.total=price
-          this.ids=[]
-          this.cartItems.forEach((element:any) => {
-            this.ids.push(element?.id)
-        });
+          this.total=price  
+          this.checkoutLoading=true
+          this.cartService.addOrder({
+            cartdetail_ids:this.ids,
+            coupon_id:this.coponid,
+            pay_by:Number(this.chosenPaymentWay)
+          }).subscribe((res:any) =>  {
+            window.open(res?.data, '_blank');
+            this.router.navigate(['/'])
+          })
         }
-       
-      }
-      if(!!localStorage.getItem('drastitoken')) {
-        this.checkoutLoading=true
-        this.cartService.addOrder({
-          cartdetail_ids:this.ids,
-          coupon_id:this.coponid,
-          pay_by:Number(this.chosenPaymentWay)
-        }).subscribe((res:any) =>  {
-          window.open(res?.data, '_blank');
-          this.router.navigate(['/'])
-        })
-      } else {
-        this.registerClick=true
-      }
+      )
+    }else {
+      this.registerClick+=1
     }
-  )
+  }
+
+
+  
+  
+
 
 }
 ngOnDestroy(): void {

@@ -21,6 +21,7 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                     (login)="registerOrLogin=2"
                     ></app-register>
                     <app-login
+                    [registerclick]="registerClick"
                     [checkout]="true"
                     (hasAccount)="hasAccount=true;checkout() "
                     (register)="registerOrLogin=1"
