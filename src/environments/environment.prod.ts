@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl:'https://code-pirates.com/Drasti-Backend/public/api/'
+  apiUrl:'https://drastiiq8.com/dashboard/public/api/'
 };
