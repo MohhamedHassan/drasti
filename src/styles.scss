@@ -103,7 +103,7 @@ a {
 nav {
     background-color: $navbarBG;
 
-    div.container {
+    div.container.flx {
         display: flex;
         justify-content: space-between;
         align-items: center;
