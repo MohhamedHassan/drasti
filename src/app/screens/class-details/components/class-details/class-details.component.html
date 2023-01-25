@@ -41,6 +41,7 @@ class="class-details pt-5">
                         [class.active]="attachOrClasses==1">المادة الدراسية</li>
                         <li class="mx-2"></li>
                         <li 
+                        *ngIf="classDetails?.public_attachment?.length"
                         (click)="attachOrClasses=2"
                         [class.active]="attachOrClasses==2">المرفقات</li>
                     </ul>

@@ -275,9 +275,11 @@ footer {
             font-family: "Cairo", Sans-serif;
             font-size: 18px;
             font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            line-height: 40px;
+            min-height: 120px;
+            // white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
 
             a {
                 color: $cartH2Color !important;
