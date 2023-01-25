@@ -47,7 +47,6 @@ export class RegisterComponent implements OnInit {
     private authService:AuthService) { }
 ngOnChanges(changes): void {
  if(changes?.registerclick?.currentValue) {
-  console.log(changes?.registerclick?.currentValue)
       this.register(this.registerForm.value)
  }
   

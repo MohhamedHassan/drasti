@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PricePipe implements PipeTransform {
 
   transform(value:number): unknown {
-    return value.toFixed(3);
+    let numberValue = Number(value)
+    return numberValue.toFixed(3);
   }
 
 }

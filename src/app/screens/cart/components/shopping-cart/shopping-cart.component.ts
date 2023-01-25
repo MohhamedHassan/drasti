@@ -58,8 +58,8 @@ getCart() {
         this.cartItems=res 
         let price = 0
         this.cartItems.forEach(item => {
-          if(item?.has_material) price+=item?.material?.discount||item?.material?.price
-          if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
+          if(item?.has_material) price+=Number(item?.material?.discount)||Number(item?.material?.price)
+          if(item?.has_offer) price+=Number(item?.offer?.discount)||Number(item?.offer?.price)
         })
         this.total=price
       }
@@ -86,6 +86,7 @@ verifyCopon(value:string) {
   if(value.trim().length>0) {
     this.verifyCoponLoading=true
     this.cartService.verifyCopon(value).subscribe((res:any) =>  {
+      let numberamount = Number(res?.data?.amount)
       this.verifyCoponLoading=false
       this.toastr.success(`  
       تهانينا لك حصلت علي  
@@ -96,25 +97,25 @@ verifyCopon(value:string) {
       //cartService.total
       if(this.total) {
         if(res?.data?.type=='percentage') {
-          this.discount=this.total * res?.data?.amount/100
-          this.discountPersintg=res?.data?.amount
+          this.discount=this.total * numberamount/100
+          this.discountPersintg=numberamount
         }
         else     {
-          this.discount = res?.data?.amount
+          this.discount = numberamount
           this.discountPersintg=0
         }
     
       } else {
         if(res?.data?.type=='percentage') {
-          this.discount=this.total * res?.data?.amount/100
-          this.discountPersintg=res?.data?.amount
+          this.discount=this.total * numberamount/100
+          this.discountPersintg=numberamount
         }
         else     {
-          this.discount = res?.data?.amount
+          this.discount = numberamount
         this.discountPersintg=0
         }
       }
-      this.coponamount=res?.data?.amount
+      this.coponamount=numberamount
       this.copontype=res?.data?.type
       this.coponid=res?.data?.id
 

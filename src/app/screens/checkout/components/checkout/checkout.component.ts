@@ -57,15 +57,14 @@ export class CheckoutComponent implements OnInit,OnDestroy {
     this.subscribtion= this.cartService.cartItems.subscribe(
       (res:any) =>  {
         if(res) {
-          console.log(res)
           this.cartItems=res 
           if(!this.cartItems?.length) {
             this.router.navigate(['/cart'])
           } else {
             let price = 0
             this.cartItems.forEach(item => {
-              if(item?.has_material) price+=item?.material?.discount||item?.material?.price
-              if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
+              if(item?.has_material) price+=Number(item?.material?.discount)||Number(item?.material?.price)
+              if(item?.has_offer) price+=Number(item?.offer?.discount)||Number(item?.offer?.price)
             })
             this.total=price
             // if(this.total) {
@@ -99,8 +98,8 @@ checkout()  {
           this.cartItems=res?.data?.cartdetails 
           let price = 0
           this.cartItems.forEach(item => {
-            if(item?.has_material) price+=item?.material?.discount||item?.material?.price
-            if(item?.has_offer) price+=item?.offer?.discount||item?.offer?.price
+            if(item?.has_material) price+=Number(item?.material?.discount)||Number(item?.material?.price)
+            if(item?.has_offer) price+=Number(item?.offer?.discount)||Number(item?.offer?.price)
             this.ids.push(item?.id)
           })
           this.total=price  
