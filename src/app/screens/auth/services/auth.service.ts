@@ -27,6 +27,9 @@ export class AuthService {
   resetPassword(body:any) {
     return this.http.post(`${environment.apiUrl}reset_password`,body)
   }
+  contact_us(body:any) {
+    return this.http.post(`${environment.apiUrl}contact_us`,body)
+  }
   logout():any {
     this.logoutloading=true
     // this.http.post(`${environment.apiUrl}set_online_offline`,{"is_online":status}).subscribe(res => 

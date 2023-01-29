@@ -14,14 +14,16 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import {AngularFireModule} from '@angular/fire/compat'
 import {AngularFireAuthModule} from '@angular/fire/compat/auth'
-import {AngularFirestoreModule} from '@angular/fire/compat/firestore'
+import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
+import { SendNowComponent } from './components/send-now/send-now.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SendNowComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

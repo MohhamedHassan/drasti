@@ -1,0 +1,53 @@
+<section 
+style="min-height: 100vh;"
+class="container my-5">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form 
+            [formGroup]="sendnowForm"
+            (ngSubmit)="senMsg()"
+            >
+                <h3 class="text-center">تواصل معنا</h3>
+                <div class="form-group mb-3">
+                    <input 
+                    formControlName="name"
+                    placeholder="الأسم *" type="text" class="form-control">
+                    <p 
+                    *ngIf="(sendnowForm.controls['name'].errors!=null&&sendnowForm.controls['name'].touched)|| (sendnowForm.controls['name'].errors!=null&&submited)"
+                    class="text-danger my-1">
+                      هذا الحقل مطلوب
+                    </p>
+                </div>
+                <div class="form-group mb-3">
+                    <input  
+                    formControlName="email"
+                    placeholder="البريد الألكتروني *" type="email"  class="form-control">
+                    <p 
+                    *ngIf="(sendnowForm.controls['email'].errors!=null&&sendnowForm.controls['email'].touched) || (sendnowForm.controls['email'].errors!=null&&submited)"
+                    class="text-danger my-1">
+                        أدخل بريد الكتروني صالح
+                    </p>
+                </div>
+                <div class="form-group mb-3">
+                    <textarea 
+                    formControlName="message"
+                    placeholder="الرسالة *" rows="5" class="form-control"></textarea>
+                    <p 
+                    *ngIf="(sendnowForm.controls['message'].errors!=null&&sendnowForm.controls['message'].touched) || (sendnowForm.controls['message'].errors!=null&&submited)"
+                    class="text-danger my-1">
+                    هذا الحقل مطلوب             
+                    </p>
+                </div>
+                <div class="text-center">
+                    <button
+                    [disabled]="submitLoading"
+                    class="bluButton">
+                        أرسال
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>

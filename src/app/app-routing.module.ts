@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { SendNowComponent } from './components/send-now/send-now.component';
 import { NotUserGuard } from './guards/not-user.guard';
 import { UserGuard } from './guards/user.guard';
 const routes: Routes = [
@@ -52,6 +53,10 @@ const routes: Routes = [
     loadChildren:() => import('src/app/screens/my-courses/my-courses.module').then(m =>m.MyCoursesModule)
   },
   {
+    path:'support',
+    component:SendNowComponent
+  },
+  {
     path:'**',
     component:NotFoundComponent
   }
@@ -61,7 +66,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     initialNavigation: 'enabled',
     scrollPositionRestoration: 'enabled',
-    useHash: true
+    // useHash: true
 })],
   exports: [RouterModule]
 })
