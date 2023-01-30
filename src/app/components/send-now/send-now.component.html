@@ -1,5 +1,10 @@
+<app-header
+text="تواصل معنا"
+imgSrc="assets/Kv8tXk2GKST8C32eQc751.jpeg"
+></app-header>
+<!-- end header image -->
 <section 
-style="min-height: 100vh;"
+style="min-height: 90vh;"
 class="container my-5">
     <div class="row">
         <div class="col-md-3"></div>
@@ -8,31 +13,34 @@ class="container my-5">
             [formGroup]="sendnowForm"
             (ngSubmit)="senMsg()"
             >
-                <h3 class="text-center">تواصل معنا</h3>
-                <div class="form-group mb-3">
+                <!-- <h3 class="text-center">تواصل معنا</h3> -->
+                <div class="form-group mb-5">
+                    <label>الأسم <span class="redstar">*</span></label>
                     <input 
                     formControlName="name"
-                    placeholder="الأسم *" type="text" class="form-control">
+             type="text" class="form-control">
                     <p 
                     *ngIf="(sendnowForm.controls['name'].errors!=null&&sendnowForm.controls['name'].touched)|| (sendnowForm.controls['name'].errors!=null&&submited)"
                     class="text-danger my-1">
                       هذا الحقل مطلوب
                     </p>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-5">
+                    <label>البريد الألكتروني <span class="redstar">*</span></label>
                     <input  
                     formControlName="email"
-                    placeholder="البريد الألكتروني *" type="email"  class="form-control">
+                    type="email"  class="form-control">
                     <p 
                     *ngIf="(sendnowForm.controls['email'].errors!=null&&sendnowForm.controls['email'].touched) || (sendnowForm.controls['email'].errors!=null&&submited)"
                     class="text-danger my-1">
                         أدخل بريد الكتروني صالح
                     </p>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-5">
+                    <label>الرسالة  <span class="redstar">*</span></label>
                     <textarea 
                     formControlName="message"
-                    placeholder="الرسالة *" rows="5" class="form-control"></textarea>
+            rows="5" class="form-control"></textarea>
                     <p 
                     *ngIf="(sendnowForm.controls['message'].errors!=null&&sendnowForm.controls['message'].touched) || (sendnowForm.controls['message'].errors!=null&&submited)"
                     class="text-danger my-1">
