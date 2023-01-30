@@ -258,7 +258,7 @@ footer {
         bottom: 5px;
     }
     .cartImg {
-        height: 260px;
+     //   max-height: 260px;
         text-align: center;
         img {
             border-top-left-radius: 10px;
@@ -275,7 +275,7 @@ footer {
             font-family: "Cairo", Sans-serif;
             font-size: 18px;
             font-weight: 600;
-            line-height: 40px;
+            line-height: 30px;
             min-height: 120px;
             // white-space: nowrap;
             // overflow: hidden;
@@ -298,7 +298,18 @@ footer {
         }
     }
 }
-
+@media only screen and (max-width: 600px) {
+    .cstmCart {
+        .cartDetails {
+            h2 {
+                font-size: small;
+            }
+            button {
+                font-size: small;
+            }
+        }
+    }
+}
 // end cart
 .class-details {
     background-color: #F7F7F7;
