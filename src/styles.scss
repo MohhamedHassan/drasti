@@ -258,7 +258,7 @@ footer {
         bottom: 5px;
     }
     .cartImg {
-     //   max-height: 260px;
+        height: 260px;
         text-align: center;
         img {
             border-top-left-radius: 10px;
@@ -300,6 +300,9 @@ footer {
 }
 @media only screen and (max-width: 600px) {
     .cstmCart {
+        .cartImg {
+            height: 150px;
+        }
         .cartDetails {
             h2 {
                 font-size: small;
