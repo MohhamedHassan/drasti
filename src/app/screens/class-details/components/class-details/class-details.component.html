@@ -41,7 +41,7 @@ class="class-details pt-5">
                         [class.active]="attachOrClasses==1">المادة الدراسية</li>
                         <li class="mx-2"></li>
                         <li 
-                        *ngIf="classDetails?.public_attachment?.length"
+                        *ngIf="attchments?.length"
                         (click)="attachOrClasses=2"
                         [class.active]="attachOrClasses==2">المرفقات</li>
                     </ul>
@@ -125,7 +125,7 @@ class="class-details pt-5">
                             </li>
                         </ul>
                         <p 
-                        *ngIf="!classDetails?.public_attachment?.length"
+                        *ngIf="!attchments?.length"
                         class="text-center text-secondary fw-bold">
                             لا يوجد مرفقات
                         </p>
