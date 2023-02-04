@@ -242,37 +242,30 @@ class="class-details pt-5">
         </div>
         <ng-container *ngIf="type=='offer'">
             <h2 *ngIf="!loading&&offerSubjects?.length">المواد</h2>
-
-            <swiper  
-            class="mrginBottom"
-            [config]="swpieroptions">
-            
-                <ng-container *ngFor="let class of offerSubjects;let i = index">
-                    <ng-template swiperSlide>
-                        <div
-                        >
-            
-                            <app-cart
-                            [small]="true"
-                            [showaddButton]="true"
-                            [addeddTocart]="class?.cart"
-                            type="subject"
-                            [classid]="-1"
-                            [speid]="-1"
-                            [id]="class?.id"
-                            [imgSrc]="class?.media"
-                            [name]="class?.name"
-                            [price]="class?.price"
-                            [discount]="class?.discount"
-                            [paid]="class?.is_paid"
-                            ></app-cart>
-                        </div>
-                    </ng-template>
-                </ng-container>
-            
-            </swiper>
+            <div class="row mrginBottom">
+                <div 
+                *ngFor="let class of offerSubjects;let i = index"
+                class=" col-6 col-lg-4 col-xl-3 mb-4"
+                >
+                    <div>
+                        <app-cart
+                        [small]="true"
+                        [showaddButton]="true"
+                        [addeddTocart]="class?.cart"
+                        type="subject"
+                        [classid]="-1"
+                        [speid]="-1"
+                        [id]="class?.id"
+                        [imgSrc]="class?.media"
+                        [name]="class?.name"
+                        [price]="class?.price"
+                        [discount]="class?.discount"
+                        [paid]="class?.is_paid"
+                        ></app-cart>
+                    </div>
+                </div>
+            </div>
         </ng-container>
-        
     </div>
 </section>
 <div 
