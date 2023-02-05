@@ -150,6 +150,8 @@ class="class-details pt-5">
                         
                     </div> -->
                     <video 
+                    controls="" controlslist="nodownload"
+                    preload="metadata"
                     playsinline
                     [cachedSrc]="classDetails?.video_upload"
                     *ngIf="classDetails?.video_type=='upload'"
