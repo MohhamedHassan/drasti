@@ -118,11 +118,19 @@ class="class-details">
                     [innerHTML]='savedYoutube(opendvideo?.video_youtube)'>
                         
                     </div> -->
+                    <video 
+                    [cachedSrc]="opendvideo?.video_upload"
+                    *ngIf="opendvideo?.video_type=='upload'"
+                    style="width:100%" height="360" controls>
+                        <source src="movie.mp4" type="video/mp4">
+                        <source src="movie.ogg" type="video/ogg">
+                        Your browser does not support the video tag.
+                      </video>
                     <iframe 
                     allow="encrypted-media"
                     allowFullScreen="true"
-                    [cachedSrc]="opendvideo?.video_url || opendvideo?.video_vimeo_url || opendvideo?.video_upload"
-                    *ngIf="(opendvideo?.video_type=='videocipher'||opendvideo?.video_type=='vimeo'||opendvideo?.video_type=='upload')"
+                    [cachedSrc]="opendvideo?.video_url || opendvideo?.video_vimeo_url"
+                    *ngIf="(opendvideo?.video_type=='videocipher'||opendvideo?.video_type=='vimeo')"
                      class="w-100" style="height:70vh"></iframe>
                     <iframe 
                     allow="encrypted-media"

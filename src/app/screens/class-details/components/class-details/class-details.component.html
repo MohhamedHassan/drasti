@@ -14,7 +14,7 @@ class="class-details pt-5">
     class="fa-solid fa-comment"></i>
         <div 
         class="row">
-            <div class="col-lg-8 mb-5">
+            <div class="col-lg-8 mb-5 order-2 order-lg-1">
                 <div class="contentDescription bg-white rounded p-3 p-md-5">
                     <h2 class="mb-5">{{classDetails?.name}}</h2>
                     <hr>
@@ -133,7 +133,7 @@ class="class-details pt-5">
                 </div>
             </div>
             <!--  -->
-            <div class="col-lg-4 mb-5">
+            <div class="col-lg-4 mb-5 order-1 order-lg-2">
                 <div class="bg-white text-center rounded overflow-hidden">
                     <!-- <video class="w-100" src="https://drastiq8.com/wp-content/uploads/2022/08/IMG_7296.mp4" controls="" controlslist="nodownload"></video> -->
                     <!-- <div 
@@ -149,11 +149,19 @@ class="class-details pt-5">
                     [innerHTML]='savedYoutube(classDetails?.video_youtube)'>
                         
                     </div> -->
+                    <video 
+                    [cachedSrc]="classDetails?.video_upload"
+                    *ngIf="classDetails?.video_type=='upload'"
+                    style="width:100%" height="360" controls>
+                        <source src="movie.mp4" type="video/mp4">
+                        <source src="movie.ogg" type="video/ogg">
+                        Your browser does not support the video tag.
+                      </video>
                     <iframe 
                     allow="encrypted-media"
                     allowFullScreen="true"
-                    [cachedSrc]="classDetails?.video_url || classDetails?.video_vimeo_url || classDetails?.video_upload"
-                    *ngIf="(classDetails?.video_type=='videocipher'||classDetails?.video_type=='vimeo'||classDetails?.video_type=='upload')"
+                    [cachedSrc]="classDetails?.video_url || classDetails?.video_vimeo_url"
+                    *ngIf="(classDetails?.video_type=='videocipher'||classDetails?.video_type=='vimeo')"
                      class="w-100" style="height:360px"></iframe>
                     <iframe 
                     allow="encrypted-media"
