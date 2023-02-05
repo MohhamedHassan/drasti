@@ -150,6 +150,7 @@ class="class-details pt-5">
                         
                     </div> -->
                     <video 
+                    playsinline
                     [cachedSrc]="classDetails?.video_upload"
                     *ngIf="classDetails?.video_type=='upload'"
                     style="width:100%" height="360" controls>
