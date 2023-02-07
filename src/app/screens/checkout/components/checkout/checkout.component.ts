@@ -116,13 +116,28 @@ checkout()  {
           //   setTimeout(() => {
           //     window.open(res?.data, '_blank');
           // },0)
-          let a:any = document.createElement("a");
-          document.body.appendChild(a);
-          a.setAttribute('target','_blank')
-          a.style = "display: none";
-          a.href = res?.data;
-          a.click();
-          document.body.removeChild(a);
+          // let a:any = document.createElement("a");
+          // document.body.appendChild(a);
+          // a.setAttribute('target','_blank')
+          // a.style = "display: none";
+          // a.href = res?.data;
+          // a.click();
+          // document.body.removeChild(a);
+
+          var linkElement = document.createElement('a');
+          linkElement.id = 'link';
+          window.document.body.appendChild(linkElement);
+      
+      
+      // When the button is clicked, I replaced window.open() with the following codes
+              var menuAddress = res?.data;
+              //window.open(menuAddress);
+      
+              // Thanks https://stackoverflow.com/a/44487883
+              var link = document.getElementById('link');
+              link.setAttribute('href', menuAddress);
+              link.setAttribute('target', '_blank');
+              link.click();
             this.router.navigate(['/'])
           })
         }
