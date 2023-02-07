@@ -13,6 +13,7 @@ import { Database, getDatabase, ref, set, onValue  } from "firebase/database";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  showalert=false
   password=true
   password2=true
   app: FirebaseApp;
@@ -81,6 +82,7 @@ ngOnChanges(changes): void {
   }
   register(value:any) {
     this.submited=true
+    if(this.showVervication) this.showalert=true
     if(!this.registerLoading&&this.registerForm.valid&&this.verified&&
       (this.registerForm.get('password_confirmation')?.value == this.registerForm.get('password')?.value)
       ) {
@@ -148,6 +150,7 @@ ngOnChanges(changes): void {
             this.sendotbLoading=false
              this.showVervication=true
              this.showsendcode=false
+
              this.enable=false
              this.counterToEnable()
              this.toastr.success(res?.message)
