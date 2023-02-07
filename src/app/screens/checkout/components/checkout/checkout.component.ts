@@ -110,16 +110,16 @@ checkout()  {
             pay_by:Number(this.chosenPaymentWay)
           }).subscribe((res:any) =>  
           {
-          //   setTimeout(() => {
-          //     window.open(res?.data, '_blank');
-          // },0)
-          let a:any = document.createElement("a");
-          document.body.appendChild(a);
-          a.setAttribute('target','_blank')
-          a.style = "display: none";
-          a.href = res?.data;
-          a.click();
-          document.body.removeChild(a);
+            setTimeout(() => {
+              window.open(res?.data, '_blank');
+          },0)
+          // let a:any = document.createElement("a");
+          // document.body.appendChild(a);
+          // a.setAttribute('target','_blank')
+          // a.style = "display: none";
+          // a.href = res?.data;
+          // a.click();
+          // document.body.removeChild(a);
             this.router.navigate(['/'])
           })
         }
