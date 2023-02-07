@@ -25,7 +25,7 @@ export class CheckoutComponent implements OnInit,OnDestroy {
   chosenPaymentWay='1'
   ids:any[]=[]
   subscribtion:Subscription
-  subscribtion2:Subscription
+  subscribtion2:Subscription 
   constructor(private title:Title,
     private router:Router,
     public cartService:CartService,
@@ -34,6 +34,7 @@ export class CheckoutComponent implements OnInit,OnDestroy {
     ) { }
 
   ngOnInit(): void {
+
     this.title.setTitle('    اتمام الطلب - دراستي')
     if(!!localStorage.getItem('drastitoken')) {
       this.hasAccount=true
@@ -110,16 +111,18 @@ checkout()  {
             pay_by:Number(this.chosenPaymentWay)
           }).subscribe((res:any) =>  
           {
-            setTimeout(() => {
-              window.open(res?.data, '_blank');
-          },0)
-          // let a:any = document.createElement("a");
-          // document.body.appendChild(a);
-          // a.setAttribute('target','_blank')
-          // a.style = "display: none";
-          // a.href = res?.data;
-          // a.click();
-          // document.body.removeChild(a);
+         
+          //  this.windowReference.
+          //   setTimeout(() => {
+          //     window.open(res?.data, '_blank');
+          // },0)
+          let a:any = document.createElement("a");
+          document.body.appendChild(a);
+          a.setAttribute('target','_blank')
+          a.style = "display: none";
+          a.href = res?.data;
+          a.click();
+          document.body.removeChild(a);
             this.router.navigate(['/'])
           })
         }
