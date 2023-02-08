@@ -118,7 +118,7 @@ checkout()  {
         this.toastr.success('جار تحويلك لبوابة الدفع')
           window.open(res?.data,'_top')
           //this.router.navigate(['/'])
-          this.checkoutLoading=false
+      //    this.checkoutLoading=false
           })
         }
       )
