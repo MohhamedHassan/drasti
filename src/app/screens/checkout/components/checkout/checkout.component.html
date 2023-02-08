@@ -121,7 +121,7 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                         </label>
                    </div>
                     <button 
-                    *ngIf="!paymentLink"
+             
                     (click)="checkout()"
                     [disabled]="checkoutLoading"
                     style="border-radius: 5px" class="w-100 bluButton text-center">
@@ -130,7 +130,7 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                         *ngIf="checkoutLoading"
                         class="fas fa-circle-notch fa-spin"></i>
                     </button>
-                    <a
+                    <!-- <a
                     *ngIf="paymentLink"
                     style="border-radius: 5px" class="w-100 bluButton text-center d-block my-2"
                    (click)="routeToPay()"
@@ -138,7 +138,7 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                     target="_blank"
                     >
                       أضغط للدفع
-                    </a>
+                    </a> -->
                 </div>
             </div>
             <!--  -->

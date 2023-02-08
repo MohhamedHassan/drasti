@@ -112,7 +112,9 @@ checkout()  {
             pay_by:Number(this.chosenPaymentWay)
           }).subscribe((res:any) =>  
           {
-          this.paymentLink=res?.data
+        //this.paymentLink=res?.data
+          window.open(res?.data,'_top')
+          this.router.navigate(['/'])
           this.checkoutLoading=false
           })
         }
