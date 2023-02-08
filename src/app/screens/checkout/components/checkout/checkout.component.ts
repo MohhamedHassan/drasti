@@ -95,6 +95,7 @@ export class CheckoutComponent implements OnInit,OnDestroy {
 checkout()  {
   if( !this.checkoutLoading) {
     if(!!localStorage.getItem('drastitoken')) {
+      this.checkoutLoading=true
       this.subscribtion2= this.cartService.getcartProducts().subscribe(
         (res:any) =>  {
           this.cartItems=res?.data?.cartdetails 
@@ -113,6 +114,7 @@ checkout()  {
           }).subscribe((res:any) =>  
           {
         //this.paymentLink=res?.data
+        this.toastr.success('جار تحويلك لبوابة الدفع')
           window.open(res?.data,'_top')
           this.router.navigate(['/'])
           this.checkoutLoading=false
