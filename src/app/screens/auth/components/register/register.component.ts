@@ -136,7 +136,13 @@ ngOnChanges(changes): void {
             if(!this.verified) this.showVervication=true
           }
         )
-    }
+    } else if(
+      !this.registerLoading&&this.registerForm.valid&&!this.verified&&
+      (this.registerForm.get('password_confirmation')?.value == this.registerForm.get('password')?.value)
+    ) {
+      this.sendOtb()
+    } 
+
   }
   sendOtb() {
     if(this.enable&&!this.sendotbLoading) {
