@@ -121,6 +121,7 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                         </label>
                    </div>
                     <button 
+                    *ngIf="!paymentLink"
                     (click)="checkout()"
                     [disabled]="checkoutLoading"
                     style="border-radius: 5px" class="w-100 bluButton text-center">
