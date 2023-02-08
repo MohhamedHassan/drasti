@@ -96,6 +96,7 @@ checkout()  {
   if( !this.checkoutLoading) {
     if(!!localStorage.getItem('drastitoken')) {
       this.checkoutLoading=true
+      this.ids=[]
       this.subscribtion2= this.cartService.getcartProducts().subscribe(
         (res:any) =>  {
           this.cartItems=res?.data?.cartdetails 
@@ -116,7 +117,7 @@ checkout()  {
         //this.paymentLink=res?.data
         this.toastr.success('جار تحويلك لبوابة الدفع')
           window.open(res?.data,'_top')
-          this.router.navigate(['/'])
+          //this.router.navigate(['/'])
           this.checkoutLoading=false
           })
         }
