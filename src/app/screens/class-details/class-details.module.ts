@@ -6,12 +6,16 @@ import { ClassDetailsComponent } from './components/class-details/class-details.
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UrlDirective } from './url.directive';
+import { SubjectChatComponent } from './components/subject-chat/subject-chat.component';
+import { AudioChatComponent } from './components/subject-chat/audio-chat/audio-chat.component';
 
 
 @NgModule({
   declarations: [
     ClassDetailsComponent,
-    UrlDirective
+    UrlDirective,
+    SubjectChatComponent,
+    AudioChatComponent
   ],
   imports: [
     CommonModule,

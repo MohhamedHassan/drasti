@@ -6,68 +6,104 @@ import { NotUserGuard } from './guards/not-user.guard';
 import { UserGuard } from './guards/user.guard';
 const routes: Routes = [
   {
-    path:'',
-    loadChildren:() => import('src/app/screens/home/home.module').then(m =>m.HomeModule)
+    path: '',
+    loadChildren: () =>
+      import('src/app/screens/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path:'auth',
-    loadChildren:() => import('src/app/screens/auth/auth.module').then(m =>m.AuthModule),
-    canActivate:[UserGuard]
+    path: 'auth',
+    loadChildren: () =>
+      import('src/app/screens/auth/auth.module').then((m) => m.AuthModule),
+    canActivate: [UserGuard],
   },
   {
-    path:'stage/:id',
-    loadChildren:() => import('src/app/screens/stage-details/stage-details.module').then(m =>m.StageDetailsModule)
+    path: 'stage/:id',
+    loadChildren: () =>
+      import('src/app/screens/stage-details/stage-details.module').then(
+        (m) => m.StageDetailsModule
+      ),
   },
   {
-    path:'classes/:id/:spe',
-    loadChildren:() => import('src/app/screens/classes/classes.module').then(m =>m.ClassesModule)
+    path: 'all-msgs',
+    loadChildren: () =>
+      import('src/app/screens/all-msgs/all-msgs.module').then(
+        (m) => m.AllMsgsModule
+      ),
   },
   {
-    path:'specialist/:id/:specialist',
-    loadChildren:() => import('src/app/screens/has-specialist/has-specialist.module').then(m =>m.HasSpecialistModule)
+    path: 'classes/:id/:spe',
+    loadChildren: () =>
+      import('src/app/screens/classes/classes.module').then(
+        (m) => m.ClassesModule
+      ),
   },
   {
-    path:'class-details/:id/:type/:class/:spe',
-    loadChildren:() => import('src/app/screens/class-details/class-details.module').then(m =>m.ClassDetailsModule)
+    path: 'specialist/:id/:specialist',
+    loadChildren: () =>
+      import('src/app/screens/has-specialist/has-specialist.module').then(
+        (m) => m.HasSpecialistModule
+      ),
   },
   {
-    path:'conditions',
-    loadChildren:() => import('src/app/screens/conditions/conditions.module').then(m =>m.ConditionsModule)
+    path: 'class-details/:id/:type/:class/:spe',
+    loadChildren: () =>
+      import('src/app/screens/class-details/class-details.module').then(
+        (m) => m.ClassDetailsModule
+      ),
   },
   {
-    path:'subject-videos/:id/:lessonid/:unitid',
-    canActivate:[NotUserGuard],
-    loadChildren:() => import('src/app/screens/subject-videos/subject-videos.module').then(m =>m.SubjectVideosModule)
+    path: 'conditions',
+    loadChildren: () =>
+      import('src/app/screens/conditions/conditions.module').then(
+        (m) => m.ConditionsModule
+      ),
   },
   {
-    path:'cart',
-    loadChildren:() => import('src/app/screens/cart/cart.module').then(m =>m.CartModule)
+    path: 'subject-videos/:id/:lessonid/:unitid',
+    canActivate: [NotUserGuard],
+    loadChildren: () =>
+      import('src/app/screens/subject-videos/subject-videos.module').then(
+        (m) => m.SubjectVideosModule
+      ),
   },
   {
-    path:'checkout',
-    loadChildren:() => import('src/app/screens/checkout/checkout.module').then(m =>m.CheckoutModule)
+    path: 'cart',
+    loadChildren: () =>
+      import('src/app/screens/cart/cart.module').then((m) => m.CartModule),
   },
   {
-    path:'my-courses',
-    canActivate:[NotUserGuard],
-    loadChildren:() => import('src/app/screens/my-courses/my-courses.module').then(m =>m.MyCoursesModule)
+    path: 'checkout',
+    loadChildren: () =>
+      import('src/app/screens/checkout/checkout.module').then(
+        (m) => m.CheckoutModule
+      ),
   },
   {
-    path:'support',
-    component:SendNowComponent
+    path: 'my-courses',
+    canActivate: [NotUserGuard],
+    loadChildren: () =>
+      import('src/app/screens/my-courses/my-courses.module').then(
+        (m) => m.MyCoursesModule
+      ),
   },
   {
-    path:'**',
-    component:NotFoundComponent
-  }
+    path: 'support',
+    component: SendNowComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabled',
-    scrollPositionRestoration: 'enabled',
-    //useHash: true
-})],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabled',
+      scrollPositionRestoration: 'enabled',
+      //useHash: true
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

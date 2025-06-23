@@ -1,0 +1,155 @@
+::ng-deep {
+  .mat-radio-group:not(:last-of-type) .border-btm {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #d4d1d1;
+    margin-bottom: 15px;
+  }
+  .accordion-toggle {
+    padding: 5px;
+  }
+  .accordion-toggle[aria-expanded="true"]:after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f077";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    position: absolute;
+    color: #3052d8;
+    left: 20px;
+    top: 20px;
+  }
+
+  .card {
+    padding: 10px 0;
+    li {
+      padding: 20px 20px 0px 20px;
+      i {
+        color: #c2bec9;
+      }
+    }
+    li:not(:last-of-type) {
+      padding-bottom: 20px;
+    }
+  }
+  .card.cstm {
+    li:last-of-type {
+      padding-bottom: 20px;
+    }
+  }
+  .card-header {
+    border-bottom: none;
+    background-color: transparent;
+    padding: 0;
+  }
+  .card-body {
+    padding: 0;
+  }
+  .accordion-toggle[aria-expanded="false"]:after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    color: #3052d8;
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+  .btn-link {
+    font-weight: 500;
+    color: #3052d8;
+    text-decoration: none;
+  }
+  .btn.focus,
+  .btn:focus {
+    box-shadow: none;
+  }
+  .btn-link:hover {
+    color: #3052d8;
+    text-decoration: none;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    background: #0034c2 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    &:after {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+  .swiper-pagination-bullet-active {
+    background-color: #0034c2 !important;
+  }
+}
+
+.cstmdel {
+  font-size: 35px;
+  font-weight: 500;
+}
+@media only screen and (max-width: 768px) {
+  .cstmdel {
+    font-size: 20px;
+  }
+}
+.chatbox {
+  position: fixed;
+  bottom: 0;
+  left: 20px;
+  width: 340px;
+
+  border: 1px solid #cfcfcf;
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  .body {
+    height: 50vh;
+    overflow: auto;
+  }
+  input {
+    width: 80%;
+    border-radius: 20px;
+    border: none;
+    background-color: #e6e8ec;
+    outline: none;
+    padding: 5px 10px;
+  }
+  .footer {
+    i {
+      cursor: pointer;
+      color: #0034c2;
+    }
+  }
+}
+@media only screen and (max-width: 600px) {
+  .chatbox {
+    width: 250px;
+  }
+}
+.locationPopup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #d6d4d4;
+    padding: 0.7rem;
+    i {
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+  }
+}

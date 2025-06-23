@@ -1,80 +1,103 @@
 <nav>
-   <div
-   style="direction:ltr;text-align: left;"
-   class="container  mt-2  d-md-none">
-      <div    style="direction:ltr;text-align: left;">
-         <a 
-         *ngIf="islogin()"
-         aria-label="موادي"
-         class="text-primary "
-         routerLink="/my-courses">
-            موادي
-         </a>
-         <span   *ngIf="islogin()" class="mx-2"></span>
-               <a 
-               class=""
-               aria-label="عربة التسوق"
-               routerLink="/cart">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-check text-primary" viewBox="0 0 16 16">
-                     <path fill-rule="evenodd" d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                     <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                   </svg>
-                   <small 
-                   
-                   class="mx-1 cartCount">{{cartLength}}</small>
-               </a> 
-      </div>
-   </div>
-   <div class="container flx">
-      <div class="logoParent">
-         <a 
-         routerLink="/"
-         aria-label="دراستي">
-             <img class="mainlogo" src="assets/logo.png" alt="دراستي">
-         </a>
+  <div
+    style="direction: ltr; text-align: left"
+    class="container mt-2 d-md-none"
+  >
+    <div style="direction: ltr; text-align: left">
+      <a
+        *ngIf="islogin()"
+        aria-label="موادي"
+        class="text-primary"
+        routerLink="/my-courses"
+      >
+        موادي
+      </a>
+      <span *ngIf="islogin()" class="mx-2"></span>
+      <a class="" aria-label="عربة التسوق" routerLink="/cart">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-bag-check text-primary"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"
+          />
+          <path
+            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
+          />
+        </svg>
+        <small class="mx-1 cartCount">{{ cartLength }}</small>
+      </a>
+    </div>
+  </div>
+  <div class="container flx">
+    <div class="logoParent">
+      <a routerLink="/" aria-label="دراستي">
+        <img class="mainlogo" src="assets/logo.png" alt="دراستي" />
+      </a>
     </div>
     <!-- end logo   -->
     <div class="loginParent">
-      <a 
-      *ngIf="islogin()"
-      aria-label="موادي"
-      class="text-primary d-none d-md-inline-block"
-      routerLink="/my-courses">
-         موادي
+      <a
+        *ngIf="islogin()"
+        aria-label="موادي"
+        class="text-primary d-none d-md-inline-block"
+        routerLink="/my-courses"
+      >
+        موادي
       </a>
-      <span   *ngIf="islogin()" class="mx-2"></span>
-            <a 
-            class="d-none d-md-inline-block"
-            aria-label="عربة التسوق"
-            routerLink="/cart">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-check text-primary" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                </svg>
-                <small 
-                
-                class="mx-1 cartCount">{{cartLength}}</small>
-            </a> 
-            <span class="mx-2"></span>
-             <a 
-             
-             *ngIf="!islogin()"
-             aria-label="تسجيل الدخول"
-             routerLink="/auth/login"
-             class="bluButton login">
-             تسجيل الدخول
-            </a>
-            <button
-            
-            [disabled]="authService.logoutloading"
-            style="cursor: pointer;"
-            *ngIf="islogin()"
-            aria-label="تسجيل الخروج"
-            (click)="authService.logout()"
-            class="bluButton logout">
-            تسجيل الخروج
-           </button>
+      <span *ngIf="islogin()" class="mx-2"></span>
+      <a
+        class="d-none d-md-inline-block"
+        aria-label="عربة التسوق"
+        routerLink="/cart"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-bag-check text-primary"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z"
+          />
+          <path
+            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
+          />
+        </svg>
+        <small class="mx-1 cartCount">{{ cartLength }}</small>
+      </a>
+      <span class="mx-2"></span>
+      <ng-container *ngIf="islogin()">
+        <a class="text-primary" routerLink="/all-msgs">رسائلي</a>
+        <span class="mx-2"></span>
+      </ng-container>
+      <a
+        *ngIf="!islogin()"
+        aria-label="تسجيل الدخول"
+        routerLink="/auth/login"
+        class="bluButton login"
+      >
+        تسجيل الدخول
+      </a>
+      <button
+        [disabled]="authService.logoutloading"
+        style="cursor: pointer"
+        *ngIf="islogin()"
+        aria-label="تسجيل الخروج"
+        (click)="authService.logout()"
+        class="bluButton logout"
+      >
+        تسجيل الخروج
+      </button>
     </div>
     <!-- end login parent -->
-   </div>
+  </div>
 </nav>

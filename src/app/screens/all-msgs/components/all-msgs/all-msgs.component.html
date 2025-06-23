@@ -1,0 +1,29 @@
+<div *ngIf="!loading" class="container">
+  <h1 style="text-align: center; color: #0034c2; margin-bottom: 20px">
+    جميع الرسائل
+  </h1>
+  <div style="font-weight: bold" *ngIf="materialChats.length === 0">
+    لا توجد مواد بها رسائل بعد.
+  </div>
+
+  <div *ngFor="let mat of materialChats" class="material-item">
+    <div
+      [queryParams]="{ openChat: true }"
+      [routerLink]="'/class-details/' + mat?.materialId + '/subject/-1/-1'"
+      style="
+        background: #2b6cb0;
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        cursor: pointer;
+      "
+      class="material-name"
+    >
+      {{ mat.materialName }}
+      <span class="mx-5"></span>
+      <span *ngIf="mat.hasUnread" class="unread-dot">●</span>
+    </div>
+  </div>
+</div>
+<app-loading *ngIf="loading"></app-loading>
