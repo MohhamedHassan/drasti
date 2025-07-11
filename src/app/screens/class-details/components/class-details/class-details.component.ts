@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -25,6 +26,8 @@ SwiperCore.use([Navigation, Pagination]);
   styleUrls: ['./class-details.component.scss'],
 })
 export class ClassDetailsComponent implements OnInit {
+  imageLoading = false;
+  currentImage = '';
   @ViewChild('boxchat') boxchat: ElementRef;
   showChatBox = false;
   showNewChatBox = false;
@@ -99,6 +102,8 @@ export class ClassDetailsComponent implements OnInit {
           'yyyy-MM-dd HH:mm:ss'
         )}`
     );
+    this.imageLoading = true;
+    this.scrollChatBox();
     reference.put(img).then(() => {
       reference.getDownloadURL().subscribe((imageurl) => {
         let date = new Date();
@@ -118,7 +123,9 @@ export class ClassDetailsComponent implements OnInit {
             to_id: this.classid,
             type: 'photo',
           }
-        );
+        ).then(() => {
+          this.imageLoading = false;
+        });
       });
     });
   }
@@ -385,5 +392,22 @@ export class ClassDetailsComponent implements OnInit {
       this.showChatBox = false;
       this.showNewChatBox = true;
     }
+  }
+  downloadImage() {
+    fetch(this.currentImage)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'downloaded-image.' + 'png';
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.error('Download failed:', err));
+  }
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscape(event: KeyboardEvent) {
+    this.currentImage = '';
   }
 }

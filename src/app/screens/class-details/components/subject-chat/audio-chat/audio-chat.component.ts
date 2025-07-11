@@ -13,6 +13,7 @@ import {
   styleUrls: ['./audio-chat.component.scss'],
 })
 export class AudioChatComponent implements OnDestroy {
+  time = 0;
   recording = false;
   mediaRecorder!: MediaRecorder;
   audioChunks: Blob[] = [];
@@ -31,6 +32,7 @@ export class AudioChatComponent implements OnDestroy {
   constructor(private cdr: ChangeDetectorRef) {}
   startRecording() {
     this.recordingStatus = 1;
+    this.time = 0;
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
@@ -41,6 +43,7 @@ export class AudioChatComponent implements OnDestroy {
         this.recording = true;
 
         this.interval = setInterval(() => {
+          this.time += 1;
           if (this.recordSeconds == 60) {
             this.recordSeconds = 0;
             this.recordTime += 1;
@@ -60,7 +63,7 @@ export class AudioChatComponent implements OnDestroy {
               type: 'audio/webm',
             });
             this.audioChunks = [];
-            this.send.emit(audioBlob);
+            this.send.emit({ audio: audioBlob, duration: this.time });
             this.audioChunks = [];
           }
           this.stopMediaStream();
@@ -84,6 +87,7 @@ export class AudioChatComponent implements OnDestroy {
   resumeRecording() {
     if (this.mediaRecorder && this.mediaRecorder.state === 'paused') {
       this.interval = setInterval(() => {
+        this.time += 1;
         if (this.recordSeconds == 60) {
           this.recordSeconds = 0;
           this.recordTime += 1;

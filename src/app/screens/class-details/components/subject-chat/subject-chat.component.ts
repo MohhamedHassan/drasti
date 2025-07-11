@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -32,6 +33,8 @@ import { ClassDetailsService } from '../../services/class-details.service';
   styleUrls: ['./subject-chat.component.scss'],
 })
 export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
+  imageLoading = false;
+  currentImage = '';
   @ViewChild('boxchat2') boxchat: ElementRef;
   micrphonAlert = false;
   nowRecording = false;
@@ -70,6 +73,8 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           'yyyy-MM-dd HH:mm:ss'
         )}`
     );
+    this.imageLoading = true;
+    this.scrollChatBox();
     reference.put(img).then(() => {
       reference.getDownloadURL().subscribe((imageurl) => {
         let date = new Date();
@@ -99,6 +104,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
               question: 'صورة',
             })
             .subscribe();
+          this.imageLoading = false;
           setTimeout(() => {
             this.handleAutoReplyIfNeeded(this.currentUserMessages);
           }, 1000);
@@ -106,7 +112,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     });
   }
-  sendAudio(audio: any) {
+  sendAudio(event: { audio: any; duration: any }) {
     this.nowRecording = false;
     let reference = this.angularFireStore.ref(
       'message_images/' +
@@ -115,7 +121,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           'yyyy-MM-dd HH:mm:ss'
         )}`
     );
-    reference.put(audio).then(() => {
+    reference.put(event.audio).then(() => {
       reference.getDownloadURL().subscribe((audioUrl) => {
         let date = new Date();
         set(
@@ -128,6 +134,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           {
             date: this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss'),
             did_read: false,
+            duration: `${event.duration}`,
             from: localStorage.getItem('username'),
             from_number: localStorage.getItem('userphone'),
             from_id: localStorage.getItem('userid'),
@@ -310,5 +317,22 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           .subscribe();
       });
     }
+  }
+  downloadImage() {
+    fetch(this.currentImage)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'downloaded-image.' + 'png';
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.error('Download failed:', err));
+  }
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscape(event: KeyboardEvent) {
+    this.currentImage = '';
   }
 }
