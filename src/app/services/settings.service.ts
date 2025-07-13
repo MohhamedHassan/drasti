@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService {
-
-  constructor(private http:HttpClient) { }
+  hideMsgs = false;
+  constructor(private http: HttpClient) {}
   getSettings() {
-    return this.http.get(`${environment.apiUrl}settings`)
+    return this.http.get(`${environment.apiUrl}settings`);
   }
 }

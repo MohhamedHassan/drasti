@@ -75,7 +75,7 @@
         <small class="mx-1 cartCount">{{ cartLength }}</small>
       </a>
       <span class="mx-2"></span>
-      <ng-container *ngIf="islogin()">
+      <ng-container *ngIf="islogin() && !hideLink && !settingsService.hideMsgs">
         <a class="text-primary" routerLink="/all-msgs">رسائلي</a>
         <span class="mx-2"></span>
       </ng-container>
