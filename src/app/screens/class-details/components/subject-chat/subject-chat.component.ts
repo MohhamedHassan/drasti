@@ -45,6 +45,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() classDetails;
   @Output() closeChat = new EventEmitter<void>();
   private authRef: DatabaseReference;
+  teacherName;
   constructor(
     private angularFireStore: AngularFireStorage,
     private datepipe: DatePipe,
@@ -196,6 +197,13 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
               let right: any = new Date(b.date);
               return left - right;
             });
+            this.teacherName = (this.teacherName = this.messages.find(
+              (item) =>
+                this.userid != item?.from_id &&
+                item?.from_id != '_1' &&
+                item.from_display_name
+            ))?.from_display_name;
+            console.log(this.messages);
           }
         }
         setTimeout(() => {

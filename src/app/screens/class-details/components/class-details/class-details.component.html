@@ -23,13 +23,7 @@
         class="chat-icon"
         (click)="checkIfStudentBlocked()"
         title="اسأل دراستي"
-        *ngIf="
-          islogin() &&
-          classDetails?.is_paid &&
-          classDetails?.can_question &&
-          type != 'offer' &&
-          showNewChatBox == false
-        "
+        *ngIf="false"
         style="cursor: pointer"
       >
         <svg
@@ -103,6 +97,20 @@
               [class.active]="attachOrClasses == 2"
             >
               المرفقات
+            </li>
+            <li class="mx-2"></li>
+            <li
+              (click)="attachOrClasses = 3; checkIfStudentBlocked()"
+              title="اسأل دراستي"
+              *ngIf="
+                islogin() &&
+                classDetails?.is_paid &&
+                classDetails?.can_question &&
+                type != 'offer'
+              "
+              [class.active]="attachOrClasses == 3"
+            >
+              عندك سؤال؟
             </li>
           </ul>
           <div *ngIf="attachOrClasses == 1 && type != 'offer'">
@@ -420,7 +428,7 @@
     </ul>
   </div>
   <div
-    style="border-top: 1px solid #cfcfcf"
+    style="border-top: 1px solid #cfcfcf; gap: 10px"
     class="footer p-2 d-flex align-items-center justify-content-between"
   >
     <div style="height: 16px; width: 16px" class="position-relative">
