@@ -1,136 +1,183 @@
-<section 
-
-style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
-    <header class="p-2 mb-5 blueHeader">
-        <h1>
-            اتمام الطلب
-        </h1>
-    </header>
-    <div class="container bg-white rounded p-5">
-        <div class="row">
-            <div
-            *ngIf="!hasAccount"
-            class="col-lg-6 mb-4">
-                <div>
-                    <h4 class="mb-4">تفاصيل الفاتورة</h4>
-                    <app-register
-                    [registerclick]="registerClick"
-                    *ngIf="registerOrLogin==1"
-                    [checkout]="true"
-                    (hasAccount)="hasAccount=true;checkout() "
-                    (login)="registerOrLogin=2"
-                    ></app-register>
-                    <app-login
-                    [registerclick]="registerClick"
-                    [checkout]="true"
-                    (hasAccount)="hasAccount=true;checkout() "
-                    (register)="registerOrLogin=1"
-                    *ngIf="registerOrLogin==2"
-                    ></app-login>
-                </div>
-            </div>
-            <!--  -->
-            <div 
-            [ngClass]="{
-                'col-lg-6': !hasAccount,
-                'col-lg-12': hasAccount
-            }"
-            class="mb-4">
-                <div>
-                    <h4 class="mb-4">طلبك</h4>
-                    <div class="table-responsive">
-                        <table class="w-100 table mb-4">
-                            <thead>
-                                <tr>
-                                    <th>المنتج</th>
-                                    <th>المجموع</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of cartItems">
-                                    <td>  
-                                        {{item?.material?.name || item?.offer?.name}}
-                                        <ng-container *ngIf="item?.has_offer">
-                                            <div 
-                                            class="mx-4 my-3"
-                                            *ngFor="let child of item?.offer?.materials"
-                                            >
-                                           
-                                               <a 
-                                               class="d-inline-block"
-                                               >
-                                              {{child?.name}}
-                                                </a>
-                                            </div>
-                                        </ng-container>
-                                        
-                                    </td>
-                                    <td 
-                                    *ngIf="item?.has_material"
-                                    >
-                                        د.ك {{item?.material?.discount||item?.material?.price}}
-                                     </td>
-                                     <td 
-                                     *ngIf="item?.has_offer"
-                                     >
-                                     د.ك {{item?.offer?.discount||item?.offer?.price}}
-                                      </td>
-                                </tr>
-                                <tr *ngIf="coponamount>0">
-                                    <th>الخصم</th>
-                                    <th>   د.ك {{coponamount|price}}</th>
-                                </tr>
-                                <tr *ngIf="chosenPaymentWay=='2'">
-                                    <th>رسوم بوابة الدفع </th>
-                                    <th>   د.ك {{(total-coponamount)*.025|price}} </th>
-                                </tr>
-                                <tr *ngIf="chosenPaymentWay=='2'">
-                                    <th>الاجمالي</th>
-                                    <th>   د.ك {{(total-coponamount) + ((total-coponamount)*.025)|price}} </th>
-                                </tr>
-                                <tr *ngIf="chosenPaymentWay=='1'">
-                                    <th>الاجمالي</th>
-                                    <th>   د.ك {{(total-coponamount) |price}} </th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div 
-                    [style.borderColor]="chosenPaymentWay=='1' ? '#2b6cb0' : '#cbd5e0'"
-                    style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;display: flex;">
-                         <input 
-                         [(ngModel)]="chosenPaymentWay"
-                         type="radio" id="one" name="payemntWay" value="1">
-                         <label for="one">
-                            <img src="assets/knet.png"
-                            class="img-fluid"
-                            alt="">
-                         </label>
-                    </div>
-                    <div
-                    [style.borderColor]="chosenPaymentWay=='2' ? '#2b6cb0' : '#cbd5e0'"
-                    style="background-color: #f7fafc;padding:10px;margin-bottom: 10px;border-right:5px solid #cbd5e0;display: flex;">
-                        <input
-                        [(ngModel)]="chosenPaymentWay"
-                        type="radio" id="two" name="payemntWay" value="2">
-                        <span class="mx-2"></span>
-                        <label for="two">
-                           <img src="assets/cc.png"
-                           class="img-fluid"
-                           alt="">
-                        </label>
-                   </div>
-                    <button 
-             
-                    (click)="checkout()"
-                    [disabled]="checkoutLoading"
-                    style="border-radius: 5px" class="w-100 bluButton text-center">
-                        تأكيد الطلب
-                        <i 
-                        *ngIf="checkoutLoading"
-                        class="fas fa-circle-notch fa-spin"></i>
-                    </button>
-                    <!-- <a
+<section style="min-height: 100vh" class="conditions cstmradioBtn pb-5">
+  <header class="p-2 mb-5 blueHeader">
+    <h1>اتمام الطلب</h1>
+  </header>
+  <div class="container bg-white rounded p-5">
+    <div class="row">
+      <div *ngIf="!hasAccount" class="col-lg-6 mb-4">
+        <div>
+          <h4 class="mb-4">تفاصيل الفاتورة</h4>
+          <app-register
+            [registerclick]="registerClick"
+            *ngIf="registerOrLogin == 1"
+            [checkout]="true"
+            (hasAccount)="hasAccount = true; checkout()"
+            (login)="registerOrLogin = 2"
+          ></app-register>
+          <app-login
+            [registerclick]="registerClick"
+            [checkout]="true"
+            (hasAccount)="hasAccount = true; checkout()"
+            (register)="registerOrLogin = 1"
+            *ngIf="registerOrLogin == 2"
+          ></app-login>
+        </div>
+      </div>
+      <!--  -->
+      <div
+        [ngClass]="{
+          'col-lg-6': !hasAccount,
+          'col-lg-12': hasAccount
+        }"
+        class="mb-4"
+      >
+        <div>
+          <h4 class="mb-4">طلبك</h4>
+          <div class="table-responsive">
+            <table class="w-100 table mb-4">
+              <thead>
+                <tr>
+                  <th>المنتج</th>
+                  <th>المجموع</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cartItems">
+                  <td>
+                    {{ item?.material?.name || item?.offer?.name }}
+                    <ng-container *ngIf="item?.has_offer">
+                      <div
+                        class="mx-4 my-3"
+                        *ngFor="let child of item?.offer?.materials"
+                      >
+                        <a class="d-inline-block">
+                          {{ child?.name }}
+                        </a>
+                      </div>
+                    </ng-container>
+                  </td>
+                  <td *ngIf="item?.has_material">
+                    د.ك {{ item?.material?.discount || item?.material?.price }}
+                  </td>
+                  <td *ngIf="item?.has_offer">
+                    د.ك {{ item?.offer?.discount || item?.offer?.price }}
+                  </td>
+                </tr>
+                <tr *ngIf="coponamount > 0">
+                  <th>الخصم</th>
+                  <th>د.ك {{ coponamount | price }}</th>
+                </tr>
+                <tr *ngIf="chosenPaymentWay == '2'">
+                  <th>رسوم بوابة الدفع</th>
+                  <th>د.ك {{ (total - coponamount) * 0.025 | price }}</th>
+                </tr>
+                <tr *ngIf="chosenPaymentWay == '2'">
+                  <th>الاجمالي</th>
+                  <th>
+                    د.ك
+                    {{
+                      total - coponamount + (total - coponamount) * 0.025
+                        | price
+                    }}
+                  </th>
+                </tr>
+                <tr *ngIf="chosenPaymentWay == '1' || chosenPaymentWay == '3'">
+                  <th>الاجمالي</th>
+                  <th>د.ك {{ total - coponamount | price }}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            [style.borderColor]="
+              chosenPaymentWay == '1' ? '#2b6cb0' : '#cbd5e0'
+            "
+            style="
+              background-color: #f7fafc;
+              padding: 10px;
+              margin-bottom: 10px;
+              border-right: 5px solid #cbd5e0;
+              display: flex;
+            "
+          >
+            <input
+              [(ngModel)]="chosenPaymentWay"
+              type="radio"
+              id="one"
+              name="payemntWay"
+              value="1"
+            />
+            <label for="one">
+              <img src="assets/knet.png" class="img-fluid" alt="" />
+            </label>
+          </div>
+          <div
+            [style.borderColor]="
+              chosenPaymentWay == '2' ? '#2b6cb0' : '#cbd5e0'
+            "
+            style="
+              background-color: #f7fafc;
+              padding: 10px;
+              margin-bottom: 10px;
+              border-right: 5px solid #cbd5e0;
+              display: flex;
+            "
+          >
+            <input
+              [(ngModel)]="chosenPaymentWay"
+              type="radio"
+              id="two"
+              name="payemntWay"
+              value="2"
+            />
+            <span class="mx-2"></span>
+            <label for="two">
+              <img src="assets/cc.png" class="img-fluid" alt="" />
+            </label>
+          </div>
+          <div
+            *ngIf="demaEnabled"
+            [style.borderColor]="
+              chosenPaymentWay == '3' ? '#2b6cb0' : '#cbd5e0'
+            "
+            style="
+              background-color: #f7fafc;
+              padding: 10px;
+              margin-bottom: 10px;
+              border-right: 5px solid #cbd5e0;
+              display: flex;
+            "
+          >
+            <input
+              [(ngModel)]="chosenPaymentWay"
+              type="radio"
+              id="three"
+              name="payemntWay"
+              value="3"
+            />
+            <span class="mx-2"></span>
+            <label for="three">
+              <img
+                style="width: 100px"
+                src="assets/d6f5a7fe-9b7d-4891-8833-4dbcd5a8fb83.jfif"
+                class="img-fluid"
+                alt=""
+              />
+              <br />
+              <br />
+              ديما (الدفع بالتقسيط)
+            </label>
+          </div>
+          <button
+            (click)="checkout()"
+            [disabled]="checkoutLoading"
+            style="border-radius: 5px"
+            class="w-100 bluButton text-center"
+          >
+            تأكيد الطلب
+            <i *ngIf="checkoutLoading" class="fas fa-circle-notch fa-spin"></i>
+          </button>
+          <!-- <a
                     *ngIf="paymentLink"
                     style="border-radius: 5px" class="w-100 bluButton text-center d-block my-2"
                    (click)="routeToPay()"
@@ -139,9 +186,9 @@ style="min-height: 100vh;" class="conditions cstmradioBtn pb-5">
                     >
                       أضغط للدفع
                     </a> -->
-                </div>
-            </div>
-            <!--  -->
         </div>
+      </div>
+      <!--  -->
     </div>
+  </div>
 </section>

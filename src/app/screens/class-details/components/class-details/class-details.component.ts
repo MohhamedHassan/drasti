@@ -19,6 +19,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { FirebaseappService } from 'src/app/shared/firebaseapp.service';
 SwiperCore.use([Navigation, Pagination]);
 @Component({
   selector: 'app-class-details',
@@ -79,7 +80,8 @@ export class ClassDetailsComponent implements OnInit {
     private subjectsService: SubjectsService,
     private ref: ChangeDetectorRef,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private fire: FirebaseappService
   ) {}
   // ngAfterViewInit() {
   //   this.ref.detach()
@@ -93,6 +95,24 @@ export class ClassDetailsComponent implements OnInit {
     }, 10);
   }
   onImageChange(event) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      this.toastr.error('لم يتم اختيار أي ملف');
+      return;
+    }
+
+    const file = input.files[0];
+
+    if (!file.type.startsWith('image/')) {
+      this.toastr.error('الملف المحدد ليس صورة!');
+      return;
+    }
+    const maxSizeInBytes = 50 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      this.toastr.error('حجم الصورة يجب ألا يتجاوز 50 ميجا');
+      return;
+    }
     const img: any = event?.target?.files[0];
 
     let reference = this.angularFireStore.ref(
@@ -130,17 +150,7 @@ export class ClassDetailsComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.app = initializeApp({
-      apiKey: 'AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc',
-      authDomain: 'drasti-37a06.firebaseapp.com',
-      databaseURL: 'https://drasti-37a06-default-rtdb.firebaseio.com',
-      projectId: 'drasti-37a06',
-      storageBucket: 'drasti-37a06.appspot.com',
-      messagingSenderId: '850147128578',
-      appId: '1:850147128578:web:2153add74417b85d4fbe1b',
-      measurementId: 'G-41JEDDFQT2',
-    });
-    this.db = getDatabase(this.app);
+    this.db = this.fire.db;
     window.scroll(0, 0);
     this.title.setTitle(` دراستي - ادرس وانت متطمن `);
     this.activatedRoute.params.subscribe((value: any) => {
@@ -245,7 +255,8 @@ export class ClassDetailsComponent implements OnInit {
               this.getLessons(this.classDetails?.id);
             }
             if (
-              this.activatedRoute.snapshot.queryParams['openChat'] == 'true'
+              this.activatedRoute.snapshot.queryParams['openChat'] == 'true' &&
+              !this.classDetails?.is_blocked
             ) {
               this.showNewChatBox = true;
             }
@@ -258,7 +269,7 @@ export class ClassDetailsComponent implements OnInit {
   savedYoutube(link: any): any {
     if (link) {
       let id = link.slice(link.indexOf('v=') + 2, link.lastIndexOf('&'));
-      // return this._sanitizer.bypassSecurityTrustHtml(`<iframe src='https://www.youtube.com/embed/${id}' class="w-100" style="height:360px"></iframe>`)
+      // /return this._sanitizer.bypassSecurityTrustHtml(`<iframe src='https://www.youtube.com/embed/${id}' class="w-100" style="height:360px"></iframe>`)
       return `https://www.youtube.com/embed/${id}`;
     }
   }

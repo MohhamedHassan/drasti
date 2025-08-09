@@ -9,6 +9,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  LOCALE_ID,
 } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import {
@@ -27,12 +28,21 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { ClassDetailsService } from '../../services/class-details.service';
+import { ToastrService } from 'ngx-toastr';
+import localeAr from '@angular/common/locales/ar';
+import { registerLocaleData } from '@angular/common';
+import { FirebaseappService } from 'src/app/shared/firebaseapp.service';
+registerLocaleData(localeAr); // تسجيل اللغة
 @Component({
   selector: 'app-subject-chat',
   templateUrl: './subject-chat.component.html',
   styleUrls: ['./subject-chat.component.scss'],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'ar' }, // تحديد اللغة الافتراضية
+  ],
 })
 export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
+  private currentAudio: HTMLAudioElement | null = null;
   imageLoading = false;
   currentImage = '';
   @ViewChild('boxchat2') boxchat: ElementRef;
@@ -46,12 +56,15 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() closeChat = new EventEmitter<void>();
   private authRef: DatabaseReference;
   teacherName;
+  currentUserMessages = [];
   constructor(
+    private toastr: ToastrService,
     private angularFireStore: AngularFireStorage,
     private datepipe: DatePipe,
     private afs: AngularFirestore,
     private title: Title,
-    private classDetailsService: ClassDetailsService
+    private classDetailsService: ClassDetailsService,
+    private fire: FirebaseappService
   ) {}
 
   scrollChatBox() {
@@ -66,6 +79,25 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scrollChatBox();
   }
   onImageChange(event) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      this.toastr.error('لم يتم اختيار أي ملف');
+      return;
+    }
+
+    const file = input.files[0];
+
+    if (!file.type.startsWith('image/')) {
+      this.toastr.error('الملف المحدد ليس صورة!');
+      return;
+    }
+    const maxSizeInBytes = 50 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      this.toastr.error('حجم الصورة يجب ألا يتجاوز 50 ميجا');
+      return;
+    }
+    console.log(event?.target?.files);
     const img: any = event?.target?.files[0];
     let reference = this.angularFireStore.ref(
       'message_images/' +
@@ -113,6 +145,16 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     });
   }
+  onAudioPlay(player: HTMLAudioElement): void {
+    // لو فيه صوت شغال بالفعل، نوقفه
+    if (this.currentAudio && this.currentAudio !== player) {
+      this.currentAudio.pause();
+      this.currentAudio.currentTime = 0; // نرجعه للبداية
+    }
+
+    // نخزن الصوت الجديد كالحالي
+    this.currentAudio = player;
+  }
   sendAudio(event: { audio: any; duration: any }) {
     this.nowRecording = false;
     let reference = this.angularFireStore.ref(
@@ -122,6 +164,8 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           'yyyy-MM-dd HH:mm:ss'
         )}`
     );
+    this.imageLoading = true;
+    this.scrollChatBox();
     reference.put(event.audio).then(() => {
       reference.getDownloadURL().subscribe((audioUrl) => {
         let date = new Date();
@@ -152,6 +196,8 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
               question: 'رسالة صوتية',
             })
             .subscribe();
+          this.imageLoading = false;
+
           setTimeout(() => {
             this.handleAutoReplyIfNeeded(this.currentUserMessages);
           }, 1000);
@@ -159,19 +205,9 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     });
   }
-  currentUserMessages = [];
+
   ngOnInit(): void {
-    this.app = initializeApp({
-      apiKey: 'AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc',
-      authDomain: 'drasti-37a06.firebaseapp.com',
-      databaseURL: 'https://drasti-37a06-default-rtdb.firebaseio.com',
-      projectId: 'drasti-37a06',
-      storageBucket: 'drasti-37a06.appspot.com',
-      messagingSenderId: '850147128578',
-      appId: '1:850147128578:web:2153add74417b85d4fbe1b',
-      measurementId: 'G-41JEDDFQT2',
-    });
-    this.db = getDatabase(this.app);
+    this.db = this.fire.db;
     window.scroll(0, 0);
     this.title.setTitle(` دراستي - ادرس وانت متطمن `);
 
@@ -257,9 +293,9 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return localStorage.getItem('userid');
   }
   ngOnDestroy(): void {
-    if (this.currentUserMessages?.length) {
-      for (let i = 0; i < this.currentUserMessages?.length; i++) {
-        const message = this.currentUserMessages[i];
+    if (Object.keys(this.currentUserMessages).length > 0) {
+      for (let key in this.currentUserMessages) {
+        const message = this.currentUserMessages[key];
         const isTeacherMessage =
           message.from_id !== localStorage.getItem('userid');
         if (isTeacherMessage && message.did_read === false) {
@@ -267,17 +303,17 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
             this.db,
             `Subjects-Messages/${this.classDetails?.id}/${localStorage.getItem(
               'userid'
-            )}/${i}`
+            )}/${key}`
           );
-
+          console.log(message);
           update(messageRef, { did_read: true });
         }
       }
     }
 
-    if (this.authRef) {
-      off(this.authRef);
-    }
+    // if (this.authRef) {
+    //   off(this.authRef);
+    // }
   }
   // this.handleAutoReplyIfNeeded(currentUserMessages);
   handleAutoReplyIfNeeded(messagesMap: any) {
@@ -308,7 +344,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
         to_id: `${localStorage.getItem('userid')}`,
         date: this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         message_content:
-          'اهلا بك في تطبيق دراستي\nسيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة\nشكرا لاستخدام دراستي',
+          'اهلا بك في تطبيق دراستي سيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة شكرا لاستخدام دراستي',
         type: 'text',
         did_read: false,
         material_name: this.classDetails?.name,
@@ -319,7 +355,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           .addAnswer({
             material_id: this.classDetails?.id,
             answer:
-              'اهلا بك في تطبيق دراستي\nسيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة\nشكرا لاستخدام دراستي',
+              'اهلا بك في تطبيق دراستي سيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة شكرا لاستخدام دراستي',
             student_id: localStorage.getItem('userid'),
           })
           .subscribe();

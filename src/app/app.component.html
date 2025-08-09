@@ -7,3 +7,45 @@
   </div>
   <app-footer></app-footer>
 </div>
+<div
+  routerLink="/all-msgs"
+  *ngIf="cartService.showNotification"
+  style="
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 250px;
+    border: 2px solid #2b6cb0;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+  "
+  class="notification"
+>
+  <div
+    style="
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    "
+  >
+    <div>
+      <img
+        style="width: 50px; border-radius: 50%"
+        src="assets/0838de4f-5271-4e88-99d9-c0f89edfe1c2.jfif"
+        alt="NAMNAM"
+      />
+    </div>
+    <div>
+      <p style="margin-bottom: 5px; text-align: center">
+        {{ cartService.notificationInfo?.from_display_name }}
+      </p>
+      <p style="margin: 0; text-align: center">
+        مادة {{ cartService.notificationInfo?.material_name }}
+      </p>
+    </div>
+  </div>
+</div>

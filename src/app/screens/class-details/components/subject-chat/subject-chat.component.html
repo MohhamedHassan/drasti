@@ -3,7 +3,7 @@
     style="border-bottom: 1px solid #cfcfcf"
     class="header px-3 py-2 d-flex align-items-center justify-content-between"
   >
-    <span class="fw-bold">{{ teacherName || "الرسائل" }}</span>
+    <span class="fw-bold">{{ "الرسائل" }}</span>
     <i
       (click)="closeChat.emit()"
       style="cursor: pointer"
@@ -15,7 +15,7 @@
       <li
         class="mb-2"
         [ngStyle]="{
-          'text-align': userid == message?.from_id ? 'left' : 'right'
+          'text-align': userid == message?.from_id ? 'right' : 'left'
         }"
         *ngFor="let message of messages"
       >
@@ -25,7 +25,7 @@
             padding: 10px;
             display: inline-block;
             max-width: 80%;
-            word-break: break-all;
+            word-break: break-word;
           "
           [ngStyle]="{
             background: userid == message?.from_id ? '#0d6efd' : '#e4e6eb',
@@ -40,7 +40,7 @@
           *ngIf="message?.type == 'photo'"
           style="min-height: 100px; cursor: pointer"
           [ngStyle]="{
-            'text-align': userid == message?.from_id ? 'left' : 'right'
+            'text-align': userid == message?.from_id ? 'right' : 'left'
           }"
         >
           <img
@@ -57,12 +57,15 @@
         <div
           [ngStyle]="{
             'justify-content':
-              userid == message?.from_id ? 'flex-end' : 'flex-start'
+              userid == message?.from_id ? 'flex-start' : 'flex-end'
           }"
           style="display: flex"
           *ngIf="message?.type == 'audio'"
         >
           <audio
+            preload="metadata"
+            #audioPlayer
+            (play)="onAudioPlay(audioPlayer)"
             style="width: 90%"
             controls
             controlsList="nodownload noplaybackrate"
@@ -74,7 +77,7 @@
         <p
           *ngIf="userid != message?.from_id"
           style="
-            justify-content: flex-start;
+            justify-content: flex-end;
             display: flex;
             margin: 0;
             font-size: 10px;
@@ -88,15 +91,39 @@
           >
           <bdi
             style="
-              justify-content: flex-start;
+              justify-content: flex-end;
               display: flex;
-              margin: 0;
+              margin: 3px 0 0 0;
               font-size: 10px;
               color: black;
               font-weight: normal;
             "
-            >{{ message?.date | date : "d MMMM, h:mm a" }}</bdi
-          >
+            >{{ message?.date | date : "d MMMM, h:mm a" }}
+          </bdi>
+        </p>
+        <p
+          *ngIf="userid == message?.from_id"
+          style="
+            justify-content: flex-start;
+            display: flex;
+            margin: 0;
+            font-size: 10px;
+            color: black;
+            display: flex;
+            gap: 10px;
+          "
+        >
+          <bdi
+            style="
+              justify-content: flex-start;
+              display: flex;
+              margin: 3px 0 0 0;
+              font-size: 10px;
+              color: black;
+              font-weight: normal;
+            "
+            >{{ message?.date | date : "d MMMM, h:mm a" }}
+          </bdi>
         </p>
       </li>
       <li *ngIf="imageLoading">

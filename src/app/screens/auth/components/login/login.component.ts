@@ -12,6 +12,7 @@ import { Title } from '@angular/platform-browser';
 import { CartService } from 'src/app/screens/cart/services/cart.service';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Database, getDatabase, ref, set, onValue } from 'firebase/database';
+import { FirebaseappService } from 'src/app/shared/firebaseapp.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -44,21 +45,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private cartService: CartService,
-    private authservice: AuthService
+    private authservice: AuthService,
+    private fire: FirebaseappService
   ) {}
 
   ngOnInit(): void {
-    this.app = initializeApp({
-      apiKey: 'AIzaSyCrZO0tF5O5Ms8au460-tmGbNS3mJ6QrEc',
-      authDomain: 'drasti-37a06.firebaseapp.com',
-      databaseURL: 'https://drasti-37a06-default-rtdb.firebaseio.com',
-      projectId: 'drasti-37a06',
-      storageBucket: 'drasti-37a06.appspot.com',
-      messagingSenderId: '850147128578',
-      appId: '1:850147128578:web:2153add74417b85d4fbe1b',
-      measurementId: 'G-41JEDDFQT2',
-    });
-    this.db = getDatabase(this.app);
+    this.db = this.fire.db;
     if (!this.checkout) {
       this.title.setTitle('تسجل الدخول - دراستي');
     }

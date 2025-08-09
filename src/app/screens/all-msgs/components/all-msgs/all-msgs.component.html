@@ -11,18 +11,28 @@
       [queryParams]="{ openChat: true }"
       [routerLink]="'/class-details/' + mat?.materialId + '/subject/-1/-1'"
       style="
-        background: #2b6cb0;
-        color: white;
+        border: 1px solid black;
         padding: 10px;
         border-radius: 10px;
         margin-bottom: 16px;
         cursor: pointer;
+        display: flex;
+        gap: 10px;
       "
       class="material-name"
     >
-      {{ mat.materialName }}
+      <img style="width: 50px" src="assets/logo.png" alt="" />
+      <div>
+        {{ mat.materialName }} <br />
+        <span style="display: block">{{ mat.latestText }}</span>
+        <span style="display: block">{{
+          mat.latest | date : "d MMMM, h:mm a"
+        }}</span>
+      </div>
       <span class="mx-5"></span>
-      <span *ngIf="mat.hasUnread" class="unread-dot">●</span>
+      <span style="color: #0034c2" *ngIf="mat.hasUnread" class="unread-dot"
+        >●</span
+      >
     </div>
   </div>
 </div>
