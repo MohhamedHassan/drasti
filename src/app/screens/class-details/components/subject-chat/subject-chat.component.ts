@@ -155,18 +155,19 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     // نخزن الصوت الجديد كالحالي
     this.currentAudio = player;
   }
-  sendAudio(event: { audio: any; duration: any }) {
+  async sendAudio(event: { audio: any; duration: any }) {
     this.nowRecording = false;
     let reference = this.angularFireStore.ref(
       'message_images/' +
         `voice_message_${this.datepipe.transform(
           new Date(),
           'yyyy-MM-dd HH:mm:ss'
-        )}`
+        )}.wav`
     );
     this.imageLoading = true;
     this.scrollChatBox();
-    reference.put(event.audio).then(() => {
+    const wavBlob = await this.convertToWav(event.audio);
+    reference.put(wavBlob).then(() => {
       reference.getDownloadURL().subscribe((audioUrl) => {
         let date = new Date();
         set(
@@ -374,6 +375,68 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
         URL.revokeObjectURL(url);
       })
       .catch((err) => console.error('Download failed:', err));
+  }
+  async convertToWav(blob: Blob): Promise<Blob> {
+    const audioCtx = new AudioContext();
+    const arrayBuffer = await blob.arrayBuffer();
+    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+    const wavBuffer = this.audioBufferToWav(audioBuffer);
+    return new Blob([wavBuffer], { type: 'audio/wav' });
+  }
+
+  // تحويل الـ AudioBuffer لـ wav
+  audioBufferToWav(buffer: AudioBuffer) {
+    const numOfChannels = buffer.numberOfChannels;
+    const length = buffer.length * numOfChannels * 2 + 44;
+    const result = new ArrayBuffer(length);
+    const view = new DataView(result);
+
+    const channels = [];
+    let sample;
+    let offset = 0;
+    let pos = 0;
+
+    // write WAV header
+    setUint32(0x46464952); // "RIFF"
+    setUint32(length - 8); // file length - 8
+    setUint32(0x45564157); // "WAVE"
+
+    setUint32(0x20746d66); // "fmt " chunk
+    setUint32(16); // length = 16
+    setUint16(1); // PCM (uncompressed)
+    setUint16(numOfChannels);
+    setUint32(buffer.sampleRate);
+    setUint32(buffer.sampleRate * 2 * numOfChannels); // avg. bytes/sec
+    setUint16(numOfChannels * 2); // block-align
+    setUint16(16); // 16-bit
+    setUint32(0x61746164); // "data" - chunk
+    setUint32(length - pos - 4); // chunk length
+
+    // write interleaved data
+    for (let i = 0; i < buffer.numberOfChannels; i++)
+      channels.push(buffer.getChannelData(i));
+
+    while (pos < length) {
+      for (let i = 0; i < numOfChannels; i++) {
+        sample = Math.max(-1, Math.min(1, channels[i][offset])); // clamp
+        sample = sample < 0 ? sample * 0x8000 : sample * 0x7fff; // scale
+        view.setInt16(pos, sample, true); // write 16-bit sample
+        pos += 2;
+      }
+      offset++;
+    }
+
+    return result;
+
+    function setUint16(data: any) {
+      view.setUint16(pos, data, true);
+      pos += 2;
+    }
+    function setUint32(data: any) {
+      view.setUint32(pos, data, true);
+      pos += 4;
+    }
   }
   @HostListener('document:keydown.escape', ['$event'])
   onEscape(event: KeyboardEvent) {
