@@ -10,6 +10,7 @@ import {
   Output,
   ViewChild,
   LOCALE_ID,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import {
@@ -64,7 +65,8 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private afs: AngularFirestore,
     private title: Title,
     private classDetailsService: ClassDetailsService,
-    private fire: FirebaseappService
+    private fire: FirebaseappService,
+    private cd: ChangeDetectorRef
   ) {}
 
   scrollChatBox() {
@@ -154,6 +156,10 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // نخزن الصوت الجديد كالحالي
     this.currentAudio = player;
+  }
+  loading() {
+    this.imageLoading = true;
+    this.cd.detectChanges();
   }
   async sendAudio(event: { audio: any; duration: any }) {
     this.nowRecording = false;

@@ -85,7 +85,9 @@ export class AllMsgsComponent implements OnInit {
     //   });
     // });
     this.myCoursesService.getMyCourses().subscribe((res: any) => {
-      this.classes = res?.data.filter((i) => i.offer == null);
+      this.classes = res?.data.filter(
+        (i) => i.offer == null && !i.material.is_blocked
+      );
       this.classes = this.classes.map((i) => i.material);
       this.loading = false;
 

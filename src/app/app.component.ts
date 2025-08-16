@@ -12,6 +12,7 @@ import { CartService } from './screens/cart/services/cart.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { FirebaseappService } from './shared/firebaseapp.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,7 +26,8 @@ export class AppComponent {
   constructor(
     public cartService: CartService,
     private router: Router,
-    private fire: FirebaseappService
+    private fire: FirebaseappService,
+    private toastr: ToastrService
   ) {
     if (!!localStorage.getItem('drastitoken')) {
       this.listenForTeacherMessages();
@@ -120,10 +122,18 @@ export class AppComponent {
               console.log(msg);
               this.cartService.showNotification = true;
               this.cartService.notificationInfo = msg;
-              setTimeout(() => {
-                this.cartService.showNotification = false;
-                this.cartService.notificationInfo = null;
-              }, 5000);
+              const toast = this.toastr.info(
+                this.cartService.notificationInfo?.from,
+                this.cartService.notificationInfo?.material_name
+              );
+              toast.onTap.subscribe(() => {
+                // توجيه المستخدم عند الكليك
+                this.router.navigate(['/all-msgs']);
+              });
+              // setTimeout(() => {
+              //   this.cartService.showNotification = false;
+              //   this.cartService.notificationInfo = null;
+              // }, 5000);
             }
           }
         });

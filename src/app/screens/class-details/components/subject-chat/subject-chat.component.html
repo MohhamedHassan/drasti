@@ -147,7 +147,7 @@
     <ng-container *ngIf="showaudio">
       <app-audio-chat
         (micError)="micrphonAlert = true"
-        (send)="sendAudio($event)"
+        (send)="loading(); sendAudio($event)"
         (nowRecording)="nowRecording = $event"
       ></app-audio-chat>
     </ng-container>
