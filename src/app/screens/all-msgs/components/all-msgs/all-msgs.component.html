@@ -8,8 +8,7 @@
 
   <div *ngFor="let mat of materialChats" class="material-item">
     <div
-      [queryParams]="{ openChat: true }"
-      [routerLink]="'/class-details/' + mat?.materialId + '/subject/-1/-1'"
+      (click)="routeToMaterial(mat)"
       style="
         border: 1px solid black;
         padding: 10px;

@@ -10,6 +10,8 @@ import {
   DatabaseReference,
   off,
 } from 'firebase/database';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-all-msgs',
   templateUrl: './all-msgs.component.html',
@@ -24,7 +26,11 @@ export class AllMsgsComponent implements OnInit {
   materialChats: MaterialChatItem[] = [];
   classes: any[] = [];
   private listeners: DatabaseReference[] = [];
-  constructor(private myCoursesService: MyCoursesService) {}
+  constructor(
+    private toastr: ToastrService,
+    private myCoursesService: MyCoursesService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // this.myCoursesService.getMyCourses().subscribe((res: any) => {
@@ -85,12 +91,10 @@ export class AllMsgsComponent implements OnInit {
     //   });
     // });
     this.myCoursesService.getMyCourses().subscribe((res: any) => {
-      this.classes = res?.data.filter(
-        (i) => i.offer == null && !i.material.is_blocked
-      );
+      this.classes = res?.data.filter((i) => i.offer == null);
       this.classes = this.classes.map((i) => i.material);
       this.loading = false;
-
+      console.log(this.classes);
       this.classes.forEach((material) => {
         const refPath = `Subjects-Messages/${material.id}/${this.studentId}`;
         const reff = ref(getDatabase(), refPath);
@@ -156,6 +160,22 @@ export class AllMsgsComponent implements OnInit {
 
   ngOnDestroy(): void {
     // this.listeners.forEach((ref) => off(ref));
+  }
+  routeToMaterial(mat: any) {
+    console.log(this.classes);
+    const material = this.classes.find((i) => i.id == mat.materialId);
+    if (material?.is_blocked) {
+      this.toastr.error('تم حظرك من ارسال الرسائل');
+    } else if (!material?.can_question) {
+      this.toastr.error('تم غلق الرسايل مؤقتا يمكنك اعادة السؤال لاحقا');
+    } else {
+      this.router.navigate(
+        [`/class-details/${mat?.materialId}/subject/-1/-1`],
+        {
+          queryParams: { openChat: true },
+        }
+      );
+    }
   }
 }
 
