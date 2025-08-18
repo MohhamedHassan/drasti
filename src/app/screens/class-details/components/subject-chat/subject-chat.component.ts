@@ -27,7 +27,7 @@ import {
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { DatePipe } from '@angular/common';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ClassDetailsService } from '../../services/class-details.service';
 import { ToastrService } from 'ngx-toastr';
 import localeAr from '@angular/common/locales/ar';
@@ -58,7 +58,9 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
   private authRef: DatabaseReference;
   teacherName;
   currentUserMessages = [];
+  localMsgs: any = [];
   constructor(
+    private sanitizer: DomSanitizer,
     private toastr: ToastrService,
     private angularFireStore: AngularFireStorage,
     private datepipe: DatePipe,
@@ -158,11 +160,38 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentAudio = player;
   }
   loading() {
-    this.imageLoading = true;
-    this.cd.detectChanges();
+    // this.imageLoading = true;
+    // this.cd.detectChanges();
   }
   async sendAudio(event: { audio: any; duration: any }) {
     this.nowRecording = false;
+    let date = new Date();
+    const tempId = 'local-' + Date.now();
+    const localUrl = URL.createObjectURL(event.audio); // Local preview
+    this.localMsgs.push({
+      date: this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      id: tempId,
+      message_content: localUrl,
+      duration: event.duration,
+      isUploading: true,
+      did_read: false,
+      from: localStorage.getItem('username'),
+      from_number: localStorage.getItem('userphone'),
+      from_id: localStorage.getItem('userid'),
+      material_name: this.classDetails?.name,
+      to: this.classDetails?.name,
+      to_id: `${this.classDetails?.id}`,
+      type: 'audio',
+    });
+    this.messages = [...this.messages, ...this.localMsgs];
+    this.messages = this.messages.sort(function (a: any, b: any) {
+      let left: any = new Date(a.date);
+      let right: any = new Date(b.date);
+      return left - right;
+    });
+    this.scrollChatBox();
+    this.cd.detectChanges();
+    this.scrollChatBox();
     let reference = this.angularFireStore.ref(
       'message_images/' +
         `voice_message_${this.datepipe.transform(
@@ -170,12 +199,11 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           'yyyy-MM-dd HH:mm:ss'
         )}.wav`
     );
-    this.imageLoading = true;
+    // this.imageLoading = true;
     this.scrollChatBox();
     const wavBlob = await this.convertToWav(event.audio);
     reference.put(wavBlob).then(() => {
       reference.getDownloadURL().subscribe((audioUrl) => {
-        let date = new Date();
         set(
           ref(
             this.db,
@@ -204,7 +232,8 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
             })
             .subscribe();
           this.imageLoading = false;
-
+          this.messages = this.messages.filter((m) => m.id !== tempId);
+          this.localMsgs = this.localMsgs.filter((m: any) => m.id !== tempId);
           setTimeout(() => {
             this.handleAutoReplyIfNeeded(this.currentUserMessages);
           }, 1000);
@@ -212,7 +241,9 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     });
   }
-
+  getSafeUrl(url: string): any {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
   ngOnInit(): void {
     this.db = this.fire.db;
     window.scroll(0, 0);
@@ -234,7 +265,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           this.currentUserMessages = subjectMessages;
           if (currentUserMessages) {
             this.messages = Object.values(currentUserMessages);
-
+            this.messages = [...this.messages, ...this.localMsgs];
             this.messages = this.messages.sort(function (a, b) {
               let left: any = new Date(a.date);
               let right: any = new Date(b.date);
