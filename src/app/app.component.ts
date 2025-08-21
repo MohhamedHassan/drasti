@@ -84,7 +84,7 @@ export class AppComponent {
               data.push(String(element?.material?.id));
             });
           }
-          return data.splice(1, 1);
+          return data;
         })
       )
       .subscribe((materialIds) => {
