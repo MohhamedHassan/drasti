@@ -84,7 +84,7 @@ export class AppComponent {
               data.push(String(element?.material?.id));
             });
           }
-          return data;
+          return data.splice(1, 1);
         })
       )
       .subscribe((materialIds) => {
@@ -114,7 +114,7 @@ export class AppComponent {
         onChildAdded(userMessagesRef, (msgSnapshot) => {
           const msg = msgSnapshot.val();
 
-          if (msg.to_id === studentId) {
+          if (msg.to_id === studentId && msg?.from_id != '_1') {
             const msgTime = new Date(msg.date).getTime();
 
             // تجاهل الرسائل التي أُرسلت قبل تسجيل الدخول

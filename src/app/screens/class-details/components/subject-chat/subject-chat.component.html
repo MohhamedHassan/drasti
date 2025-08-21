@@ -63,11 +63,15 @@
           *ngIf="message?.type == 'audio'"
         >
           <i *ngIf="message?.isUploading" class="fa-regular fa-clock"></i>
+          <i #loader class="rotate-icon fa-solid fa-spinner"></i>
           <audio
             preload="metadata"
             #audioPlayer
             (play)="onAudioPlay(audioPlayer)"
-            style="width: 90%"
+            (canplaythrough)="
+              loader.style.display = 'none'; audioPlayer.style.display = 'block'
+            "
+            style="width: 90%; display: none"
             controls
             controlsList="nodownload noplaybackrate"
           >
