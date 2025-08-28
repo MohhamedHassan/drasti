@@ -165,7 +165,7 @@ export class AllMsgsComponent implements OnInit {
     console.log(this.classes);
     const material = this.classes.find((i) => i.id == mat.materialId);
     if (material?.is_blocked) {
-      this.toastr.error('تم حظرك من ارسال الرسائل');
+      this.toastr.error('لايمكنك ارسال رسالة');
     } else if (!material?.can_question) {
       this.toastr.error('تم غلق الرسايل مؤقتا يمكنك اعادة السؤال لاحقا');
     } else {

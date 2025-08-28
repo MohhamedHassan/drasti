@@ -381,8 +381,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
         to: localStorage.getItem('username'),
         to_id: `${localStorage.getItem('userid')}`,
         date: this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-        message_content:
-          'اهلا بك في تطبيق دراستي سيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة شكرا لاستخدام دراستي',
+        message_content: this.classDetailsService.autoReply,
         type: 'text',
         did_read: false,
         material_name: this.classDetails?.name,
@@ -392,8 +391,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
         this.classDetailsService
           .addAnswer({
             material_id: this.classDetails?.id,
-            answer:
-              'اهلا بك في تطبيق دراستي سيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة شكرا لاستخدام دراستي',
+            answer: this.classDetailsService.autoReply,
             student_id: localStorage.getItem('userid'),
           })
           .subscribe();

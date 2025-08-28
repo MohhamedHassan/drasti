@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ClassDetailsService {
+  autoReply = '';
   constructor(private http: HttpClient) {}
   getClassDetails(id: any) {
     return this.http.get(`${environment.apiUrl}material/${id}`);

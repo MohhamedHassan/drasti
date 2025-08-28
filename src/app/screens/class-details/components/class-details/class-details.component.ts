@@ -398,7 +398,7 @@ export class ClassDetailsComponent implements OnInit {
   }
   checkIfStudentBlocked() {
     if (this.classDetails?.is_blocked) {
-      this.toastr.error('تم حظرك من ارسال الرسائل');
+      this.toastr.error('لايمكنك ارسال رسالة');
     } else {
       this.showChatBox = false;
       this.showNewChatBox = true;

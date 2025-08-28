@@ -1,53 +1,53 @@
-<section class="homepage" style="min-height: 100vh;">
-    <app-header
-    imgSrc="assets/header.png"
-    ></app-header>
-    <!-- end header image -->
-    <section class="container">
-        <div class="homepageHeader">
-            <h1>
-                مواد تعليمية مدرسية
-            </h1>
-            <h2>
-                الطريق الاسهل والاضمن للنجاح و التفوق
-            </h2>
+<section class="homepage" style="min-height: 100vh">
+  <app-header imgSrc="assets/header.png"></app-header>
+  <!-- end header image -->
+  <section class="container">
+    <div class="homepageHeader">
+      <h1>مواد تعليمية مدرسية</h1>
+      <h2>الطريق الاسهل والاضمن للنجاح و التفوق</h2>
+    </div>
+    <!--  -->
+    <app-loading *ngIf="loading"></app-loading>
+    <div *ngIf="!loading" class="row justify-content-center mb-3">
+      <div *ngFor="let stage of all" class="col-6 col-md-3 mb-4">
+        <div>
+          <a aria-label="دراستي" [routerLink]="route(stage)">
+            <img class="img-fluid stage" [src]="stage?.media" alt="دراستي" />
+          </a>
         </div>
-        <!--  -->
-        <app-loading *ngIf="loading"></app-loading>
-        <div 
-        *ngIf="!loading"
-        class="row justify-content-center mb-3">
-            <div 
-            *ngFor="let stage of all"
-            class="col-6 col-md-3 mb-4">
-                <div>
-                   <a 
-                   aria-label="دراستي"
-                   [routerLink]="route(stage)">
-                    <img 
-                    class="img-fluid stage"
-                    [src]="stage?.media" alt="دراستي">
-                   </a>
-                </div>
-            </div>
+      </div>
+    </div>
+    <p
+      style="font-size: 20px"
+      *ngIf="!loading && !stages?.length"
+      class="text-center fw-bold text-secondary m-2"
+    >
+      لا توجد بيانات
+    </p>
+    <!--  -->
+    <div class="videoSection mb-3">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <!-- <video
+            preload="metadata"
+            class="elementor-video"
+            src="https://player.vdocipher.com/v2/?otp=20160313versASE323eXY4QLzHXVl4Qe3cpcQARlBD1OemZMPccvwNSVo9yeblsM&playbackInfo=eyJ2aWRlb0lkIjoiNzA3YzExODA2YjdjNDExMGE0Y2E2M2Q5ZGUzMGJhMDIifQ=="
+            controls=""
+            controlslist="nodownload"
+          ></video> -->
+          <iframe
+            allow="encrypted-media"
+            allowFullScreen="true"
+            src="
+              https://player.vdocipher.com/v2/?otp=20160313versASE323eXY4QLzHXVl4Qe3cpcQARlBD1OemZMPccvwNSVo9yeblsM&playbackInfo=eyJ2aWRlb0lkIjoiNzA3YzExODA2YjdjNDExMGE0Y2E2M2Q5ZGUzMGJhMDIifQ==
+            "
+            class="w-100"
+            style="height: 360px"
+          ></iframe>
         </div>
-        <p 
-        style="font-size:20px"
-        *ngIf="!loading&&!stages?.length"
-        class="text-center fw-bold text-secondary m-2">
-            لا توجد بيانات
-        </p>
-        <!--  -->
-        <div class="videoSection mb-3">
-           <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <video 
-                    preload="metadata"
-                    class="elementor-video" src="assets/IMG_7296.mp4" controls="" controlslist="nodownload"></video>
-                </div>
-                <div class="col-md-2"></div>
-           </div>
-        </div>
-    </section>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+  </section>
 </section>

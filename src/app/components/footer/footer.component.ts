@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/screens/cart/services/cart.service';
+import { ClassDetailsService } from 'src/app/screens/class-details/services/class-details.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class FooterComponent implements OnInit {
   settings: any;
   constructor(
     private settingsService: SettingsService,
-    private cartService: CartService
+    private cartService: CartService,
+    private _ClassDetailsService: ClassDetailsService
   ) {}
 
   ngOnInit(): void {
@@ -19,6 +21,7 @@ export class FooterComponent implements OnInit {
       this.settingsService.hideMsgs = !res?.data.can_question;
       this.settings = res?.data;
       if (res?.data?.show_coupon == 1) this.cartService.showCopon = true;
+      this._ClassDetailsService.autoReply = res?.data?.auto_replay_message;
     });
   }
 }
