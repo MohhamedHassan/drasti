@@ -6,7 +6,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ClassDetailsService {
-  autoReply = '';
+  autoReply =
+    'اهلا بك في تطبيق دراستي سيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة شكرا لاستخدام دراستي';
   constructor(private http: HttpClient) {}
   getClassDetails(id: any) {
     return this.http.get(`${environment.apiUrl}material/${id}`);

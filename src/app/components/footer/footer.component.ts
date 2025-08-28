@@ -21,7 +21,9 @@ export class FooterComponent implements OnInit {
       this.settingsService.hideMsgs = !res?.data.can_question;
       this.settings = res?.data;
       if (res?.data?.show_coupon == 1) this.cartService.showCopon = true;
-      this._ClassDetailsService.autoReply = res?.data?.auto_replay_message;
+      this._ClassDetailsService.autoReply = res?.data?.auto_replay_message
+        ? res?.data?.auto_replay_message
+        : 'اهلا بك في تطبيق دراستي سيقوم اعضاء هيئة التدريس بالرد علي سيادتكم خلال ٢٤ ساعة شكرا لاستخدام دراستي';
     });
   }
 }
