@@ -131,13 +131,13 @@ export class ClassDetailsComponent implements OnInit {
           ref(
             this.db,
             `Messages/${this.classid}/${localStorage.getItem(
-              'userid'
+              'drastiuserid'
             )}/${this.afs.createId()}`
           ),
           {
             date: this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss'),
-            from: localStorage.getItem('username'),
-            from_id: localStorage.getItem('userid'),
+            from: localStorage.getItem('drastiusername'),
+            from_id: localStorage.getItem('drastiuserid'),
             message_content: imageurl,
             to: this.classDetails?.name,
             to_id: this.classid,
@@ -157,7 +157,7 @@ export class ClassDetailsComponent implements OnInit {
       this.classid = value?.id;
       const authRef = ref(
         this.db,
-        `Messages/${this.classid}/${localStorage.getItem('userid')}`
+        `Messages/${this.classid}/${localStorage.getItem('drastiuserid')}`
       );
       onValue(authRef, (snapshot: any) => {
         this.messages = [];
@@ -367,7 +367,7 @@ export class ClassDetailsComponent implements OnInit {
     }
   }
   get userid() {
-    return localStorage.getItem('userid');
+    return localStorage.getItem('drastiuserid');
   }
   islogin() {
     return !!localStorage.getItem('drastitoken');
@@ -380,13 +380,13 @@ export class ClassDetailsComponent implements OnInit {
         ref(
           this.db,
           `Messages/${this.classid}/${localStorage.getItem(
-            'userid'
+            'drastiuserid'
           )}/${this.afs.createId()}`
         ),
         {
           date: this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss'),
-          from: localStorage.getItem('username'),
-          from_id: localStorage.getItem('userid'),
+          from: localStorage.getItem('drastiusername'),
+          from_id: localStorage.getItem('drastiuserid'),
           message_content: inputValue,
           to: this.classDetails?.name,
           to_id: this.classid,

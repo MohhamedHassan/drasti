@@ -22,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AllMsgsComponent implements OnInit {
   loading = true;
-  studentId = localStorage.getItem('userid') || '';
+  studentId = localStorage.getItem('drastiuserid') || '';
   materialChats: MaterialChatItem[] = [];
   classes: any[] = [];
   private listeners: DatabaseReference[] = [];

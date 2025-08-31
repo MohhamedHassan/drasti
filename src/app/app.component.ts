@@ -49,7 +49,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.db = this.fire.db;
     if (!!localStorage.getItem('drastitoken')) {
-      set(ref(this.db, `Auth/${localStorage.getItem('userid')}`), {
+      set(ref(this.db, `Auth/${localStorage.getItem('drastiuserid')}`), {
         user_token: localStorage.getItem('drastitoken'),
       });
     }
@@ -58,15 +58,16 @@ export class AppComponent {
       if (!!localStorage.getItem('drastitoken')) {
         const data = snapshot.val();
         for (let i in data) {
-          if (i == localStorage.getItem('userid')) this.savedToken = data[i];
+          if (i == localStorage.getItem('drastiuserid'))
+            this.savedToken = data[i];
         }
         if (
           this.savedToken?.user_token != localStorage.getItem('drastitoken')
         ) {
           this.cartService.cartItems.next([]);
           localStorage.removeItem('drastitoken');
-          localStorage.removeItem('userid');
-          localStorage.removeItem('username');
+          localStorage.removeItem('drastiuserid');
+          localStorage.removeItem('drastiusername');
           this.router.navigate(['/']);
         }
       }
@@ -93,7 +94,7 @@ export class AppComponent {
   }
   listenForNewMessages(
     materialIds: string[],
-    studentId = localStorage.getItem('userid')
+    studentId = localStorage.getItem('drastiuserid')
   ) {
     const loginTime = Date.now(); // وقت تسجيل الدخول
 

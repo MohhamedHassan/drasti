@@ -79,10 +79,10 @@ export class LoginComponent implements OnInit {
       this.authservice.login(value).subscribe(
         (res: any) => {
           localStorage.setItem('drastitoken', res?.meta?.token);
-          localStorage.setItem('userphone', res?.data?.phone);
-          localStorage.setItem('userid', res?.data?.id);
+          localStorage.setItem('drastiuserphone', res?.data?.phone);
+          localStorage.setItem('drastiuserid', res?.data?.id);
           localStorage.setItem(
-            'username',
+            'drastiusername',
             `${res?.data?.fname} ${res?.data?.lname}`
           );
           set(ref(this.db, `Auth/${res?.data?.id}`), {

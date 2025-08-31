@@ -119,15 +119,15 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           ref(
             this.db,
             `Subjects-Messages/${this.classDetails?.id}/${localStorage.getItem(
-              'userid'
+              'drastiuserid'
             )}/${this.afs.createId()}`
           ),
           {
             date: this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss'),
             did_read: false,
-            from: localStorage.getItem('username'),
-            from_number: localStorage.getItem('userphone'),
-            from_id: localStorage.getItem('userid'),
+            from: localStorage.getItem('drastiusername'),
+            from_number: localStorage.getItem('drastiuserphone'),
+            from_id: localStorage.getItem('drastiuserid'),
             message_content: imageurl,
             material_name: this.classDetails?.name,
             to: this.classDetails?.name,
@@ -175,9 +175,9 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
       duration: event.duration,
       isUploading: true,
       did_read: false,
-      from: localStorage.getItem('username'),
-      from_number: localStorage.getItem('userphone'),
-      from_id: localStorage.getItem('userid'),
+      from: localStorage.getItem('drastiusername'),
+      from_number: localStorage.getItem('drastiuserphone'),
+      from_id: localStorage.getItem('drastiuserid'),
       material_name: this.classDetails?.name,
       to: this.classDetails?.name,
       to_id: `${this.classDetails?.id}`,
@@ -208,16 +208,16 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           ref(
             this.db,
             `Subjects-Messages/${this.classDetails?.id}/${localStorage.getItem(
-              'userid'
+              'drastiuserid'
             )}/${this.afs.createId()}`
           ),
           {
             date: this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss'),
             did_read: false,
             duration: `${event.duration}`,
-            from: localStorage.getItem('username'),
-            from_number: localStorage.getItem('userphone'),
-            from_id: localStorage.getItem('userid'),
+            from: localStorage.getItem('drastiusername'),
+            from_number: localStorage.getItem('drastiuserphone'),
+            from_id: localStorage.getItem('drastiuserid'),
             message_content: audioUrl,
             material_name: this.classDetails?.name,
             to: this.classDetails?.name,
@@ -252,7 +252,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.authRef = ref(
       this.db,
       `Subjects-Messages/${this.classDetails?.id}/${localStorage.getItem(
-        'userid'
+        'drastiuserid'
       )}`
     );
     onValue(this.authRef, (snapshot: any) => {
@@ -298,15 +298,15 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
         ref(
           this.db,
           `Subjects-Messages/${this.classDetails?.id}/${localStorage.getItem(
-            'userid'
+            'drastiuserid'
           )}/${this.afs.createId()}`
         ),
         {
           did_read: false,
           date: this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss'),
-          from: localStorage.getItem('username'),
-          from_number: localStorage.getItem('userphone'),
-          from_id: localStorage.getItem('userid'),
+          from: localStorage.getItem('drastiusername'),
+          from_number: localStorage.getItem('drastiuserphone'),
+          from_id: localStorage.getItem('drastiuserid'),
           message_content: inputValue,
           material_name: this.classDetails?.name,
           to: this.classDetails?.name,
@@ -328,19 +328,19 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   get userid() {
-    return localStorage.getItem('userid');
+    return localStorage.getItem('drastiuserid');
   }
   ngOnDestroy(): void {
     if (Object.keys(this.currentUserMessages).length > 0) {
       for (let key in this.currentUserMessages) {
         const message = this.currentUserMessages[key];
         const isTeacherMessage =
-          message.from_id !== localStorage.getItem('userid');
+          message.from_id !== localStorage.getItem('drastiuserid');
         if (isTeacherMessage && message.did_read === false) {
           const messageRef = ref(
             this.db,
             `Subjects-Messages/${this.classDetails?.id}/${localStorage.getItem(
-              'userid'
+              'drastiuserid'
             )}/${key}`
           );
           console.log(message);
@@ -370,16 +370,16 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
       const replyRef = ref(
         this.db,
         `Subjects-Messages/${this.classDetails.id}/${localStorage.getItem(
-          'userid'
+          'drastiuserid'
         )}/${replyId}`
       );
 
       const autoReplyMessage = {
         from: 'الرد الالي',
         from_id: '_1',
-        from_number: localStorage.getItem('userphone'),
-        to: localStorage.getItem('username'),
-        to_id: `${localStorage.getItem('userid')}`,
+        from_number: localStorage.getItem('drastiuserphone'),
+        to: localStorage.getItem('drastiusername'),
+        to_id: `${localStorage.getItem('drastiuserid')}`,
         date: this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         message_content: this.classDetailsService.autoReply,
         type: 'text',
@@ -392,7 +392,7 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
           .addAnswer({
             material_id: this.classDetails?.id,
             answer: this.classDetailsService.autoReply,
-            student_id: localStorage.getItem('userid'),
+            student_id: localStorage.getItem('drastiuserid'),
           })
           .subscribe();
       });
