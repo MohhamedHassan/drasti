@@ -244,6 +244,11 @@ export class SubjectChatComponent implements OnInit, AfterViewInit, OnDestroy {
   getSafeUrl(url: string): any {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
+  getSaveText(text: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(
+      text?.replace(/\r?\n/g, '<br/>')
+    );
+  }
   ngOnInit(): void {
     this.db = this.fire.db;
     window.scroll(0, 0);
